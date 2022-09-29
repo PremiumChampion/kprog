@@ -18,7 +18,7 @@ public class TestPalindromeChecker {
     palindromeChecker = new SimplePalindromeChecker();
   }
 
-  @Test @Ignore
+  @Test
   public void testNormalizeWithBlanks() {
     char[] result = palindromeChecker.normalizeLine("this is a line with  blanks");
      assertNotNull(result);
@@ -27,7 +27,7 @@ public class TestPalindromeChecker {
     assertArrayEquals(expectedCharArray, result);
   }
 
-  @Test @Ignore
+  @Test
   public void testNormalizeWithSpecialCharacters() {
     char[] result = palindromeChecker.normalizeLine("this is a line, also with 2 special Chars!");
     assertNotNull(result);
@@ -36,17 +36,17 @@ public class TestPalindromeChecker {
     assertArrayEquals(expectedCharArray, result);
   }
 
-  @Test @Ignore
+  @Test
   public void testIsPalindrome01() {
     assertTrue(palindromeChecker.isPalindrome("abba"));
   }
 
-  @Test @Ignore
+  @Test
   public void testIsPalindrome02() {
     assertTrue(palindromeChecker.isPalindrome("O Genie, der Herr ehre dein Ego!"));
   }
 
-  @Test @Ignore
+  @Test
   public void testIsPalindrome03() {
     assertTrue(palindromeChecker.isPalindrome("A man, a plan, a canal – Panama"));
   }
