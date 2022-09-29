@@ -52,8 +52,9 @@ dependencies {
 checkstyle {
     toolVersion = "8.41.1"
     configFile = file('etc/google-checks-2021.xml')
-    showViolations = false
+    showViolations = true
     checkstyleTest.enabled = false
+    checkstyleMain.enabled = true
 }
 
 checkstyleMain.exclude('examples/ch14/*', 'examples/executorservice/*')

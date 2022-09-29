@@ -10,7 +10,11 @@ import org.junit.Test;
 import prog.ex01.exercise.palindrome.PalindromeChecker;
 import prog.ex01.solution.palindrome.SimplePalindromeChecker;
 
+/**
+ * tests palindromes.
+ */
 public class TestPalindromeChecker {
+
   PalindromeChecker palindromeChecker;
 
   @Before
@@ -21,7 +25,7 @@ public class TestPalindromeChecker {
   @Test
   public void testNormalizeWithBlanks() {
     char[] result = palindromeChecker.normalizeLine("this is a line with  blanks");
-     assertNotNull(result);
+    assertNotNull(result);
     String expectedString = "thisisalinewithblanks";
     char[] expectedCharArray = expectedString.toCharArray();
     assertArrayEquals(expectedCharArray, result);

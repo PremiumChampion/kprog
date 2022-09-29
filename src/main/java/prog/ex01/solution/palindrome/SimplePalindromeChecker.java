@@ -9,7 +9,7 @@ public class SimplePalindromeChecker implements PalindromeChecker {
 
   @Override
   public boolean isPalindrome(final String line) {
-    char[] normalised =this.normalizeLine(line);
+    char[] normalised = this.normalizeLine(line);
     char[] reversed = this.normalizeLine(line);
 
     for (int i = 0; i < (reversed.length) / 2; i++) {
