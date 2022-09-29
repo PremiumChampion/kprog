@@ -1,0 +1,76 @@
+plugins {
+    id ("checkstyle")
+    id ("application")
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id ("org.openjfx.javafxplugin").version("0.0.12")
+    id ("org.beryx.jlink").version("2.24.4")
+}
+
+group 'de.hhn.seb.kprog'
+version '1.0-SNAPSHOT'
+
+
+wrapper {
+    gradleVersion = '7.5.1'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+javafx {
+    version = "17"
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.media' ]
+}
+
+
+application {
+    mainModule = "kprog.main"
+    mainClassName = "environment.testprograms." + (findProperty('mainClass') ?: 'HelloWorldWithJavaFx')
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+// use slf versions with module-info information inside
+    implementation ("org.slf4j:slf4j-api:2.0.0-beta1") {
+      because "we need the SimpleLoggingFacade with module information"
+}
+    implementation ("org.slf4j:slf4j-simple:2.0.0-beta1")
+    // https://mvnrepository.com/artifact/junit/junit
+    testImplementation group: 'junit', name: 'junit', version: '4.13'
+    // https://mvnrepository.com/artifact/org.testfx/testfx-core
+    testImplementation group: 'org.testfx', name: 'testfx-core', version: '4.0.16-alpha'
+    // https://mvnrepository.com/artifact/org.testfx/testfx-junit
+    testImplementation group: 'org.testfx', name: 'testfx-junit', version: '4.0.15-alpha'
+}
+
+checkstyle {
+    toolVersion = "8.41.1"
+    configFile = file('etc/google-checks-2021.xml')
+    showViolations = false
+    checkstyleTest.enabled = false
+}
+
+checkstyleMain.exclude('examples/ch14/*', 'examples/executorservice/*')
+
+ext {
+    if (!project.hasProperty('exid')) {
+        exid = 'ex06'
+    }
+}
+
+
+// generic task to zip
+// call it, e.g. for ex11, with "gradle -Pexid=ex11 zipEx"
+task zipEx(type: Zip){
+    archiveFileName = exid + "Solution.zip"
+    destinationDirectory = file ("${rootDir}/zipfiles")
+    from  fileTree('src/main/java/prog/'+ exid)
+    into('prog/' + exid)
+}
+
