@@ -9,7 +9,8 @@ public class SimplePalindromeChecker implements PalindromeChecker {
 
   @Override
   public boolean isPalindrome(final String line) {
-    char[] reversed = line.toCharArray();
+    char[] normalised = this.normalizeLine(line);
+    char[] reversed = this.normalizeLine(line);
 
     for (int i = 0; i < (reversed.length) / 2; i++) {
       char tmp = reversed[i];
@@ -17,25 +18,18 @@ public class SimplePalindromeChecker implements PalindromeChecker {
       reversed[reversed.length - 1 - i] = tmp;
     }
 
-    Boolean isPalindrome = true;
-    for (int i = 0; i < line.length(); i++) {
-      if (line.charAt(i) != reversed[i]) {
-        isPalindrome = false;
+    for (int i = 0; i < normalised.length; i++) {
+      if (normalised[i] != reversed[i]) {
+        return false;
       }
     }
 
-    return isPalindrome;
+    return true;
   }
 
   @Override
   public char[] normalizeLine(String line) {
-    line = line.replaceAll("[^a-zA-Z/d]", "");
-    return line.toCharArray();
-  }
-
-  public static void main(String[] args) {
-    System.out.println(new SimplePalindromeChecker().isPalindrome("HelloWorld"));
-    System.out.println(new SimplePalindromeChecker().isPalindrome("Hello olleH"));
+    return line.toLowerCase().replaceAll("[^a-zA-Z0-9]", "").toCharArray();
   }
 
 }

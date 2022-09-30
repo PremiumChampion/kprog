@@ -12,6 +12,12 @@ public class Document {
   // Number of copies already printed from this document.
   private int numberOfCopies;
 
+  /**
+   * represents a document.
+   *
+   * @param pages the count of pages.
+   * @param color if the document is of type color.
+   */
   public Document(final int pages, final boolean color) {
     this.pages = pages;
     this.color = color;
@@ -45,8 +51,8 @@ public class Document {
   }
 
   /**
-   * This method gets called by a printer to increase the counter of copies. Should only be
-   * called if the printer can successfully print the document.
+   * This method gets called by a printer to increase the counter of copies. Should only be called
+   * if the printer can successfully print the document.
    */
   public void hasBeenPrinted() {
     numberOfCopies++;

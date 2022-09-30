@@ -4,17 +4,17 @@ package prog.ex02.exercise.printer;
  * Interface to a common printer.
  */
 public interface Printer {
+
   /**
    * Prints the given document.
    *
    * @param document document to print
    * @param duplex   flag to signal if the document should be printed two-sided
-   * @return false if
-   *<ul>
-   *   <li>there is not enough paper in the paper tray</li>
-   *   <li>if duplex is required but not provided by the printer</li>
-   *   <li>if it is a color document but the printer cannot provide color</li>
-   *</ul> otherwise true
+   * @return false if <ul>
+   * <li>there is not enough paper in the paper tray</li>
+   * <li>if duplex is required but not provided by the printer</li>
+   * <li>if it is a color document but the printer cannot provide color</li>
+   * </ul> otherwise true
    */
   boolean print(Document document, boolean duplex);
 
@@ -42,8 +42,8 @@ public interface Printer {
   /**
    * Adds paper to the paper tray.
    *
-   * @param numberOfSheets number of sheets of paper to be added. This number must be
-   *                       greater-equals zero
+   * @param numberOfSheets number of sheets of paper to be added. This number must be greater-equals
+   *                       zero
    * @return true if the number is greater-equals zero, otherwise false
    */
   boolean addPaper(int numberOfSheets);

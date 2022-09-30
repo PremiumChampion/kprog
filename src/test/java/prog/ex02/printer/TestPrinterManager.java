@@ -33,7 +33,7 @@ public class TestPrinterManager {
     colorDuplexPrinter1 = new ColorPrinter(COLOR_DUPLEX_1, true);
   }
 
-  @Test  @Ignore
+  @Test  
   public void testPrintManagerIsEmpty() {
     assertEquals(0, printerManager.getNumberOfBwPrinters());
     assertEquals(0, printerManager.getNumberOfColorPrinters());
@@ -41,7 +41,7 @@ public class TestPrinterManager {
     assertEquals(0, printerManager.getAllPrinters().size());
   }
 
-  @Test  @Ignore
+  @Test  
   public void testAddGoodBwPrinter(){
     printerManager.addPrinter(bwSimplexPrinter1);
     assertEquals(0, printerManager.getNumberOfColorPrinters());

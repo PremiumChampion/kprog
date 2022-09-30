@@ -5,12 +5,18 @@ package prog.ex02.solution.printer;
  */
 public class ColorPrinter extends BasePrinter {
 
-  public ColorPrinter(String string, boolean b) {
-    super();
+  /**
+   * creates a color printer.
+   *
+   * @param name          the name of the printer.
+   * @param duplexCapable if the printer is able to print duplex.
+   */
+  public ColorPrinter(String name, boolean duplexCapable) {
+    super(name, duplexCapable);
   }
 
   @Override
   public boolean hasColor() {
-    return false;
+    return true;
   }
 }

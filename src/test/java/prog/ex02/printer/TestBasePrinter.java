@@ -6,11 +6,13 @@ import org.junit.Test;
 import prog.ex02.exercise.printer.Document;
 import prog.ex02.solution.printer.BasePrinter;
 import prog.ex02.solution.printer.BwPrinter;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * testcases for printer.
+ */
 public class TestBasePrinter {
 
   public static final String SIMPLEX_PRINTER = "Simple One";
@@ -33,7 +35,7 @@ public class TestBasePrinter {
     document23color = new Document(23, true);
   }
 
-  @Test @Ignore
+  @Test 
   public void testPaperManagement() {
     assertEquals(0, baseSimplexPrinter.getNumberOfSheetsOfPaper());
     assertEquals(0, baseDuplexPrinter.getNumberOfSheetsOfPaper());
@@ -48,13 +50,13 @@ public class TestBasePrinter {
     assertTrue(baseDuplexPrinter.addPaper(0));
   }
 
-  @Test @Ignore
+  @Test 
   public void addNegativeNumberOfSheetsOfPaper() {
     assertFalse(baseSimplexPrinter.addPaper(-100));
     assertFalse(baseDuplexPrinter.addPaper(-100));
   }
 
-  @Test @Ignore
+  @Test 
   public void testPrintingSimplex() {
     assertTrue(baseSimplexPrinter.addPaper(100));
     assertTrue(baseSimplexPrinter.print(document23bw, false));
@@ -62,7 +64,7 @@ public class TestBasePrinter {
     assertEquals(77, baseSimplexPrinter.getNumberOfSheetsOfPaper());
   }
 
-  @Test @Ignore
+  @Test 
   public void testPrintingDuplex() {
     assertTrue(baseDuplexPrinter.addPaper(12));
     assertTrue(baseDuplexPrinter.print(document23bw, true));
