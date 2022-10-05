@@ -11,4 +11,5 @@ public interface SnakeService {
   void addListener(SnakeListener listener);
   void removeListener(SnakeListener listener);
   void configure(GameConfiguration configuration);
+  Snake getSnake();
 }
