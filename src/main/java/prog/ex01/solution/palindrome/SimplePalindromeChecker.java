@@ -1,5 +1,6 @@
 package prog.ex01.solution.palindrome;
 
+import java.util.Arrays;
 import prog.ex01.exercise.palindrome.PalindromeChecker;
 
 /**
@@ -18,18 +19,13 @@ public class SimplePalindromeChecker implements PalindromeChecker {
       reversed[reversed.length - 1 - i] = tmp;
     }
 
-    for (int i = 0; i < normalised.length; i++) {
-      if (normalised[i] != reversed[i]) {
-        return false;
-      }
-    }
-
-    return true;
+    return Arrays.equals(normalised,reversed);
   }
 
   @Override
   public char[] normalizeLine(String line) {
-    return line.toLowerCase().replaceAll("[^a-zA-Z0-9]", "").toCharArray();
+    System.out.println(line.toLowerCase().replaceAll("[^a-zA-Z0-9äöüß]", ""));
+    return line.toLowerCase().replaceAll("[^a-zA-Z0-9äöüß]", "").toCharArray();
   }
 
 }

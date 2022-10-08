@@ -10,6 +10,6 @@ public interface SnakeService {
   void moveRight();
   void addListener(SnakeListener listener);
   void removeListener(SnakeListener listener);
-  void configure(GameConfiguration configuration);
+  void configure(GameConfiguration configuration) throws IllegalConfigurationException;
   Snake getSnake();
 }

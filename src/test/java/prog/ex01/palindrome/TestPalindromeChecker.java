@@ -3,6 +3,7 @@ package prog.ex01.palindrome;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -53,6 +54,10 @@ public class TestPalindromeChecker {
   @Test
   public void testIsPalindrome03() {
     assertTrue(palindromeChecker.isPalindrome("A man, a plan, a canal – Panama"));
+  }
+  @Test
+  public void testIsPalindrome04() {
+    assertFalse(palindromeChecker.isPalindrome("äÄöÖüÜ?ß"));
   }
 
 }
