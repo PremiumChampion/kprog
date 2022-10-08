@@ -19,7 +19,7 @@ public class SimplePalindromeChecker implements PalindromeChecker {
       reversed[reversed.length - 1 - i] = tmp;
     }
 
-    return Arrays.equals(normalised,reversed);
+    return Arrays.equals(normalised, reversed);
   }
 
   @Override
