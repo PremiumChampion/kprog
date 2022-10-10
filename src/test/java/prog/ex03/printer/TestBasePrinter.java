@@ -35,7 +35,7 @@ public class TestBasePrinter {
     document23color = new Document(23, true);
   }
 
-  @Test @Ignore
+  @Test
   public void testPaperManagement() {
     assertEquals(0, baseSimplexPrinter.getNumberOfSheetsOfPaper());
     assertEquals(0, baseDuplexPrinter.getNumberOfSheetsOfPaper());
@@ -50,7 +50,7 @@ public class TestBasePrinter {
     baseDuplexPrinter.addPaper(0);
   }
 
-  @Test @Ignore
+  @Test
   public void addNegativeNumberOfSheetsOfPaper() {
     try {
       baseSimplexPrinter.addPaper(-100);
@@ -67,7 +67,7 @@ public class TestBasePrinter {
     }
   }
 
-  @Test @Ignore
+  @Test
   public void testPrintingSimplex()
           throws NoDuplexPrinterException, NotEnoughPaperException, NoColorPrinterException {
     baseSimplexPrinter.addPaper(100);
@@ -82,7 +82,7 @@ public class TestBasePrinter {
     }
   }
 
-  @Test @Ignore
+  @Test
   public void testPrintingDuplex()
           throws NoDuplexPrinterException, NotEnoughPaperException, NoColorPrinterException {
     baseDuplexPrinter.addPaper(12);
@@ -90,7 +90,7 @@ public class TestBasePrinter {
     assertEquals(0, baseDuplexPrinter.getNumberOfSheetsOfPaper());
   }
 
-  @Test @Ignore
+  @Test
   public void testPrintNullDocument() {
     baseSimplexPrinter.addPaper(100);
     try {
@@ -103,7 +103,7 @@ public class TestBasePrinter {
     }
   }
 
-  @Test @Ignore
+  @Test
   public void testColorDocumentOnBwPrinter() {
     baseSimplexPrinter.addPaper(100);
     try {

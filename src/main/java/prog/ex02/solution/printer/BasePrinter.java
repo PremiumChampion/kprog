@@ -42,6 +42,7 @@ public abstract class BasePrinter implements Printer {
       return false;
     }
 
+
     int sheetCountForPrintJob = BasePrinter.getSheetCountForPrintJob(document, duplex);
 
     if (sheetCountForPrintJob > this.getNumberOfSheetsOfPaper()) {
@@ -49,7 +50,7 @@ public abstract class BasePrinter implements Printer {
     }
 
     this.setSheetCount(this.getNumberOfSheetsOfPaper() - sheetCountForPrintJob);
-
+    document.hasBeenPrinted();
     return true;
   }
 
@@ -64,7 +65,7 @@ public abstract class BasePrinter implements Printer {
     int absolutePageCountPerCopy = document.getPages();
 
     if (duplex) {
-      absolutePageCountPerCopy = (int) ((absolutePageCountPerCopy + 1) / 2);
+      absolutePageCountPerCopy = ((absolutePageCountPerCopy + 1) / 2);
     }
 
     return absolutePageCountPerCopy;

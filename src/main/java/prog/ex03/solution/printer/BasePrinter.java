@@ -32,7 +32,8 @@ public abstract class BasePrinter implements Printer {
 
   @Override
   public void print(final Document document, final boolean duplex)
-      throws IllegalArgumentException, NoColorPrinterException, NoDuplexPrinterException, NotEnoughPaperException {
+      throws IllegalArgumentException, NoColorPrinterException, NoDuplexPrinterException,
+      NotEnoughPaperException {
 
     if (document == null) {
       throw new IllegalArgumentException();
