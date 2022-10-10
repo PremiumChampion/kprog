@@ -1,9 +1,9 @@
 plugins {
-    id ("checkstyle")
-    id ("application")
+    id("checkstyle")
+    id("application")
     id 'com.github.johnrengelman.shadow' version '6.0.0'
-    id ("org.openjfx.javafxplugin").version("0.0.12")
-    id ("org.beryx.jlink").version("2.24.4")
+    id("org.openjfx.javafxplugin").version("0.0.12")
+    id("org.beryx.jlink").version("2.24.4")
 }
 
 group 'de.hhn.seb.kprog'
@@ -22,7 +22,7 @@ tasks.withType(JavaCompile) {
 
 javafx {
     version = "11"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.media' ]
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.media']
 }
 
 
@@ -37,10 +37,10 @@ repositories {
 
 dependencies {
 // use slf versions with module-info information inside
-    implementation ("org.slf4j:slf4j-api:2.0.0-beta1") {
-      because "we need the SimpleLoggingFacade with module information"
-}
-    implementation ("org.slf4j:slf4j-simple:2.0.0-beta1")
+    implementation("org.slf4j:slf4j-api:2.0.0-beta1") {
+        because "we need the SimpleLoggingFacade with module information"
+    }
+    implementation("org.slf4j:slf4j-simple:2.0.0-beta1")
     // https://mvnrepository.com/artifact/junit/junit
     testImplementation group: 'junit', name: 'junit', version: '4.13'
     // https://mvnrepository.com/artifact/org.testfx/testfx-core
@@ -57,7 +57,7 @@ checkstyle {
     checkstyleMain.enabled = true
 }
 
-checkstyleMain.exclude('examples/ch14/*', 'examples/executorservice/*')
+checkstyleMain.exclude('examples/ch14/*', 'examples/executorservice/*', 'livesession/*')
 
 ext {
     if (!project.hasProperty('exid')) {
@@ -68,10 +68,10 @@ ext {
 
 // generic task to zip
 // call it, e.g. for ex11, with "gradle -Pexid=ex11 zipEx"
-task zipEx(type: Zip){
+task zipEx(type: Zip) {
     archiveFileName = exid + "Solution.zip"
-    destinationDirectory = file ("${rootDir}/zipfiles")
-    from  fileTree('src/main/java/prog/'+ exid)
+    destinationDirectory = file("${rootDir}/zipfiles")
+    from fileTree('src/main/java/prog/' + exid)
     into('prog/' + exid)
 }
 
