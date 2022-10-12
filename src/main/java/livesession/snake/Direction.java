@@ -1,5 +1,8 @@
 package livesession.snake;
 
+/**
+ * Directions a snake can wiggle.
+ */
 public enum Direction {
   NORTH, EAST, SOUTH, WEST;
 
@@ -17,10 +20,20 @@ public enum Direction {
     WEST.right = NORTH;
   }
 
+  /**
+   * Returns the direction when the snake is turning left.
+   *
+   * @return new direction
+   */
   public Direction getLeft() {
     return left;
   }
 
+  /**
+   * Returns the direction when the snake is turning right.
+   *
+   * @return new direction
+   */
   public Direction getRight() {
     return right;
   }

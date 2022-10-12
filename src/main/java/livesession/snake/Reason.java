@@ -1,5 +1,8 @@
 package livesession.snake;
 
+/**
+ * Contains the reason for the termination of the game.
+ */
 public class Reason {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Reason.class);

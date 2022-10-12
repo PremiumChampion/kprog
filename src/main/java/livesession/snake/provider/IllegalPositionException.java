@@ -3,7 +3,10 @@ package livesession.snake.provider;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 
-public class IllegalPositionException extends Exception{
+/**
+ * Gets thrown when the snake reaches a position on the board where the snake should not be.
+ */
+public class IllegalPositionException extends Exception {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(IllegalPositionException.class);
 

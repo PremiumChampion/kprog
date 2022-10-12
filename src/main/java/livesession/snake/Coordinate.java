@@ -2,6 +2,9 @@ package livesession.snake;
 
 import java.util.StringJoiner;
 
+/**
+ * Realizes a 2D coordinate. This class is intended to be immutable.
+ */
 public class Coordinate {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Coordinate.class);
@@ -21,6 +24,12 @@ public class Coordinate {
     return column;
   }
 
+  /**
+   * Calculates the coordinate of the neighbouring cell in a given direction.
+   *
+   * @param direction direction where the neighbour lies.
+   * @return Coordinate of the neighbour
+   */
   public Coordinate getNeighbor(Direction direction) {
     switch (direction) {
       case EAST:
@@ -35,8 +44,6 @@ public class Coordinate {
         throw new IllegalArgumentException("Unknown direction: " + direction);
     }
   }
-
-  // TODO: equals and hashcode
 
   @Override
   public boolean equals(final Object o) {
