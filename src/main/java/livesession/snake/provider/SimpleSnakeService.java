@@ -56,13 +56,13 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   }
 
   @Override
-  public void addListener(final SnakeListener listener) {
-
+  public boolean addListener(final SnakeListener listener) {
+    return false;
   }
 
   @Override
-  public void removeListener(final SnakeListener listener) {
-
+  public boolean removeListener(final SnakeListener listener) {
+    return false;
   }
 
   @Override
