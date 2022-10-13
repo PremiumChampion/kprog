@@ -24,8 +24,8 @@ public class SimplePalindromeChecker implements PalindromeChecker {
 
   @Override
   public char[] normalizeLine(String line) {
-    System.out.println(line.toLowerCase().replaceAll("[^a-zA-Z0-9äöüß]", ""));
-    return line.toLowerCase().replaceAll("[^a-zA-Z0-9äöüß]", "").toCharArray();
+    String _testLine = line.toLowerCase().replaceAll("[^\\p{L}0-9]", "");
+    return line.toLowerCase().replaceAll("[^\\p{L}0-9]", "").toCharArray();
   }
 
 }

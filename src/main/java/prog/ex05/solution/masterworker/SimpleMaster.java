@@ -1,51 +1,101 @@
 package prog.ex05.solution.masterworker;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 import prog.ex05.exercise.masterworker.Master;
 import prog.ex05.exercise.masterworker.Task;
 import prog.ex05.exercise.masterworker.TaskState;
+import prog.ex05.exercise.masterworker.Worker;
 
 /**
  * Simple and straight-forward implementation of the Master interface.
  */
 public class SimpleMaster implements Master {
-  private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(SimpleMaster.class);
+
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      SimpleMaster.class);
+
+  private int numberOfWorkers;
+  private List<Worker> workers;
+  private Map<Integer, Task> allTasks;
+  private ConcurrentLinkedQueue<Task> queuedTasks;
 
   public SimpleMaster(int numberOfWorkers) {
+    this.numberOfWorkers = numberOfWorkers;
+    this.workers = new ArrayList<>();
+    this.allTasks = new HashMap<>();
+    this.queuedTasks = new ConcurrentLinkedQueue<>();
+  }
+
+  private void generateWorker() {
+    for (int i = 0; i < this.numberOfWorkers; i++) {
+      workers.add(new SimpleWorker("Worker-" + this.numberOfWorkers));
+    }
   }
 
   @Override
   public Task addTask(final Runnable runnable) throws IllegalArgumentException {
-    return null;
+    Task newTask = new Task(runnable);
+    this.allTasks.put(newTask.getId(), newTask);
+    return newTask;
   }
 
   @Override
   public TaskState getTaskState(final int taskId) throws IllegalArgumentException {
-    return null;
+    if (taskId < 0) {
+      throw new IllegalArgumentException("taskId must not be negative.");
+    }
+    if (!this.allTasks.containsKey(taskId)) {
+      throw new IllegalArgumentException("taskId not found.");
+    }
+
+    return this.allTasks.get(taskId).getState();
   }
 
   @Override
   public Task getTask(final int taskId) throws IllegalArgumentException {
-    return null;
+    if (taskId < 0) {
+      throw new IllegalArgumentException("taskId must not be negative.");
+    }
+    if (!this.allTasks.containsKey(taskId)) {
+      throw new IllegalArgumentException("taskId not found.");
+    }
+    return this.allTasks.get(taskId);
   }
 
   @Override
   public int getNumberOfWorkers() {
-    return 0;
+    return numberOfWorkers;
   }
 
   @Override
   public List<String> getWorkerNames() {
-    return null;
+    return this.workers.stream().map(Worker::getName).collect(Collectors.toList());
   }
 
   @Override
   public int getNumberOfQueuedTasks() {
-    return 0;
+    return this.queuedTasks.size();
   }
 
   @Override
   public void shutdown() {
+    this.workers.forEach(Worker::terminate);
+
+    for (Worker worker : this.workers) {
+      if (worker instanceof Thread) {
+        Thread thread = (Thread) worker;
+        try {
+          thread.join();
+        } catch (InterruptedException e) {
+          SimpleMaster.logger.error("joining threads got interrupted", e);
+        }
+      }
+    }
+
   }
 }
