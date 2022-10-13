@@ -24,16 +24,31 @@ public class SimpleMaster implements Master {
   private Map<Integer, Task> allTasks;
   private ConcurrentLinkedQueue<Task> queuedTasks;
 
+  /**
+   * creates a master with a certain ammount of workers.
+   *
+   * @param numberOfWorkers the nummer of workers managed by this master.
+   */
   public SimpleMaster(int numberOfWorkers) {
+    if (numberOfWorkers < 1) {
+      throw new IllegalArgumentException("can not add less than one worker.");
+    }
     this.numberOfWorkers = numberOfWorkers;
     this.workers = new ArrayList<>();
     this.allTasks = new HashMap<>();
     this.queuedTasks = new ConcurrentLinkedQueue<>();
+    this.generateWorker();
   }
 
+  /**
+   * generates the worker and starts them.
+   */
   private void generateWorker() {
     for (int i = 0; i < this.numberOfWorkers; i++) {
-      workers.add(new SimpleWorker("Worker-" + this.numberOfWorkers));
+      SimpleWorker w = new SimpleWorker("Worker-" + i);
+      w.setQueue(this.queuedTasks);
+      w.start();
+      this.workers.add(w);
     }
   }
 
@@ -41,6 +56,7 @@ public class SimpleMaster implements Master {
   public Task addTask(final Runnable runnable) throws IllegalArgumentException {
     Task newTask = new Task(runnable);
     this.allTasks.put(newTask.getId(), newTask);
+    this.queuedTasks.add(newTask);
     return newTask;
   }
 
@@ -88,6 +104,7 @@ public class SimpleMaster implements Master {
 
     for (Worker worker : this.workers) {
       if (worker instanceof Thread) {
+        System.out.println("joining thread");
         Thread thread = (Thread) worker;
         try {
           thread.join();
@@ -96,6 +113,5 @@ public class SimpleMaster implements Master {
         }
       }
     }
-
   }
 }
