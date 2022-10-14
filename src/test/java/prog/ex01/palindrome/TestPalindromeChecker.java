@@ -57,7 +57,13 @@ public class TestPalindromeChecker {
   }
   @Test
   public void testIsPalindrome04() {
-    assertFalse(palindromeChecker.isPalindrome("äÄöÖüÜ?ß"));
+    char[] result = palindromeChecker.normalizeLine("Кулина́р, храни́ лук");
+    assertNotNull(result);
+    String expectedString = "кулинархранилук";
+    char[] expectedCharArray = expectedString.toCharArray();
+    assertArrayEquals(expectedCharArray, result);
+    assertTrue(palindromeChecker.isPalindrome("Кулина́р, храни́ лук"));
+    assertFalse(palindromeChecker.isPalindrome("Кулина́р"));
   }
 
 }
