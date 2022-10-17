@@ -51,6 +51,26 @@ public interface SnakeService {
    * @return true if the listener could be removed. Otherwise, false.
    */
   boolean removeListener(SnakeListener listener);
+
+  /**
+   * Configures the next game.
+   *
+   * @param configuration contains the game configuration parameters
+   * @throws IllegalConfigurationException if the values cannot be accepted due whatever reason
+   */
   void configure(GameConfiguration configuration) throws IllegalConfigurationException;
+
+  /**
+   * Returns the snake.
+   *
+   * @return snake
+   */
   Snake getSnake();
+
+  /**
+   * Returns the board including SNAKE, WALL, GRASS and FOOD.
+   *
+   * @return board with all elements
+   */
+  Board getBoard();
 }

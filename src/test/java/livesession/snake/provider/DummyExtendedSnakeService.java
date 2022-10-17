@@ -68,6 +68,11 @@ public class DummyExtendedSnakeService implements ExtendedSnakeService {
   }
 
   @Override
+  public Board getBoard() {
+    return null;
+  }
+
+  @Override
   public Board getExternalBoard() {
     return null;
   }

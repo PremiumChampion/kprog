@@ -75,3 +75,19 @@ task zipEx(type: Zip) {
     into('prog/' + exid)
 }
 
+zipEx.doLast {
+    println "Resulting zip file should be ${rootDir}/zipfiles/${exid}Solution.zip"
+    assert file("${rootDir}/zipfiles/${exid}Solution.zip").exists()
+}
+
+// Task just to zip the tests of the students for ex06
+task zipTests(type: Zip){
+    archiveFileName = "ex06Tests.zip"
+    destinationDirectory = file ("${rootDir}/zipfiles")
+    from  fileTree('src/test/java/prog/ex06')
+    into('prog/ex06')
+}
+zipTests.doLast {
+    println "Resulting zip file should be ${rootDir}/zipfiles/ex06Tests.zip"
+    assert file("${rootDir}/zipfiles/ex06Tests.zip").exists()
+}
