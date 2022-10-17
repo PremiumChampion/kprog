@@ -63,6 +63,7 @@ public class TestPalindromeChecker {
     char[] expectedCharArray = expectedString.toCharArray();
     assertArrayEquals(expectedCharArray, result);
     assertTrue(palindromeChecker.isPalindrome("Кулина́р, храни́ лук"));
+    assertFalse(palindromeChecker.isPalindrome("Кулина́р"));
   }
 
 }

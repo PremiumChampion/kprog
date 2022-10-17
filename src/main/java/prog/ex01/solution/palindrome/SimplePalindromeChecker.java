@@ -24,7 +24,7 @@ public class SimplePalindromeChecker implements PalindromeChecker {
 
   @Override
   public char[] normalizeLine(String line) {
-    return line.toLowerCase().replaceAll("[^\\p{L}0-9]", "").toCharArray();
+    return line.toLowerCase().replaceAll("[^\\p{LD}]", "").toCharArray();
   }
 
 }
