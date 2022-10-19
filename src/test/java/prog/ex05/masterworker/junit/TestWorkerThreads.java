@@ -43,7 +43,7 @@ public class TestWorkerThreads {
     return threadMap;
   }
 
-  @Test @Ignore
+  @Test
   public void checkWorkerNames() throws InterruptedException {
     Map<String, Thread> threadMap = getThreadMap(getAllThreadsOfGroup());
     logger.info("activeThreads = " + threadMap.size());
