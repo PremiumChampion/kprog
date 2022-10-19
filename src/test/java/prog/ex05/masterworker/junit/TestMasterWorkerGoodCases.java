@@ -50,7 +50,7 @@ public class TestMasterWorkerGoodCases {
   }
 
   @Test
-  @Ignore
+  
   public void runOneFailingRunnable() throws InterruptedException {
     Task task = master.addTask(failingRunnable);
     assertNotNull("Master should have a task added.", task);
@@ -66,7 +66,7 @@ public class TestMasterWorkerGoodCases {
   }
 
   @Test
-  @Ignore
+  
   public void runOneSucceedingRunnable() throws InterruptedException {
     Task task = master.addTask(succeedingRunnable);
     assertNotNull("Master should have a task added.", task);
@@ -77,7 +77,7 @@ public class TestMasterWorkerGoodCases {
   }
 
   @Test
-  @Ignore
+  
   public void testGetTask() throws InterruptedException {
     int taskId = master.addTask(succeedingRunnable).getId();
     Thread.sleep(1000);
@@ -85,7 +85,7 @@ public class TestMasterWorkerGoodCases {
   }
 
   @Test
-  @Ignore
+  
   public void runLotsOfRunnables() throws InterruptedException {
     ConcurrentLinkedQueue<PrimeFactorResult> resultQueue = new ConcurrentLinkedQueue<>();
     StopWatch stopWatch = new SimpleStopWatch();
@@ -112,7 +112,7 @@ public class TestMasterWorkerGoodCases {
   }
 
   @Test
-  @Ignore
+  
   public void checkNumberOfWorkerThreadNames() throws InterruptedException {
     int numberOfTasks = 20;
     ThreadNameCollector collector = new ThreadNameCollector();

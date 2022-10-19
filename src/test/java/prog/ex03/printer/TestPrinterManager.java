@@ -34,7 +34,7 @@ public class TestPrinterManager {
     colorDuplexPrinter1 = new ColorPrinter(COLOR_DUPLEX_1, true);
   }
 
-  @Test @Ignore
+  @Test
   public void testPrintManagerIsEmpty() {
     assertEquals(0, printerManager.getNumberOfBwPrinters());
     assertEquals(0, printerManager.getNumberOfColorPrinters());
@@ -42,7 +42,7 @@ public class TestPrinterManager {
     assertEquals(0, printerManager.getAllPrinters().size());
   }
 
-  @Test @Ignore
+  @Test
   public void testAddGoodBwPrinter() throws PrinterAlreadyRegisteredException {
     printerManager.addPrinter(bwSimplexPrinter1);
     assertEquals(0, printerManager.getNumberOfColorPrinters());
@@ -54,7 +54,7 @@ public class TestPrinterManager {
     assertEquals(BW_SIMPLEX_1, tmpPrinter.getName());
   }
 
-  @Test @Ignore
+  @Test
   public void testAddNullPrinter() {
     try {
       printerManager.addPrinter(null);
@@ -66,7 +66,7 @@ public class TestPrinterManager {
     }
   }
 
-  @Test  @Ignore
+  @Test 
   public void testAddPrinterWithEmptyName() {
     Printer printer = new BwPrinter("", false);
     try {
@@ -79,7 +79,7 @@ public class TestPrinterManager {
     }
   }
 
-  @Test @Ignore
+  @Test
   public void testAddPrinterWithWhitespaceName() {
     Printer printer = new BwPrinter("  ", false);
     try {

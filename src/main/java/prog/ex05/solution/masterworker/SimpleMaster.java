@@ -74,9 +74,6 @@ public class SimpleMaster implements Master {
 
   @Override
   public Task getTask(final int taskId) throws IllegalArgumentException {
-    if (taskId < 0) {
-      throw new IllegalArgumentException("taskId must not be negative.");
-    }
     if (!this.allTasks.containsKey(taskId)) {
       throw new IllegalArgumentException("taskId not found.");
     }

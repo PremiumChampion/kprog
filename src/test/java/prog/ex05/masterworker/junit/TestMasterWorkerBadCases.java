@@ -25,7 +25,7 @@ public class TestMasterWorkerBadCases {
     master = null;
   }
 
-  @Test @Ignore
+  @Test
   public void testRunnableNullReference() throws IllegalArgumentException {
     try {
       master.addTask(null);
@@ -36,7 +36,7 @@ public class TestMasterWorkerBadCases {
     }
   }
 
-  @Test @Ignore
+  @Test
   public void testTaskIdNotKnown() throws IllegalArgumentException {
     try {
       master.getTask(99999);
@@ -54,7 +54,7 @@ public class TestMasterWorkerBadCases {
     }
   }
 
-  @Test @Ignore
+  @Test
   public void testToLessWorkers() throws IllegalArgumentException {
     try {
       SimpleMaster m1 = new SimpleMaster(0);
