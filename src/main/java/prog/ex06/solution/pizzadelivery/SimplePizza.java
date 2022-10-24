@@ -69,6 +69,7 @@ public class SimplePizza implements Pizza {
 
   @Override
   public int getPrice() {
+
     Map<PizzaSize, Integer> sizePriceList = service.getPizzaSizePriceList();
     Map<Topping, Integer> toppingPriceList = service.getToppingsPriceList();
 

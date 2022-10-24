@@ -11,6 +11,7 @@ import livesession.snake.Snake;
  * Simple and straight-forward implementation of the Snake interface.
  */
 public class SimpleSnake implements Snake {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleSnake.class);
   private final InternalBoard board;
@@ -41,13 +42,56 @@ public class SimpleSnake implements Snake {
    */
   public Coordinate advance() throws IllegalPositionException {
     // TODO: advance the snake
-    return null;
+    Coordinate currentHead = this.position.getFirst();
+    Direction currentDirection = this.direction;
+    int moveROW = 0;
+    int moveCOL = 0;
+
+    if (currentDirection == Direction.NORTH) {
+      moveROW = 0;
+      moveCOL = +1;
+    }
+
+    if (currentDirection == Direction.EAST) {
+      moveROW = +1;
+      moveCOL = 0;
+    }
+    if (currentDirection == Direction.SOUTH) {
+      moveROW = -1;
+      moveCOL = 0;
+    }
+    if (currentDirection == Direction.WEST) {
+      moveROW = 0;
+      moveCOL = +1;
+    }
+
+    Coordinate nextPosition = new Coordinate(currentHead.getRow() + moveROW,
+        currentHead.getColumn() + moveCOL);
+
+    assertNewPositionIsPossible(nextPosition);
+
+//    this.position.addFirst(nextPosition);
+//    this.position.removeLast();
+
+    return nextPosition;
   }
 
   private BoardState assertNewPositionIsPossible(final Coordinate newHead)
       throws IllegalPositionException {
+
     // TODO: Check if the position is valid
-    return null;
+    switch (this.board.board[newHead.getRow()][newHead.getColumn()]) {
+      case FOOD:
+      case GRASS:
+        // valid options
+        break;
+      case WALL:
+      case SNAKE:
+        throw new IllegalPositionException(newHead,
+            this.board.board[newHead.getRow()][newHead.getColumn()]);
+    }
+
+    return this.board.board[newHead.getRow()][newHead.getColumn()];
   }
 
   @Override

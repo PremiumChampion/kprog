@@ -151,7 +151,6 @@ public class TestSimplePizza {
         for (Topping toppingToAdd : this.toppingsValidRange) {
           this.pizzaService.addTopping(pizzaId, toppingToAdd);
         }
-
       } catch (TooManyToppingsException e) {
         fail("The number of toppings added lies within the valid range.");
       }

@@ -1,5 +1,8 @@
 package livesession.snake.provider;
 
+import static livesession.snake.Board.MINIMAL_BOARD_SIZE;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import livesession.snake.Board;
@@ -11,9 +14,9 @@ import livesession.snake.IllegalConfigurationException;
 import livesession.snake.Reason;
 import livesession.snake.Snake;
 import livesession.snake.SnakeListener;
-import livesession.snake.SnakeService;
 
 public class SimpleSnakeService implements ExtendedSnakeService {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleSnakeService.class);
   private GameConfiguration gameConfiguration;
@@ -31,20 +34,24 @@ public class SimpleSnakeService implements ExtendedSnakeService {
    * Default constructor. The game uses then default values for configuration.
    */
   public SimpleSnakeService() {
-    // TODO: What to initialize?
+    // TODO: What else to initialize?
+    this.listeners = new ArrayList<>();
+    this.gameConfiguration = GameConfiguration.DEFAULT_GAME_CONFIGURATION;
+    this.init();
   }
 
-  @Override
-  public void configure(final GameConfiguration configuration) throws
-      IllegalConfigurationException {
-    // TODO: check and save the configuration info.
+  private void init() {
+    this.board = new InternalBoard(this.gameConfiguration.getSize());
+    this.snake = new SimpleSnake(this);
   }
 
   @Override
   public void reset() {
     // TODO: reset for a new game
+    this.init();
   }
 
+  // needs some exception when not configuration odr do we start with a default configuration?
   @Override
   public void start() {
     logger.debug("start:");
@@ -133,6 +140,35 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   }
 
   @Override
+  public void configure(final GameConfiguration configuration)
+      throws IllegalConfigurationException {
+    // TODO: check and save the configuration info.
+    if (configuration == null) {
+      throw new IllegalConfigurationException(
+          "expecting non null value for board configuration when configuring");
+    }
+
+    if (configuration.getVelocityInMilliSeconds() <= 0) {
+      throw new IllegalConfigurationException(
+          String.format("VelocityInMilliSeconds invalid: expected not 0 or negative but got: %s",
+              configuration.getVelocityInMilliSeconds()));
+    }
+    if (configuration.getNumberOfFood() <= 0) {
+      throw new IllegalConfigurationException(
+          String.format("NumberOfFood invalid: expected not 0 or negative but got: %s",
+              configuration.getVelocityInMilliSeconds()));
+    }
+    if (configuration.getSize() < MINIMAL_BOARD_SIZE) {
+      throw new IllegalConfigurationException(
+          String.format("Size invalid: expected number greater/equal to %s but got: %s",
+              MINIMAL_BOARD_SIZE,
+              configuration.getVelocityInMilliSeconds())
+      );
+    }
+
+    this.gameConfiguration = configuration;
+  }
+
   public void triggeredByGameLoop() {
     try {
       advanceSnake();

@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import prog.ex06.exercise.pizzadelivery.PizzaDeliveryService;
+import prog.ex06.exercise.pizzadelivery.PizzaSize;
 import prog.ex06.exercise.pizzadelivery.Topping;
 import prog.ex06.solution.pizzadelivery.SimplePizzaDeliveryService;
 
@@ -31,9 +32,9 @@ public class TestTopping {
   public void teardown() {
   }
 
-  @Test
-  public void testPriseListTopping() {
 
+  @Test
+  public void testForImmutableToppingList(){
     Map<Topping, Integer> previousPriceMap = this.service.getToppingsPriceList();
 
     assertNotNull("price map is null", previousPriceMap);
@@ -47,6 +48,10 @@ public class TestTopping {
     Map<Topping, Integer> nextPriceMap = this.service.getToppingsPriceList();
 
     assertTrue("Price list should be immutable", nextPriceMap.containsKey(Topping.TOMATO));
+  }
+
+  @Test
+  public void testPriseListTopping() {
 
     Map<Topping, Integer> priceMap = this.service.getToppingsPriceList();
 

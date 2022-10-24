@@ -16,8 +16,8 @@ import prog.ex06.exercise.pizzadelivery.Topping;
  */
 public class SimplePizzaDeliveryService implements PizzaDeliveryService {
 
-  private static final Map<PizzaSize, Integer> sizePriceList;
-  private static final Map<Topping, Integer> toppingPriceList;
+  public static final Map<PizzaSize, Integer> sizePriceList;
+  public static final Map<Topping, Integer> toppingPriceList;
 
   static {
     Map<PizzaSize, Integer> tmpSizePriceList = new HashMap<>();

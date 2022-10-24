@@ -8,6 +8,7 @@ import livesession.snake.Coordinate;
  * Simple and straight-forward implementation of the Board interface.
  */
 public class BaseBoard implements Board {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(BaseBoard.class);
 
@@ -17,6 +18,7 @@ public class BaseBoard implements Board {
 
   /**
    * Creates a board with the given size.
+   *
    * @param size size of the board to be created
    * @throws IllegalArgumentException if the size is smaller than the minimal board size.
    */
@@ -29,7 +31,7 @@ public class BaseBoard implements Board {
   /**
    * Checks if the requested size of the board is valid.
    *
-   * @param size requested size
+   * @param size             requested size
    * @param minimalBoardSize official minimal size
    */
   protected void assertSizeIsGreaterThan(final int size, final int minimalBoardSize) {
@@ -61,6 +63,24 @@ public class BaseBoard implements Board {
   }
 
   protected void assertPositionIsOnBoard(int row, int column) {
-    // TODO implement it throwing an IllegalArgumentException with the position.
+    // TODO implement it throwing an IllegalArgumentException with the position. (DONE)
+    if ((row > this.size || row < 0) && (column > this.size || column < 0)) {
+      throw new IllegalArgumentException(
+          String.format("row %s and column %s are not on the board. max row: %s max column: %s",
+              row, column, this.size, this.size)
+      );
+    }
+    if (row > this.size || row < 0) {
+      throw new IllegalArgumentException(
+          String.format("row %s is not on the board. max row: %s",
+              row, this.size, this.size)
+      );
+    }
+    if (column > this.size || row < 0) {
+      throw new IllegalArgumentException(
+          String.format("column %s is not on the board. max column: %s",
+              column, this.size, this.size)
+      );
+    }
   }
 }

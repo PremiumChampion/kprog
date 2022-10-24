@@ -33,8 +33,7 @@ public class TestPizzaSize {
   }
 
   @Test
-  public void testPriseListPizzaSize() {
-
+  public void testForImmutableSizeList(){
     Map<PizzaSize, Integer> previousPriceMap = this.service.getPizzaSizePriceList();
 
     assertNotNull("price map is null", previousPriceMap);
@@ -45,6 +44,13 @@ public class TestPizzaSize {
       // this is expected
     }
 
+    Map<PizzaSize, Integer> nextPriceMap = this.service.getPizzaSizePriceList();
+
+    assertTrue("Price list should be immutable", nextPriceMap.containsKey(PizzaSize.SMALL));
+  }
+
+  @Test
+  public void testPriseListPizzaSize() {
     Map<PizzaSize, Integer> nextPriceMap = this.service.getPizzaSizePriceList();
 
     assertTrue("Price list should be immutable", nextPriceMap.containsKey(PizzaSize.SMALL));
