@@ -16,15 +16,28 @@ import livesession.snake.SnakeService;
 public class SimpleSnakeService implements ExtendedSnakeService {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleSnakeService.class);
+  private GameConfiguration gameConfiguration;
+  private InternalBoard board;
+  private SimpleSnake snake;
+  private SimpleGameLoop simpleGameLoop;
+  private FoodGenerator foodGenerator;
 
-  SimpleSnake snake;
-  GameLoop simpleGameLoop;
+  private GameState gameState;
+  private int score;
+
   private List<SnakeListener> listeners;
-  private int velocityInMilliseconds;
 
+  /**
+   * Default constructor. The game uses then default values for configuration.
+   */
   public SimpleSnakeService() {
-    this.snake = new SimpleSnake(this);
-    // TODO: What else to initialize?
+    // TODO: What to initialize?
+  }
+
+  @Override
+  public void configure(final GameConfiguration configuration) throws
+      IllegalConfigurationException {
+    // TODO: check and save the configuration info.
   }
 
   @Override
@@ -35,27 +48,43 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void start() {
     logger.debug("start:");
-    simpleGameLoop = new SimpleGameLoop(this, velocityInMilliseconds);
-    notifyListeners((l) -> l.newGameState(GameState.RUNNING));
+    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
+    gameState = GameState.RUNNING;
+    notifyListeners((l) -> l.newGameState(gameState));
   }
 
   @Override
   public void pause() {
     logger.debug("pause:");
     simpleGameLoop.pauseGame();
-    notifyListeners((SnakeListener listener) -> listener.newGameState(GameState.PAUSED));
+    gameState = GameState.PAUSED;
+    notifyListeners((SnakeListener listener) -> listener.newGameState(gameState));
   }
 
   @Override
   public void resume() {
     logger.debug("resume:");
     simpleGameLoop.resumeGame();
-    notifyListeners((SnakeListener listener) -> listener.newGameState(GameState.RUNNING));
+    gameState = GameState.RUNNING;
+    notifyListeners((l) -> l.newGameState(gameState));
   }
 
   @Override
   public void abort() {
+    logger.debug("abort:");
+    simpleGameLoop.stopGame();
+    gameState = GameState.ABORTED;
+    notifyListeners((SnakeListener listener) -> listener.newGameState(gameState));
+    notifyListeners((SnakeListener listener) -> listener.gameEnded(new Reason("Game aborted")));
+  }
 
+  @Override
+  public void failed(Reason reason) {
+    logger.debug("failed: " + reason);
+    simpleGameLoop.stopGame();
+    gameState = GameState.ABORTED;
+    notifyListeners((SnakeListener listener) -> listener.newGameState(gameState));
+    notifyListeners((l) -> l.gameEnded(reason));
   }
 
   @Override
@@ -72,12 +101,23 @@ public class SimpleSnakeService implements ExtendedSnakeService {
 
   @Override
   public boolean addListener(final SnakeListener listener) {
-    return false;
+    logger.debug("addListener: " + listener);
+    if (listener == null) {
+      return false;
+    }
+
+    if (listeners.contains(listener)) {
+      return false;
+    }
+
+    listeners.add(listener);
+    return true;
   }
 
   @Override
   public boolean removeListener(final SnakeListener listener) {
-    return false;
+    logger.debug("removeListener: " + listener);
+    return listeners.remove(listener);
   }
 
   /**
@@ -92,14 +132,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     }
   }
 
-
   @Override
-  public void configure(final GameConfiguration configuration) throws
-      IllegalConfigurationException {
-    // TODO: check and save the configuration info.
-  }
-
-  void triggeredByGameLoop() {
+  public void triggeredByGameLoop() {
     try {
       advanceSnake();
     } catch (IllegalPositionException e) {
@@ -108,45 +142,54 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   }
 
   @Override
-  public Board getExternalBoard() {
-    return null;
-  }
-
-  @Override
-  public void failed(final Reason reason) {
-
-  }
-
   public void advanceSnake() throws IllegalPositionException {
-    snake.advance();
+    logger.debug("advanceSnake:");
+    Coordinate newPosition = snake.advance();
+    notifyListeners((l) -> l.updateBoard(getExternalBoard()));
   }
 
   @Override
   public void addFood(final Coordinate coordinate) {
-
+    logger.debug("addFood: " + coordinate);
+    board.addFood(coordinate);
+    notifyListeners((l) -> l.updateBoard(getExternalBoard()));
   }
 
   @Override
-  public Snake getSnake() {
-    return null;
-  }
-
-  @Override
-  public Board getBoard() {
-    return null;
-  }
-
-  public InternalBoard getInternalBoard() {
-    return null;
-  }
-
-  @Override
-  public void foodEaten(Coordinate coordinate) {
-
+  public void foodEaten(final Coordinate coordinate) {
+    logger.debug("foodEaten: " + coordinate);
+    // TODO: what has to be done when one food has been eaten?
   }
 
   @Override
   public void updateScore(final BoardState state) {
+    logger.debug("updateScore: " + state);
+    switch (state) {
+      case FOOD:
+        score += 10;
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown state in updateScore: " + state);
+    }
+  }
 
+  @Override
+  public Snake getSnake() {
+    return snake;
+  }
+
+  @Override
+  public Board getExternalBoard() {
+    ExternalBoard externalBoard = new ExternalBoard(board, snake);
+    return externalBoard;
+  }
+
+  @Override
+  public InternalBoard getInternalBoard() {
+    return board;
+  }
+
+  public Board getBoard() {
+    return getExternalBoard();
   }
 }

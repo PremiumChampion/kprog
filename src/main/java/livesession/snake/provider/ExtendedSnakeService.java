@@ -27,6 +27,8 @@ public interface ExtendedSnakeService extends SnakeService {
    */
   void failed(Reason reason);
 
+  void triggeredByGameLoop();
+
   /**
    * Triggers the movement of the snake.
    *

@@ -72,7 +72,7 @@ public class TestMasterWorkerGoodCases {
     assertNotNull("Master should have a task added.", task);
     assertNotNull("State of Task should not be null.", task.getState());
     Thread.sleep(1000);
-    assertEquals("After a failingRunnable its status should be " + TaskState.SUCCEEDED,
+    assertEquals("After a succeedingRunnable its status should be " + TaskState.SUCCEEDED,
             TaskState.SUCCEEDED, task.getState());
   }
 

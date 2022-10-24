@@ -83,6 +83,11 @@ public class DummyExtendedSnakeService implements ExtendedSnakeService {
   }
 
   @Override
+  public void triggeredByGameLoop() {
+
+  }
+
+  @Override
   public void advanceSnake() throws IllegalPositionException {
 
   }
