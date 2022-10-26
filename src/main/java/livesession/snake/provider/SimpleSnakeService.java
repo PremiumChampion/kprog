@@ -32,6 +32,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
 
   /**
    * Default constructor. The game uses then default values for configuration.
+   * The default values are defined in the SnakeService interface.
    */
   public SimpleSnakeService() {
     // TODO: What else to initialize?

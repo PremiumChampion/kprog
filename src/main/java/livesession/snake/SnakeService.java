@@ -1,6 +1,10 @@
 package livesession.snake;
 
 public interface SnakeService {
+  final int DEFAULT_SIZE = 20;
+  final int DEFAULT_VELOCITY = 500;
+  final int DEFAULT_NUMBER_OF_FOOD = 1;
+
   /**
    * Resets the game. The new game state is PREPARED.
    */
