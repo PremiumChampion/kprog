@@ -59,12 +59,11 @@ public class TestPizzaSize {
 
     assertEquals("Eine kleine Pizza sollte 500ct kosten.", priceMap.get(PizzaSize.SMALL),
         Integer.valueOf(500));
-    assertEquals("Eine kleine Pizza sollte 700ct kosten.", priceMap.get(PizzaSize.MEDIUM),
+    assertEquals("Eine medium Pizza sollte 700ct kosten.", priceMap.get(PizzaSize.MEDIUM),
         Integer.valueOf(700));
     assertEquals("Eine kleine Pizza sollte 900ct kosten.", priceMap.get(PizzaSize.LARGE),
         Integer.valueOf(900));
     assertEquals("Eine kleine Pizza sollte 1100ct kosten.", priceMap.get(PizzaSize.EXTRA_LARGE),
         Integer.valueOf(1100));
   }
-
 }
