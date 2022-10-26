@@ -252,8 +252,6 @@ public class TestSimplePizza {
       fail("The number of toppings added lies within the invalid range.");
     } catch (TooManyToppingsException e) {
       // this is expected
-    } catch (Exception e) {
-      fail("Something else went wrong: " + e.getMessage());
     }
 
   }

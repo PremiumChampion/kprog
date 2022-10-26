@@ -53,6 +53,7 @@ public class TestPizzaSize {
   public void testPriseListPizzaSize() {
     Map<PizzaSize, Integer> nextPriceMap = this.service.getPizzaSizePriceList();
 
+
     assertTrue("Price list should be immutable", nextPriceMap.containsKey(PizzaSize.SMALL));
 
     Map<PizzaSize, Integer> priceMap = this.service.getPizzaSizePriceList();
