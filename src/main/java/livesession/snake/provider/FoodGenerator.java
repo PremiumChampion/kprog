@@ -2,8 +2,10 @@ package livesession.snake.provider;
 
 import java.util.Random;
 import livesession.snake.Coordinate;
+import livesession.snake.Snake;
 
 public class FoodGenerator {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(FoodGenerator.class);
 
@@ -18,8 +20,12 @@ public class FoodGenerator {
 
   Coordinate placeFood() {
     Coordinate coordinate = null;
-    // TODO: place the food randomly.
-
+    // TODO: (DONE) place the food randomly.
+    Snake s = service.getSnake();
+    Random r = new Random();
+    do {
+      coordinate = new Coordinate(r.nextInt(), r.nextInt());
+    } while (s.getPosition().contains(coordinate));
     // TODO: end.
     return coordinate;
 

@@ -10,6 +10,7 @@ import livesession.snake.Snake;
  * This is a copy of the internal board. So the UI code cannot manipulate the internal board.
  */
 public class ExternalBoard extends BaseBoard {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ExternalBoard.class);
 
@@ -31,8 +32,12 @@ public class ExternalBoard extends BaseBoard {
    * @param internalBoard internal board with WALL, GRASS, FOOD, no snake.
    */
   private void copyContents(final InternalBoard internalBoard) {
-    // TODO: Copy the contents of the internal board
-
+    // TODO: (DONE) Copy the contents of the internal board
+    for (int i = 0; i < internalBoard.board.length; i++) {
+      for (int j = 0; j < internalBoard.board[i].length; j++) {
+        this.board[i][j] = internalBoard.board[i][i];
+      }
+    }
     // TODO: end
   }
 
@@ -42,8 +47,10 @@ public class ExternalBoard extends BaseBoard {
    * @param snake snake to be added.
    */
   private void addSnake(Snake snake) {
-    // TODO: Add the snake to the board
-
+    // TODO: (DONE) Add the snake to the board
+    snake.getPosition().forEach(p->{
+      this.board[p.getRow()][p.getColumn()] = BoardState.SNAKE;
+    });
     // TODO: end
   }
 }

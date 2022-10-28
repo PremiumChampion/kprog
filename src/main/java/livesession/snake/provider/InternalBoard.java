@@ -20,7 +20,7 @@ public class InternalBoard extends BaseBoard {
   public InternalBoard(final int size) {
     super(size);
 
-    // TODO: Init board with GRASS and WALLs
+    // TODO: (DONE) Init board with GRASS and WALLs
     this.createEmptyBoard();
 
   }

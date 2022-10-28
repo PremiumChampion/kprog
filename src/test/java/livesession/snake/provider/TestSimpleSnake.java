@@ -30,7 +30,7 @@ public class TestSimpleSnake {
     snake = new SimpleSnake(fakeService);
   }
 
-  @Test @Ignore
+  @Test 
   public void checkStartingPosition(){
     Coordinate startPosition = fakeBoard.getStartPosition();
     List<Coordinate> snakePosition = snake.getPosition();
@@ -38,7 +38,7 @@ public class TestSimpleSnake {
     assertEquals( Direction.EAST, snake.getDirection());
   }
 
-  @Test @Ignore
+  @Test 
   public void checkAdvanceOnGrass() throws IllegalPositionException {
     // prepare test data
     int snakeLength = snake.getPosition().size();
@@ -53,7 +53,7 @@ public class TestSimpleSnake {
     assertEquals(snakeLength, snake.getPosition().size());
   }
 
-  @Test @Ignore
+  @Test 
   public void checkAdvanceOnFood() throws IllegalPositionException {
     // prepare food position
     Coordinate startPosition = fakeBoard.getStartPosition();
@@ -70,7 +70,7 @@ public class TestSimpleSnake {
     assertTrue(fakeService.isEaten());
   }
 
-  @Test @Ignore
+  @Test 
   public void checkAdvanceToWall() {
     // prepare wall position
     Coordinate startPosition = fakeBoard.getStartPosition();
@@ -88,7 +88,7 @@ public class TestSimpleSnake {
     }
   }
 
-  @Test @Ignore
+  @Test 
   public void checkAdvanceToSnake() throws IllegalPositionException {
     // prepare food position
     Coordinate startPosition = fakeBoard.getStartPosition();

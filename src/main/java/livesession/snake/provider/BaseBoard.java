@@ -63,20 +63,20 @@ public class BaseBoard implements Board {
   }
 
   protected void assertPositionIsOnBoard(int row, int column) {
-    // TODO implement it throwing an IllegalArgumentException with the position. (DONE)
-    if ((row > this.size || row < 0) && (column > this.size || column < 0)) {
+    // TODO: (DONE) implement it throwing an IllegalArgumentException with the position.
+    if ((row >= this.size || row < 0) && (column >= this.size || column < 0)) {
       throw new IllegalArgumentException(
           String.format("row %s and column %s are not on the board. max row: %s max column: %s",
               row, column, this.size, this.size)
       );
     }
-    if (row > this.size || row < 0) {
+    if (row >= this.size || row < 0) {
       throw new IllegalArgumentException(
           String.format("row %s is not on the board. max row: %s",
               row, this.size, this.size)
       );
     }
-    if (column > this.size || row < 0) {
+    if (column >= this.size || row < 0) {
       throw new IllegalArgumentException(
           String.format("column %s is not on the board. max column: %s",
               column, this.size, this.size)

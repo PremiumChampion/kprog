@@ -2,6 +2,7 @@ package livesession.snake.provider;
 
 import java.util.LinkedList;
 import java.util.List;
+import livesession.snake.Board;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 import livesession.snake.Direction;
@@ -41,46 +42,51 @@ public class SimpleSnake implements Snake {
    * @throws IllegalPositionException if the position is not allowed
    */
   public Coordinate advance() throws IllegalPositionException {
-    // TODO: advance the snake
+    // TODO: (DONE) advance the snake
     Coordinate currentHead = this.position.getFirst();
     Direction currentDirection = this.direction;
+
     int moveROW = 0;
     int moveCOL = 0;
 
     if (currentDirection == Direction.NORTH) {
-      moveROW = 0;
-      moveCOL = +1;
+      moveROW = -1;
+      moveCOL = 0;
     }
 
     if (currentDirection == Direction.EAST) {
-      moveROW = +1;
-      moveCOL = 0;
+      moveROW = 0;
+      moveCOL = +1;
     }
     if (currentDirection == Direction.SOUTH) {
-      moveROW = -1;
+      moveROW = +1;
       moveCOL = 0;
     }
     if (currentDirection == Direction.WEST) {
       moveROW = 0;
-      moveCOL = +1;
+      moveCOL = -1;
     }
 
     Coordinate nextPosition = new Coordinate(currentHead.getRow() + moveROW,
         currentHead.getColumn() + moveCOL);
 
-    assertNewPositionIsPossible(nextPosition);
+    BoardState newPosBoardState = assertNewPositionIsPossible(nextPosition);
 
-//    this.position.addFirst(nextPosition);
-//    this.position.removeLast();
+    this.position.addFirst(nextPosition);
+
+    if (newPosBoardState != BoardState.FOOD) {
+      this.position.removeLast();
+    }else{
+      this.service.foodEaten(nextPosition);
+    }
 
     return nextPosition;
   }
 
   private BoardState assertNewPositionIsPossible(final Coordinate newHead)
       throws IllegalPositionException {
-
-    // TODO: Check if the position is valid
-    switch (this.board.board[newHead.getRow()][newHead.getColumn()]) {
+    // TODO: (DONE) Check if the position is valid
+    switch (this.board.getStateFromPosition(newHead)) {
       case FOOD:
       case GRASS:
         // valid options
@@ -88,10 +94,15 @@ public class SimpleSnake implements Snake {
       case WALL:
       case SNAKE:
         throw new IllegalPositionException(newHead,
-            this.board.board[newHead.getRow()][newHead.getColumn()]);
+            this.board.getStateFromPosition(newHead));
     }
 
-    return this.board.board[newHead.getRow()][newHead.getColumn()];
+    if (this.position.contains(newHead)) {
+      throw new IllegalPositionException(newHead,
+          BoardState.SNAKE);
+    }
+
+    return this.board.getStateFromPosition(newHead);
   }
 
   @Override

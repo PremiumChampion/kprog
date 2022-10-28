@@ -35,7 +35,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
    * The default values are defined in the SnakeService interface.
    */
   public SimpleSnakeService() {
-    // TODO: What else to initialize?
+    // TODO: (DONE) What else to initialize?
     this.listeners = new ArrayList<>();
     this.gameConfiguration = GameConfiguration.DEFAULT_GAME_CONFIGURATION;
     this.init();
@@ -48,7 +48,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
 
   @Override
   public void reset() {
-    // TODO: reset for a new game
+    // TODO: (DONE) reset for a new game
     this.init();
   }
 

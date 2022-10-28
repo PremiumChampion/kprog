@@ -20,12 +20,12 @@ public class TestInternalBoard {
     board = new InternalBoard(TEST_SIZE_1);
   }
 
-  @Test @Ignore
+  @Test 
   public void testGetSize() {
     assertEquals(TEST_SIZE_1, board.size());
   }
 
-  @Test @Ignore
+  @Test 
   public void accessLegalCoordinates() {
     BoardState state0000 = board.getStateFromPosition(0,0);
     assertEquals(BoardState.WALL, state0000);
@@ -41,7 +41,7 @@ public class TestInternalBoard {
     assertEquals(BoardState.WALL, state1000);
   }
 
-  @Test @Ignore
+  @Test 
   public void accessIllegalCoordinates() {
     assertTrue(boardThrowsExceptionOnCoordinate(-1,-1));
     assertTrue(boardThrowsExceptionOnCoordinate(TEST_SIZE_1,0));
