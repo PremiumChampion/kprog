@@ -63,6 +63,11 @@ public class DummyExtendedSnakeService implements ExtendedSnakeService {
   }
 
   @Override
+  public GameConfiguration getConfiguration() {
+    return null;
+  }
+
+  @Override
   public Snake getSnake() {
     return null;
   }
