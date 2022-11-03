@@ -56,17 +56,15 @@ public class SimpleMaster implements Master {
   public Task addTask(final Runnable runnable) throws IllegalArgumentException {
     Task newTask = new Task(runnable);
     this.allTasks.put(newTask.getId(), newTask);
+    this.queuedTasks.add(newTask);
     synchronized (this.queuedTasks){
-      this.queuedTasks.notifyAll();
+      this.queuedTasks.notify();
     }
     return newTask;
   }
 
   @Override
   public TaskState getTaskState(final int taskId) throws IllegalArgumentException {
-    if (taskId < 0) {
-      throw new IllegalArgumentException("taskId must not be negative.");
-    }
     if (!this.allTasks.containsKey(taskId)) {
       throw new IllegalArgumentException("taskId not found.");
     }
