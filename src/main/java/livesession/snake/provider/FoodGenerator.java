@@ -19,14 +19,15 @@ public class FoodGenerator {
   }
 
   Coordinate placeFood() {
-    Coordinate coordinate = null;
+    Coordinate coordinate;
     // TODO: (DONE) place the food randomly.
     Snake s = service.getSnake();
     Random r = new Random();
     do {
-      coordinate = new Coordinate(r.nextInt(), r.nextInt());
+      coordinate = new Coordinate(r.nextInt(service.getConfiguration().getSize()), r.nextInt(service.getConfiguration().getSize()));
     } while (s.getPosition().contains(coordinate));
     // TODO: end.
+    service.addFood(coordinate);
     return coordinate;
 
   }

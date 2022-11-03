@@ -253,6 +253,6 @@ public class TestSimplePizza {
     } catch (TooManyToppingsException e) {
       // this is expected
     }
-
   }
 }
+

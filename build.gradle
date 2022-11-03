@@ -28,7 +28,7 @@ javafx {
 
 application {
     mainModule = "kprog.main"
-    mainClassName = "environment.testprograms." + (findProperty('mainClass') ?: 'HelloWorldWithJavaFx')
+    mainClassName = "prog.javafx.main." + (findProperty('mainClass') ?: 'KprogGuiWithJavaFx')
 }
 
 repositories {

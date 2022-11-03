@@ -28,9 +28,6 @@ public class SimpleWorker extends Thread implements Worker {
   @Override
   public void run() {
     while (!markedForTermination) {
-      if (this.queue == null) {
-        continue;
-      }
       // check if new task available
       Task currentTask = this.queue.poll();
 
@@ -38,9 +35,12 @@ public class SimpleWorker extends Thread implements Worker {
         // wait for new tasks
         try {
           // should this be done?
-          Thread.sleep(Worker.WAIT_EMPTY_QUEUE);
+          synchronized (this.queue){
+            this.queue.wait();
+          }
         } catch (InterruptedException e) {
           SimpleWorker.logger.error("Thread got interrupted", e);
+          return;
         }
         continue;
       }
@@ -49,13 +49,11 @@ public class SimpleWorker extends Thread implements Worker {
 
       try {
         currentTask.getRunnable().run();
+        currentTask.setState(TaskState.SUCCEEDED);
       } catch (Exception e) {
         currentTask.crashed(e);
         currentTask.setState(TaskState.CRASHED);
-        continue;
       }
-
-      currentTask.setState(TaskState.SUCCEEDED);
     }
   }
 

@@ -148,7 +148,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void configure(final GameConfiguration configuration)
       throws IllegalConfigurationException {
-    // TODO: check and save the configuration info.
+    // TODO: (DONE) check and save the configuration info.
     if (configuration == null) {
       throw new IllegalConfigurationException(
           "expecting non null value for board configuration when configuring");
@@ -201,6 +201,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   public void foodEaten(final Coordinate coordinate) {
     logger.debug("foodEaten: " + coordinate);
     // TODO: what has to be done when one food has been eaten?
+    foodGenerator.placeFood();
   }
 
   @Override
