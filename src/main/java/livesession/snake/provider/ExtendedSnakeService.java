@@ -27,27 +27,35 @@ public interface ExtendedSnakeService extends SnakeService {
    */
   void failed(Reason reason);
 
-  void triggeredByGameLoop();
+  /**
+   * Triggers the calculation of the next round. Only allowed in GameState RUNNING.
+   *
+   * @throws IllegalStateException is the GameState is not appropriate
+   */
+  void triggeredByGameLoop() throws IllegalStateException;
 
   /**
-   * Triggers the movement of the snake.
+   * Triggers the movement of the snake. This method may only be called if the GameState is RUNNING.
    *
    * @throws IllegalPositionException if the snake reaches an invalid position, e.g. WALL or SNAKE
+   * @throws IllegalStateException is the GameState is not appropriate
    */
-  void advanceSnake() throws IllegalPositionException;
+  void advanceSnake() throws IllegalPositionException, IllegalStateException;
 
   /**
    * Adds food to the given position.
    * @param coordinate coordinate to add food to.
+   * @throws IllegalArgumentException if there is already food or the position is not allowed.
    */
-  void addFood(Coordinate coordinate);
+  void addFood(Coordinate coordinate) throws IllegalArgumentException;
 
   /**
    * Signals that the food has been eaten.
    *
    * @param coordinate coordinate where the food has been eaten.
+   * @throws IllegalArgumentException if there is no food at the given position
    */
-  void foodEaten(Coordinate coordinate);
+  void foodEaten(Coordinate coordinate) throws IllegalArgumentException;
 
   /**
    * Changes the score on behalf of the reason, the BoardState.
