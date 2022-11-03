@@ -5,4 +5,5 @@ module kprog.main{
     requires javafx.fxml;
     exports environment.testprograms;
     exports examples.javafx.modal;
+    exports prog.javafx.main;
     }
