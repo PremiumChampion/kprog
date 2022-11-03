@@ -6,39 +6,51 @@ public interface SnakeService {
   final int DEFAULT_NUMBER_OF_FOOD = 1;
 
   /**
-   * Resets the game. The new game state is PREPARED.
+   * Resets the game. The new game state is PREPARED. Reset means reset, no matter in which
+   * GameState the game is.
    */
   void reset();
 
   /**
-   * Starts the game. The new game state is RUNNING.
+   * Starts the game if the GameState is PREPARED. The new game state is RUNNING.
+   * @throws IllegalStateException if the GameState was not PREPARED.
    */
-  void start();
+  void start() throws IllegalStateException;
 
   /**
-   * Aborts the game. The new game state is ABORTED.
+   * Aborts the game if the GameState is RUNNING or PAUSED. The new game state is ABORTED.
+   *
+   * @throws IllegalStateException is the GameState is PREPARED
    */
-  void abort();
+  void abort() throws IllegalStateException;
 
   /**
-   * Pauses the game. The new game state is PAUSED.
+   * Pauses the game if the GameState is RUNNING. The new game state is PAUSED.
+   *
+   * @throws IllegalStateException is the GameState is not RUNNING
    */
-  void pause();
+  void pause() throws IllegalStateException;
 
   /**
-   * Resumes the game. the new game state is RUNNING.
+   * Resumes the game if the GameState is PAUSED. the new game state is RUNNING.
+   *
+   * @throws IllegalStateException is the GameState is not PAUSED
    */
-  void resume();
+  void resume() throws IllegalStateException;
 
   /**
-   * Changes the snake direction by turning left.
+   * Changes the snake direction by turning left if the GameState is RUNNING.
+   *
+   * @throws IllegalStateException is the GameState is not appropriate
    */
-  void moveLeft();
+  void moveLeft() throws IllegalStateException;
 
   /**
-   * Changes the snake direction by turning right.
+   * Changes the snake direction by turning right if the GameState is RUNNING.
+   *
+   * @throws IllegalStateException is the GameState is not appropriate
    */
-  void moveRight();
+  void moveRight() throws IllegalStateException;
 
   /**
    * Adds a listener for game updates. Each listener can only be added once.
@@ -57,10 +69,11 @@ public interface SnakeService {
   boolean removeListener(SnakeListener listener);
 
   /**
-   * Configures the next game.
+   * Configures the next game if GameState is PREPARED or ABORTED.
    *
    * @param configuration contains the game configuration parameters
    * @throws IllegalConfigurationException if the values cannot be accepted due whatever reason
+   * @throws IllegalStateException if the game is not in the assumed GameState
    */
   void configure(GameConfiguration configuration) throws IllegalConfigurationException;
 
