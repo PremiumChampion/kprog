@@ -22,7 +22,7 @@ public class SimpleMaster implements Master {
   private int numberOfWorkers;
   private List<Worker> workers;
   private Map<Integer, Task> allTasks;
-  private final ConcurrentLinkedQueue<Task> queuedTasks;
+  private ConcurrentLinkedQueue<Task> queuedTasks;
 
   /**
    * creates a master with a certain ammount of workers.
@@ -57,14 +57,14 @@ public class SimpleMaster implements Master {
     Task newTask = new Task(runnable);
     this.allTasks.put(newTask.getId(), newTask);
     this.queuedTasks.add(newTask);
-    synchronized (this.queuedTasks) {
-      this.queuedTasks.notify();
-    }
     return newTask;
   }
 
   @Override
   public TaskState getTaskState(final int taskId) throws IllegalArgumentException {
+    if (taskId < 0) {
+      throw new IllegalArgumentException("taskId must not be negative.");
+    }
     if (!this.allTasks.containsKey(taskId)) {
       throw new IllegalArgumentException("taskId not found.");
     }
@@ -77,7 +77,6 @@ public class SimpleMaster implements Master {
     if (!this.allTasks.containsKey(taskId)) {
       throw new IllegalArgumentException("taskId not found.");
     }
-
     return this.allTasks.get(taskId);
   }
 
@@ -98,26 +97,18 @@ public class SimpleMaster implements Master {
 
   @Override
   public void shutdown() {
-    // set termination flag
-    this.workers
-        .forEach(Worker::terminate);
+    this.workers.forEach(Worker::terminate);
 
-    // wake up non sleeping threads
-    synchronized (this.queuedTasks) {
-      this.queuedTasks.notifyAll();
+    for (Worker worker : this.workers) {
+      if (worker instanceof Thread) {
+        System.out.println("joining thread");
+        Thread thread = (Thread) worker;
+        try {
+          thread.join();
+        } catch (InterruptedException e) {
+          SimpleMaster.logger.error("joining threads got interrupted", e);
+        }
+      }
     }
-
-    // join all threads
-    workers.stream()
-        .filter(w->w instanceof Thread)
-        .map(w->(Thread)w)
-        .forEach(t->{
-          try {
-            t.join();
-          } catch (InterruptedException e) {
-            logger.error("thread got interrupted while waiting for subthreads", e);
-          }
-        });
-
   }
 }

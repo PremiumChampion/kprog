@@ -37,15 +37,13 @@ public class SimpleWorker extends Thread implements Worker {
       Task currentTask = this.queue.poll();
 
       if (currentTask == null) {
-        // wait for new tasks
         try {
           synchronized (this.queue) {
             this.queue.wait();
-            logger.info("got wakeup signal");
           }
         } catch (InterruptedException e) {
-          logger.error("Thread got interrupted for some reason", e);
-          markedForTermination = true;
+          logger.error("Thread got interrupted", e);
+          return;
         }
         continue;
       }
