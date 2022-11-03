@@ -27,26 +27,27 @@ public class SimpleWorker extends Thread implements Worker {
 
   @Override
   public void run() {
+    if (this.queue == null) {
+      logger.error("Queue is not set.");
+      return;
+    }
+
     while (!markedForTermination) {
       // check if new task available
       Task currentTask = this.queue.poll();
 
       if (currentTask == null) {
         try {
-          synchronized (this.queue){
-            logger.info("waiting for task");
+          synchronized (this.queue) {
             this.queue.wait();
-            logger.info("wakeup");
           }
         } catch (InterruptedException e) {
-          SimpleWorker.logger.error("Thread got interrupted", e);
-          this.markedForTermination = true;
+          logger.error("Thread got interrupted", e);
           return;
         }
         continue;
       }
 
-      logger.info("running task with id",currentTask.getId());
       currentTask.setState(TaskState.RUNNING);
 
       try {
@@ -61,6 +62,7 @@ public class SimpleWorker extends Thread implements Worker {
 
   @Override
   public void terminate() {
+    logger.info("IllBeBack");
     this.markedForTermination = true;
   }
 }
