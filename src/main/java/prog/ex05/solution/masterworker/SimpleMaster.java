@@ -57,6 +57,9 @@ public class SimpleMaster implements Master {
     Task newTask = new Task(runnable);
     this.allTasks.put(newTask.getId(), newTask);
     this.queuedTasks.add(newTask);
+    synchronized (this.queuedTasks) {
+      this.queuedTasks.notify();
+    }
     return newTask;
   }
 
@@ -98,7 +101,9 @@ public class SimpleMaster implements Master {
   @Override
   public void shutdown() {
     this.workers.forEach(Worker::terminate);
-
+    synchronized (this.queuedTasks) {
+      this.queuedTasks.notifyAll();
+    }
     for (Worker worker : this.workers) {
       if (worker instanceof Thread) {
         System.out.println("joining thread");

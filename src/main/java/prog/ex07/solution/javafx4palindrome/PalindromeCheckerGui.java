@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import prog.ex07.exercise.javafx4palindrome.Constants;
 import prog.ex07.exercise.javafx4palindrome.PalindromeChecker;
 
 /**
@@ -13,15 +14,18 @@ import prog.ex07.exercise.javafx4palindrome.PalindromeChecker;
  */
 public class PalindromeCheckerGui extends FlowPane {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(PalindromeCheckerGui.class);
-  public static final String SUCCESS = "SUCCESS";
-  public static final String FAILURE = "FAILURE";
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      PalindromeCheckerGui.class);
   private final PalindromeChecker palindromeChecker;
   private TextField inputField;
   private Button checkButton;
   private Label resultLabel;
 
+  /**
+   * Creates a palindrom ui.
+   *
+   * @param palindromeChecker the palindrome checker
+   */
   public PalindromeCheckerGui(PalindromeChecker palindromeChecker) {
     this.palindromeChecker = palindromeChecker;
     this.createInputField();
@@ -29,6 +33,9 @@ public class PalindromeCheckerGui extends FlowPane {
     this.createResultLabel();
   }
 
+  /**
+   * creates the input field and binds events to the created field.
+   */
   private void createInputField() {
     if (Objects.nonNull(this.inputField)) {
       return;
@@ -38,6 +45,9 @@ public class PalindromeCheckerGui extends FlowPane {
     this.getChildren().add(this.inputField);
   }
 
+  /**
+   * creates the check button and binds events to the created button.
+   */
   private void createCheckButton() {
     if (Objects.nonNull(this.checkButton)) {
       return;
@@ -48,6 +58,9 @@ public class PalindromeCheckerGui extends FlowPane {
     this.getChildren().add(this.checkButton);
   }
 
+  /**
+   * creates the result label.
+   */
   private void createResultLabel() {
     if (Objects.nonNull(this.resultLabel)) {
       return;
@@ -57,10 +70,15 @@ public class PalindromeCheckerGui extends FlowPane {
     this.getChildren().add(this.resultLabel);
   }
 
+  /**
+   * event handler to run on click or action.
+   *
+   * @param event the generated event.
+   */
   private void checkForPalindrome(ActionEvent event) {
     String inputToCheck = this.inputField.getText();
     boolean inputIsPalindrome = this.palindromeChecker.isPalindrome(inputToCheck);
-    this.resultLabel.setText(inputIsPalindrome ? SUCCESS : FAILURE);
+    this.resultLabel.setText(inputIsPalindrome ? Constants.SUCCESS : Constants.FAILURE);
   }
 
 

@@ -31,8 +31,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   private List<SnakeListener> listeners;
 
   /**
-   * Default constructor. The game uses then default values for configuration.
-   * The default values are defined in the SnakeService interface.
+   * Default constructor. The game uses then default values for configuration. The default values
+   * are defined in the SnakeService interface.
    */
   public SimpleSnakeService() {
     // TODO: (DONE) What else to initialize?
@@ -200,8 +200,13 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void foodEaten(final Coordinate coordinate) {
     logger.debug("foodEaten: " + coordinate);
-    // TODO: what has to be done when one food has been eaten?
-    foodGenerator.placeFood();
+    // TODO: (DONE) what has to be done when one food has been eaten?
+    Coordinate nextFoodCoordinate;
+    do {
+      nextFoodCoordinate = foodGenerator.placeFood();
+    } while (this.getExternalBoard().getStateFromPosition(nextFoodCoordinate) != BoardState.GRASS);
+    this.addFood(nextFoodCoordinate);
+    this.board.removeFood(coordinate);
   }
 
   @Override
