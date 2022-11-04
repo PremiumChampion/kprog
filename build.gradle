@@ -57,7 +57,9 @@ checkstyle {
     checkstyleMain.enabled = true
 }
 
-checkstyleMain.exclude('examples/ch14/*', 'examples/executorservice/*', 'livesession/*')
+checkstyleMain.exclude('examples/ch14/*', 'examples/executorservice/*',
+//        'livesession/*'
+)
 
 ext {
     if (!project.hasProperty('exid')) {

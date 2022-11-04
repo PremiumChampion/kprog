@@ -1,6 +1,7 @@
 package livesession.snake;
 
 public interface SnakeService {
+
   final int DEFAULT_SIZE = 20;
   final int DEFAULT_VELOCITY = 500;
   final int DEFAULT_NUMBER_OF_FOOD = 1;
@@ -13,6 +14,7 @@ public interface SnakeService {
 
   /**
    * Starts the game if the GameState is PREPARED. The new game state is RUNNING.
+   *
    * @throws IllegalStateException if the GameState was not PREPARED.
    */
   void start() throws IllegalStateException;
@@ -73,7 +75,7 @@ public interface SnakeService {
    *
    * @param configuration contains the game configuration parameters
    * @throws IllegalConfigurationException if the values cannot be accepted due whatever reason
-   * @throws IllegalStateException if the game is not in the assumed GameState
+   * @throws IllegalStateException         if the game is not in the assumed GameState
    */
   void configure(GameConfiguration configuration) throws IllegalConfigurationException;
 
