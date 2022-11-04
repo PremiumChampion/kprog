@@ -80,6 +80,20 @@ zipEx.doLast {
     assert file("${rootDir}/zipfiles/${exid}Solution.zip").exists()
 }
 
+// generic task to zip
+// call it, e.g. for ex11, with "gradle -Pexid=ex11 zipEx"
+task zipSnake(type: Zip){
+    archiveFileName = "SnakeSolution.zip"
+    destinationDirectory = file ("${rootDir}/zipfiles")
+    from  fileTree('src/main/java/livesession')
+    into('livesession')
+}
+
+zipEx.doLast {
+    println "Resulting zip file should be ${rootDir}/zipfiles/${exid}Solution.zip"
+    assert file("${rootDir}/zipfiles/${exid}Solution.zip").exists()
+}
+
 // Task just to zip the tests of the students for ex06
 task zipTests(type: Zip){
     archiveFileName = "ex06Tests.zip"
