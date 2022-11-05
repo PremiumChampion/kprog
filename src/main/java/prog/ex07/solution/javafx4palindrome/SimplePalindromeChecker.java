@@ -10,6 +10,10 @@ public class SimplePalindromeChecker implements PalindromeChecker {
 
   @Override
   public boolean isPalindrome(final String line) {
+    if (line.length() == 0) {
+      return false;
+    }
+
     char[] normalised = this.normalizeLine(line);
     char[] reversed = this.normalizeLine(line);
 

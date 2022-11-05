@@ -6,8 +6,8 @@ import livesession.snake.Snake;
 
 public class FoodGenerator {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(FoodGenerator.class);
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      FoodGenerator.class);
 
   private SimpleSnakeService service;
   private Random random;
@@ -18,18 +18,13 @@ public class FoodGenerator {
     this.random = new Random(42);
   }
 
-  Coordinate placeFood() {
-    Coordinate coordinate;
+  public Coordinate placeFood() {
     // TODO: (DONE) place the food randomly.
-    Snake s = service.getSnake();
     Random r = new Random();
-    do {
-      coordinate = new Coordinate(r.nextInt(service.getConfiguration().getSize()), r.nextInt(service.getConfiguration().getSize()));
-    } while (s.getPosition().contains(coordinate));
+    Coordinate coordinate = new Coordinate(r.nextInt(service.getConfiguration().getSize()),
+        r.nextInt(service.getConfiguration().getSize()));
     // TODO: end.
-    service.addFood(coordinate);
     return coordinate;
-
   }
 
   private Coordinate getRandomCoordinate() {

@@ -1,6 +1,5 @@
 package livesession.snake.provider;
 
-import java.util.Arrays;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 
