@@ -1,6 +1,9 @@
 package livesession.snake;
 
 import static livesession.snake.Board.MINIMAL_BOARD_SIZE;
+import static livesession.snake.SnakeService.DEFAULT_NUMBER_OF_FOOD;
+import static livesession.snake.SnakeService.DEFAULT_SIZE;
+import static livesession.snake.SnakeService.DEFAULT_VELOCITY;
 
 /**
  * Configures a snake game. This class is intended to be immutable.
@@ -10,7 +13,7 @@ public class GameConfiguration {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(GameConfiguration.class);
   public static final GameConfiguration DEFAULT_GAME_CONFIGURATION = new GameConfiguration(
-      MINIMAL_BOARD_SIZE, 500, 1);
+      DEFAULT_SIZE, DEFAULT_VELOCITY, DEFAULT_NUMBER_OF_FOOD);
   private int size;
   private int velocityInMilliSeconds;
   private int numberOfFood;
