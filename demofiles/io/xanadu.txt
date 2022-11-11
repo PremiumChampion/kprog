@@ -1,0 +1,6 @@
+In Xanadu did Kubla Khan
+A stately pleasure-dome decree:
+Where Alph, the sacred river, ran
+Through caverns measureless to man
+Down to a sunless sea.
+(Aus http://docs.oracle.com/javase/tutorial/essential/io/streams.html am 7.10.14)
