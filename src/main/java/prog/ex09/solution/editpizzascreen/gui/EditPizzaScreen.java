@@ -1,23 +1,16 @@
 package prog.ex09.solution.editpizzascreen.gui;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
-import java.util.stream.Stream;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
-import javax.swing.ListCellRenderer;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
@@ -39,7 +32,6 @@ public class EditPizzaScreen extends VBox {
   private final PizzaDeliveryService service;
   private final int orderId;
   private final int pizzaId;
-  private final ObservableList<Topping> toppings;
   private final ObservableList<Topping> selectedToppings;
   private final Pizza pizza;
   private final Button finishButton;
@@ -59,13 +51,10 @@ public class EditPizzaScreen extends VBox {
 
     this.priceLabel = new Label();
     this.priceLabel.setId("priceLabel");
-    this.priceLabel.setText("Preis: " + pizza.getPrice() + " ct");
-
-    this.toppings = FXCollections.observableList(List.of(Topping.values()));
 
     this.toppingChoiceBox = new ChoiceBox<>();
     this.toppingChoiceBox.setId("toppingChoiceBox");
-    this.toppingChoiceBox.setItems(this.toppings);
+    this.toppingChoiceBox.setItems(FXCollections.observableList(List.of(Topping.values())));
 
     this.addToppingButton = new Button();
     this.addToppingButton.setText("Topping hinzufügen");
@@ -75,7 +64,6 @@ public class EditPizzaScreen extends VBox {
     this.toppingsOnPizzaListView = new ListView<>();
     this.toppingsOnPizzaListView.setId("toppingsOnPizzaListView");
     this.selectedToppings = FXCollections.observableList(new ArrayList<>());
-    this.selectedToppings.addAll(pizza.getToppings());
     this.toppingsOnPizzaListView.setCellFactory(studentListView -> {
       ToppingListCell toppingListCell = new ToppingListCell(this.service);
       toppingListCell.setOnRemoveHandler(this::onRemoveTopping);
@@ -91,12 +79,19 @@ public class EditPizzaScreen extends VBox {
     this.getChildren()
         .addAll(this.pizzaSizeLabel, this.priceLabel, this.toppingChoiceBox, this.addToppingButton,
             this.toppingsOnPizzaListView, this.finishButton);
+
+    this.update();
+  }
+
+  private void update() {
+    this.selectedToppings.remove(0, this.selectedToppings.size());
+    this.selectedToppings.addAll(pizza.getToppings());
+    this.priceLabel.setText("Preis: " + pizza.getPrice() + " ct");
   }
 
   private void onRemoveTopping(Topping toppingToRemove) {
-    this.selectedToppings.removeAll(pizza.getToppings());
     this.service.removeTopping(this.pizzaId, toppingToRemove);
-    this.selectedToppings.addAll(pizza.getToppings());
+    this.update();
   }
 
   private void onAddTopping(ActionEvent event) {
@@ -104,17 +99,16 @@ public class EditPizzaScreen extends VBox {
     if (toppingToAdd == null) {
       return;
     }
-    this.selectedToppings.removeAll(pizza.getToppings());
+
     try {
       this.service.addTopping(pizzaId, toppingToAdd);
     } catch (TooManyToppingsException e) {
       logger.info("Can not add topping");
     }
-    this.selectedToppings.addAll(pizza.getToppings());
-    this.priceLabel.setText("Preis: " + pizza.getPrice() + " ct");
+
+    this.update();
   }
 
-  private void onFinishOrder(ActionEvent event){
-    Platform.exit();
+  private void onFinishOrder(ActionEvent event) {
   }
 }
