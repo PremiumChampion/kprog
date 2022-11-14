@@ -3,6 +3,7 @@ package prog.ex09.solution.editpizzascreen.gui;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
+import javafx.beans.WeakInvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,20 +57,25 @@ public class EditPizzaScreen extends VBox {
     this.toppingChoiceBox.setId("toppingChoiceBox");
     this.toppingChoiceBox.setItems(FXCollections.observableList(List.of(Topping.values())));
 
+
     this.addToppingButton = new Button();
     this.addToppingButton.setText("Topping hinzufügen");
     this.addToppingButton.setId("addToppingButton");
     this.addToppingButton.setOnAction(this::onAddTopping);
+    this.addToppingButton.setDisable(true);
+    this.toppingChoiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+      this.addToppingButton.setDisable(newValue == null);
+    });
 
     this.toppingsOnPizzaListView = new ListView<>();
     this.toppingsOnPizzaListView.setId("toppingsOnPizzaListView");
-    this.selectedToppings = FXCollections.observableList(new ArrayList<>());
+    this.selectedToppings = FXCollections.observableList(new ArrayList<>(7));
     this.toppingsOnPizzaListView.setCellFactory(studentListView -> {
       ToppingListCell toppingListCell = new ToppingListCell(this.service);
       toppingListCell.setOnRemoveHandler(this::onRemoveTopping);
       return toppingListCell;
     });
-    toppingsOnPizzaListView.setItems(selectedToppings);
+    this.toppingsOnPizzaListView.setItems(selectedToppings);
 
     this.finishButton = new Button();
     this.finishButton.setId("finishButton");
@@ -102,11 +108,10 @@ public class EditPizzaScreen extends VBox {
 
     try {
       this.service.addTopping(pizzaId, toppingToAdd);
+      this.update();
     } catch (TooManyToppingsException e) {
-      logger.info("Can not add topping");
+      logger.info(String.format("Can not add topping %s to pizza with id %s.",toppingToAdd,pizzaId));
     }
-
-    this.update();
   }
 
   private void onFinishOrder(ActionEvent event) {

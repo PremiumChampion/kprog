@@ -23,14 +23,12 @@ public class ToppingListCell extends ListCell<Topping> {
 
   public ToppingListCell(PizzaDeliveryService service) {
     this.service = service;
-    this.removeButton = new Button("test");
+    this.removeButton = new Button();
     removeButton.setOnAction(this::onRemoveButtonAction);
   }
 
   protected void updateItem(Topping topping, boolean empty) {
     super.updateItem(topping, empty);
-    logger.info("update topping list cell");
-
     this.topping = topping;
 
     if (topping == null || empty) {
