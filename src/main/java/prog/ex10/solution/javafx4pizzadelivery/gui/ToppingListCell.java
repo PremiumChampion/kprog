@@ -1,12 +1,10 @@
-package prog.ex09.solution.editpizzascreen.gui;
+package prog.ex10.solution.javafx4pizzadelivery.gui;
 
-import java.util.List;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
 
 /**
  * class ToppingListCell.

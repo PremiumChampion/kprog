@@ -1,4 +1,4 @@
-package prog.ex09.solution.editpizzascreen.gui;
+package prog.ex10.solution.javafx4pizzadelivery.gui;
 
 import examples.javafx.modal.ExceptionAlert;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.TooManyToppingsException;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.TooManyToppingsException;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
 
 /**
  * JavaFX component to edit a pizza configuration.

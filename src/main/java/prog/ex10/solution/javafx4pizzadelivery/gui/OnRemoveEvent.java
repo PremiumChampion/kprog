@@ -1,4 +1,4 @@
-package prog.ex09.solution.editpizzascreen.gui;
+package prog.ex10.solution.javafx4pizzadelivery.gui;
 
 /**
  * comment.

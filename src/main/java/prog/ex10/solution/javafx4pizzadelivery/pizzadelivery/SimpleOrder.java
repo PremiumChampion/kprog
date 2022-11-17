@@ -1,10 +1,10 @@
-package prog.ex09.solution.editpizzascreen.pizzadelivery;
+package prog.ex10.solution.javafx4pizzadelivery.pizzadelivery;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Order;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Order;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
 
 /**
  * Simple and straight-forward implementation of the Order interface.
@@ -12,7 +12,8 @@ import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
 public class SimpleOrder implements Order {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(SimpleOrder.class);
+      org.slf4j.LoggerFactory.getLogger(
+          prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder.class);
   private static int nextOrderId = 0;
   private final int orderId;
   private final List<Pizza> pizzaList;
