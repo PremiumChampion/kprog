@@ -16,8 +16,11 @@ module kprog.main {
   exports examples.designpattern.observer;
   exports examples.designpattern.singleton;
   exports prog.javafx.main;
-  exports prog.ex10.solution.javafx4pizzadelivery.gui;
   exports prog.ex09.solution.editpizzascreen.gui;
   exports prog.ex09.solution.editpizzascreen.pizzadelivery;
   exports prog.ex09.exercise.editpizzascreen.pizzadelivery;
+  exports prog.ex10.solution.javafx4pizzadelivery.gui;
+  exports prog.ex10.exercise.javafx4pizzadelivery.gui;
+  exports prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery;
+  exports prog.ex10.solution.javafx4pizzadelivery.gui.events;
 }

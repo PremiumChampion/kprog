@@ -91,7 +91,7 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
     if (pizzaToRemove == null) {
       throw new IllegalArgumentException(String.format("invalid pizza id (%s)", pizzaId));
     }
-
+    pizza.remove(pizzaId);
     order.removePizza(pizzaToRemove);
   }
 

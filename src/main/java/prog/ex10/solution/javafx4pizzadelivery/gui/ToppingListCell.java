@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
+import prog.ex10.solution.javafx4pizzadelivery.gui.events.OnRemoveEventHandler;
 
 /**
  * class ToppingListCell.
@@ -15,7 +16,7 @@ public class ToppingListCell extends ListCell<Topping> {
       org.slf4j.LoggerFactory.getLogger(ToppingListCell.class);
   private final Button removeButton;
   private final PizzaDeliveryService service;
-  private OnRemoveEvent<Topping> onRemoveHandler;
+  private OnRemoveEventHandler<Topping> onRemoveHandler;
   private Topping topping;
 
   /**
@@ -61,7 +62,7 @@ public class ToppingListCell extends ListCell<Topping> {
    *
    * @param onRemoveHandler event handler.
    */
-  public void setOnRemoveHandler(OnRemoveEvent<Topping> onRemoveHandler) {
+  public void setOnRemoveHandler(OnRemoveEventHandler<Topping> onRemoveHandler) {
     this.onRemoveHandler = onRemoveHandler;
   }
 }
