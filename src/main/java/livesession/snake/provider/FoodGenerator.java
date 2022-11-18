@@ -20,9 +20,8 @@ public class FoodGenerator {
 
   public Coordinate placeFood() {
     // TODO: (DONE) place the food randomly.
-    Random r = new Random();
-    Coordinate coordinate = new Coordinate(r.nextInt(service.getConfiguration().getSize()),
-        r.nextInt(service.getConfiguration().getSize()));
+    Coordinate coordinate = new Coordinate(1+this.random.nextInt(service.getConfiguration().getSize()-2),
+        1+this.random.nextInt(service.getConfiguration().getSize()-2));
     // TODO: end.
     return coordinate;
   }

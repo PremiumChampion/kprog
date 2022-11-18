@@ -1,13 +1,13 @@
-package prog.ex09.solution.editpizzascreen.pizzadelivery;
+package prog.ex10.solution.javafx4pizzadelivery.pizzadelivery;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
 
 /**
  * Simple and straight-forward implementation of the Pizza interface.

@@ -1,8 +1,10 @@
-package prog.ex09.solution.editpizzascreen.gui;
+package prog.ex10.solution.javafx4pizzadelivery.gui;
 
 import examples.javafx.modal.ExceptionAlert;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,11 +13,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.TooManyToppingsException;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
+import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.TooManyToppingsException;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
 
 /**
  * JavaFX component to edit a pizza configuration.
@@ -30,30 +32,34 @@ public class EditPizzaScreen extends VBox {
   private final Button addToppingButton;
   private final ListView<Topping> toppingsOnPizzaListView;
   private final PizzaDeliveryService service;
-  private final int orderId;
-  private final int pizzaId;
+  private final IntegerProperty orderId;
+  private final IntegerProperty pizzaId;
   private final ObservableList<Topping> selectedToppings;
-  private final Pizza pizza;
+  private final PizzaDeliveryScreenController screenController;
+  private Pizza pizza;
   private final Button finishButton;
+  public static final String SCREEN_NAME = "EditPizzaScreen";
+  private final SingletonAttributeStore store;
 
   /**
-   * Comment.
+   * stuff.
    *
-   * @param service service.
-   * @param orderId order.
-   * @param pizzaId pizza.
+   * @param screenController stuff.
    */
-  public EditPizzaScreen(PizzaDeliveryService service, final int orderId, int pizzaId) {
-    this.service = service;
-    this.orderId = orderId;
-    this.pizzaId = pizzaId;
-    this.pizza = service.getOrder(orderId).getPizzaList().stream()
-        .filter(p -> p.getPizzaId() == pizzaId).findFirst().orElse(null);
-    PizzaSize size = pizza.getSize();
+  public EditPizzaScreen(PizzaDeliveryScreenController screenController) {
+    this.screenController = screenController;
+    this.store = SingletonAttributeStore.getInstance();
+
+    this.service = (PizzaDeliveryService) store.getAttribute(
+        SingletonAttributeStore.PIZZA_DELIVERY_SERVICE);
+    this.orderId = (IntegerProperty) store.getAttribute(SingletonAttributeStore.ORDER_ID);
+    this.pizzaId = (IntegerProperty) store.getAttribute(SingletonAttributeStore.PIZZA_ID);
+
+    this.pizzaId.addListener(this::updateData);
+    this.orderId.addListener(this::updateData);
 
     this.pizzaSizeLabel = new Label();
     this.pizzaSizeLabel.setId("pizzaSizeLabel");
-    this.pizzaSizeLabel.setText("Größe: " + size);
 
     this.priceLabel = new Label();
     this.priceLabel.setId("priceLabel");
@@ -85,17 +91,52 @@ public class EditPizzaScreen extends VBox {
     this.getChildren()
         .addAll(this.pizzaSizeLabel, this.priceLabel, this.toppingChoiceBox, this.addToppingButton,
             this.toppingsOnPizzaListView, this.finishButton);
+    if (!findPizza()) {
+      return;
+    }
+    update();
+  }
 
+  /**
+   * something changed.
+   *
+   * @param observable stuff.
+   * @param oldValue   stuff.
+   * @param newValue   stuff.
+   */
+  private void updateData(ObservableValue<? extends Number> observable, Number oldValue,
+      Number newValue) {
+    if (!findPizza()) {
+      return;
+    }
     this.update();
+  }
+
+  /**
+   * finds and sets the pizza value.
+   *
+   * @return if the pizza was found.
+   */
+  private boolean findPizza() {
+    if (this.orderId.getValue() == -1 || this.pizzaId.getValue() == -1) {
+      return false;
+    }
+    pizza = this.service.getOrder(this.orderId.getValue()).getPizzaList().stream()
+        .filter(p -> p.getPizzaId() == this.pizzaId.getValue()).findFirst().orElse(null);
+    if (pizza == null) {
+      return false;
+    }
+    return true;
   }
 
   /**
    * update ui.
    */
   private void update() {
-    this.selectedToppings.remove(0, this.selectedToppings.size());
+    this.selectedToppings.clear();
     this.selectedToppings.addAll(pizza.getToppings());
     this.priceLabel.setText("Preis: " + pizza.getPrice() + " ct");
+    this.pizzaSizeLabel.setText("Größe: " + pizza.getSize());
   }
 
   /**
@@ -104,7 +145,10 @@ public class EditPizzaScreen extends VBox {
    * @param toppingToRemove topping to remove.
    */
   private void onRemoveTopping(Topping toppingToRemove) {
-    this.service.removeTopping(this.pizzaId, toppingToRemove);
+    if (pizza == null) {
+      return;
+    }
+    this.service.removeTopping(this.pizzaId.getValue(), toppingToRemove);
     this.update();
   }
 
@@ -114,6 +158,9 @@ public class EditPizzaScreen extends VBox {
    * @param event event.
    */
   private void onAddTopping(ActionEvent event) {
+    if (pizza == null) {
+      return;
+    }
     Topping toppingToAdd = this.toppingChoiceBox.getValue();
     if (toppingToAdd == null) {
       new ExceptionAlert(new Exception("Bitte zuerst ein Toppinng auswählen.")).show();
@@ -121,7 +168,7 @@ public class EditPizzaScreen extends VBox {
     }
 
     try {
-      this.service.addTopping(pizzaId, toppingToAdd);
+      this.service.addTopping(pizzaId.getValue(), toppingToAdd);
       this.update();
     } catch (TooManyToppingsException e) {
       new ExceptionAlert(e).show();
@@ -134,5 +181,12 @@ public class EditPizzaScreen extends VBox {
    * @param event event.
    */
   private void onFinishOrder(ActionEvent event) {
+    try {
+      this.pizzaId.setValue(-1);
+      this.screenController.switchTo(EditPizzaScreen.SCREEN_NAME, ShowOrderScreen.SCREEN_NAME);
+    } catch (UnknownTransitionException e) {
+      new ExceptionAlert(e).show();
+    }
   }
+
 }

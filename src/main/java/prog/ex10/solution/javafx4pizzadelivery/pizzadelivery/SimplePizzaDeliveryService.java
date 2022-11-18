@@ -1,15 +1,15 @@
-package prog.ex09.solution.editpizzascreen.pizzadelivery;
+package prog.ex10.solution.javafx4pizzadelivery.pizzadelivery;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Order;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.TooManyToppingsException;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Order;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.TooManyToppingsException;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
 
 /**
  * Simple and straight-forward implementation of the PizzaDeliveryService interface.
@@ -91,7 +91,7 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
     if (pizzaToRemove == null) {
       throw new IllegalArgumentException(String.format("invalid pizza id (%s)", pizzaId));
     }
-
+    pizza.remove(pizzaId);
     order.removePizza(pizzaToRemove);
   }
 

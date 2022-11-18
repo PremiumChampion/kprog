@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="prog.ex10.solution.javafx4pizzadelivery.gui.ShowOrderScreenController">
+  <children>
+    <VBox layoutX="17.0" layoutY="10.0" spacing="5.0">
+      <Label id="orderIdLabel" fx:id="orderIdLabel" layoutX="14.0" layoutY="14.0" text="Order xxx"/>
+      <Label id="orderPriceLabel" fx:id="orderPriceLabel" layoutX="14.0" layoutY="33.0"
+        text="Preis: xxx ct"/>
+    </VBox>
+    <HBox layoutX="17.0" layoutY="54.0" spacing="10.0">
+      <ChoiceBox id="pizzaSizeChoiceBox" fx:id="pizzaSizeChoiceBox" layoutX="14.0" layoutY="62.0"
+        prefWidth="150.0"/>
+      <Button id="addPizzaButton" fx:id="addPizzaButton" layoutX="177.0" layoutY="62.0"
+        mnemonicParsing="false" text="Add pizza"/>
+    </HBox>
+    <ListView id="pizzaInOrderList" fx:id="pizzaInOrderList" layoutX="17.0" layoutY="99.0"
+      prefHeight="443.0" prefWidth="472.0"/>
+    <HBox layoutX="374.0" layoutY="560.0" spacing="10.0">
+      <Button id="cancelOrderButton" fx:id="cancelOrderButton" layoutX="415.0" layoutY="319.0"
+        mnemonicParsing="false" text="Cancel"/>
+      <Button id="onSubmitOrderButton" fx:id="onSubmitOrderButton" layoutX="357.0" layoutY="319.0"
+        mnemonicParsing="false" text="Order"/>
+    </HBox>
+    <Label alignment="CENTER_RIGHT" layoutX="142.0" layoutY="10.0" prefHeight="31.0"
+      prefWidth="350.0" text="FREAKING PIZZA DELIVERY SERVICE" textAlignment="CENTER">
+      <font>
+        <Font size="21.0"/>
+      </font>
+    </Label>
+  </children>
+</AnchorPane>

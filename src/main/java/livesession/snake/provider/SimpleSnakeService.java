@@ -3,6 +3,7 @@ package livesession.snake.provider;
 import static livesession.snake.Board.MINIMAL_BOARD_SIZE;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import livesession.snake.Board;
@@ -38,12 +39,26 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     // TODO: (DONE) What else to initialize?
     this.listeners = new ArrayList<>();
     this.gameConfiguration = GameConfiguration.DEFAULT_GAME_CONFIGURATION;
+    this.foodGenerator = new FoodGenerator(this);
     this.init();
+
   }
 
   private void init() {
+    this.gameState = GameState.PREPARED;
     this.board = new InternalBoard(this.gameConfiguration.getSize());
     this.snake = new SimpleSnake(this);
+    this.initFood();
+  }
+
+  private void initFood(){
+    for (int i = 0; i < this.gameConfiguration.getNumberOfFood(); i++) {
+      Coordinate nextFoodCoordinate;
+      do {
+        nextFoodCoordinate = foodGenerator.placeFood();
+      } while (this.getExternalBoard().getStateFromPosition(nextFoodCoordinate) != BoardState.GRASS);
+      this.addFood(nextFoodCoordinate);
+    }
   }
 
   @Override
@@ -54,13 +69,15 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void reset() {
     // TODO: (DONE) reset for a new game
+    this.gameState = GameState.PREPARED;
     this.init();
   }
 
-  // needs some exception when not configuration odr do we start with a default configuration?
   @Override
   public void start() {
     logger.debug("start:");
+    this.assertCorrectState(new GameState[]{GameState.PREPARED});
+
     simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
     gameState = GameState.RUNNING;
     notifyListeners((l) -> l.newGameState(gameState));
@@ -69,6 +86,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void pause() {
     logger.debug("pause:");
+    this.assertCorrectState(new GameState[]{GameState.RUNNING});
+
     simpleGameLoop.pauseGame();
     gameState = GameState.PAUSED;
     notifyListeners((SnakeListener listener) -> listener.newGameState(gameState));
@@ -77,6 +96,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void resume() {
     logger.debug("resume:");
+    this.assertCorrectState(new GameState[]{GameState.PAUSED});
+
     simpleGameLoop.resumeGame();
     gameState = GameState.RUNNING;
     notifyListeners((l) -> l.newGameState(gameState));
@@ -85,6 +106,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void abort() {
     logger.debug("abort:");
+    this.assertCorrectState(new GameState[]{GameState.RUNNING, GameState.PAUSED});
     simpleGameLoop.stopGame();
     gameState = GameState.ABORTED;
     notifyListeners((SnakeListener listener) -> listener.newGameState(gameState));
@@ -148,6 +170,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void configure(final GameConfiguration configuration)
       throws IllegalConfigurationException {
+    this.assertCorrectState(new GameState[]{GameState.PREPARED, GameState.ABORTED});
+
     // TODO: (DONE) check and save the configuration info.
     if (configuration == null) {
       throw new IllegalConfigurationException(
@@ -173,6 +197,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     }
 
     this.gameConfiguration = configuration;
+
+    this.init();
   }
 
   public void triggeredByGameLoop() {
@@ -186,6 +212,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void advanceSnake() throws IllegalPositionException {
     logger.debug("advanceSnake:");
+    this.assertCorrectState(new GameState[]{GameState.RUNNING});
+
     Coordinate newPosition = snake.advance();
     notifyListeners((l) -> l.updateBoard(getExternalBoard()));
   }
@@ -206,6 +234,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
       nextFoodCoordinate = foodGenerator.placeFood();
     } while (this.getExternalBoard().getStateFromPosition(nextFoodCoordinate) != BoardState.GRASS);
     this.addFood(nextFoodCoordinate);
+    updateScore(BoardState.FOOD);
     this.board.removeFood(coordinate);
   }
 
@@ -239,5 +268,18 @@ public class SimpleSnakeService implements ExtendedSnakeService {
 
   public Board getBoard() {
     return getExternalBoard();
+  }
+
+  /**
+   * checks if the current games state is one of the provided values.
+   *
+   * @param validStates gamestates that are valid when calling this method.
+   */
+  private void assertCorrectState(GameState[] validStates) {
+    if (!Arrays.stream(validStates).anyMatch(state -> this.gameState == state)) {
+      throw new IllegalStateException(
+          String.format("The state was expected to be one of %s but is %s",
+              Arrays.toString(validStates), this.gameState));
+    }
   }
 }

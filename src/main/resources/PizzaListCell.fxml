@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<HBox alignment="CENTER_LEFT" spacing="10.0" xmlns="http://javafx.com/javafx/16"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="prog.ex10.solution.javafx4pizzadelivery.gui.PizzaListCellController">
+  <children>
+    <Label fx:id="pizzaSizeLabel" text="PIZZASIZE"/>
+    <Label fx:id="toppingCountLabel" text="x Toppings"/>
+    <Button fx:id="changePizzaButton" mnemonicParsing="false" text="Change"/>
+    <Button fx:id="removePizzaButton" mnemonicParsing="false" text="Remove"/>
+  </children>
+</HBox>

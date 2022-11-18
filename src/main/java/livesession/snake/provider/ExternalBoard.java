@@ -35,7 +35,7 @@ public class ExternalBoard extends BaseBoard {
     // TODO: (DONE) Copy the contents of the internal board
     for (int i = 0; i < internalBoard.board.length; i++) {
       for (int j = 0; j < internalBoard.board[i].length; j++) {
-        this.board[i][j] = internalBoard.board[i][i];
+        this.board[i][j] = internalBoard.board[i][j];
       }
     }
     // TODO: end
