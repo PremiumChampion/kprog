@@ -18,7 +18,7 @@ public class PizzaDeliveryScreenController implements ScreenController {
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
       PizzaDeliveryScreenController.class);
   private final Pane pane;
-  private final Map<String, Builder<Node>> scenes;
+  private final Map<String, Node> scenes;
   private final Map<String, List<String>> validTransitions;
 
   /**
@@ -49,7 +49,7 @@ public class PizzaDeliveryScreenController implements ScreenController {
       throws UnknownTransitionException {
     assertValidTransition(fromScreen, toScreen);
     this.pane.getChildren().clear();
-    this.pane.getChildren().add(scenes.get(toScreen).build());
+    this.pane.getChildren().add(scenes.get(toScreen));
   }
 
   /**
@@ -93,7 +93,7 @@ public class PizzaDeliveryScreenController implements ScreenController {
         k -> new ArrayList<>());
 
     screenlist.add(toScreen);
-    this.scenes.computeIfAbsent(toScreen, k -> screen);
+    this.scenes.computeIfAbsent(toScreen, k -> screen.build());
   }
 
 }

@@ -1,11 +1,19 @@
 package prog.ex10.solution.javafx4pizzadelivery.gui;
 
+import static prog.ex10.solution.javafx4pizzadelivery.gui.SingletonAttributeStore.ORDER_ID;
+import static prog.ex10.solution.javafx4pizzadelivery.gui.SingletonAttributeStore.PIZZA_DELIVERY_SERVICE;
+
 import examples.javafx.modal.ExceptionAlert;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import javafx.beans.property.IntegerProperty;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
@@ -13,18 +21,16 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryServic
 /**
  * Screen to create an order in the PizzaDeliveryService.
  */
-public class CreateOrderScreen extends VBox {
+public class CreateOrderScreen extends VBox implements Initializable {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(CreateOrderScreen.class);
 
   public static final String SCREEN_NAME = "CreateOrderScreen";
   private final PizzaDeliveryScreenController screenController;
-  private final SingletonAttributeStore store;
-  private final PizzaDeliveryService service;
-  private final IntegerProperty orderId;
-  private final IntegerProperty pizzaId;
-  private final CreateOrderScreenController controller;
+  @FXML
+  public Button createOrderButton;
+  private final CreateOrderScreenModel model;
 
   /**
    * Create Order Screen.
@@ -32,41 +38,45 @@ public class CreateOrderScreen extends VBox {
    * @param screenController screen controller
    */
   public CreateOrderScreen(PizzaDeliveryScreenController screenController) {
-
+    this.model = new CreateOrderScreenModel();
     this.screenController = screenController;
-    this.store = SingletonAttributeStore.getInstance();
 
-    this.service = (PizzaDeliveryService) store.getAttribute(
-        SingletonAttributeStore.PIZZA_DELIVERY_SERVICE);
-    this.orderId = (IntegerProperty) store.getAttribute(SingletonAttributeStore.ORDER_ID);
-    this.pizzaId = (IntegerProperty) store.getAttribute(SingletonAttributeStore.PIZZA_ID);
+    SingletonAttributeStore store = SingletonAttributeStore.getInstance();
+
+    model.setDeliveryService((PizzaDeliveryService) store.getAttribute(PIZZA_DELIVERY_SERVICE));
+    model.orderIdProperty().bindBidirectional((IntegerProperty) store.getAttribute(ORDER_ID));
 
     try {
       FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(
           getClass().getClassLoader().getResource("CreateOrderScreen.fxml"),
           "CreateOrderScreen.fxml resource not found."));
 
-      this.getChildren().setAll((Node) loader.load());
-      this.controller = loader.getController();
-      this.controller.setOnCreateOrder(this::onCreateOrder);
+      loader.setController(this);
+      this.getChildren().clear();
+      this.getChildren().add(loader.load());
 
     } catch (IOException | NullPointerException e) {
       new ExceptionAlert(e).showAndWait();
       throw new RuntimeException(e);
     }
-
   }
 
   /**
    * creates a order and navigates in the view order screen.
    */
-  private void onCreateOrder() {
-    orderId.setValue(service.createOrder());
+  private void onCreateOrder(ActionEvent e) {
+    int orderId = model.getDeliveryService().createOrder();
+    model.setOrderId(orderId);
 
     try {
       screenController.switchTo(CreateOrderScreen.SCREEN_NAME, ShowOrderScreen.SCREEN_NAME);
-    } catch (UnknownTransitionException e) {
-      new ExceptionAlert(e).show();
+    } catch (UnknownTransitionException ex) {
+      new ExceptionAlert(ex).show();
     }
+  }
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    this.createOrderButton.setOnAction(this::onCreateOrder);
   }
 }
