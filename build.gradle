@@ -109,3 +109,14 @@ zipTests.doLast {
     println "Resulting zip file should be ${rootDir}/zipfiles/ex06Tests.zip"
     assert file("${rootDir}/zipfiles/ex06Tests.zip").exists()
 }
+
+task zipEx10WithResources(type: Zip) {
+    archiveFileName = "ex10solutionWithResources.zip"
+    destinationDirectory = file ("${rootDir}/zipfiles")
+    from ('src/main/java/prog/ex10') {
+        into('src/main/java/prog/ex10')
+    }
+    from ('src/main/resources') {
+        into('src/main/resources')
+    }
+}

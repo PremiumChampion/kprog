@@ -11,12 +11,14 @@ public interface Board {
 
   /**
    * Returns the size of the board.
+   *
    * @return size of the board.
    */
   int size();
 
   /**
    * Returns the BoardState at the given coordinate.
+   *
    * @param coordinate requested coordinate
    * @return state at this coordinate
    * @throws IllegalArgumentException if the coordinate is either null or not on the board.
@@ -25,6 +27,7 @@ public interface Board {
 
   /**
    * Returns the BoardState at the given coordinate.
+   *
    * @param row requested row
    * @param column requested column
    * @return state at this coordinate

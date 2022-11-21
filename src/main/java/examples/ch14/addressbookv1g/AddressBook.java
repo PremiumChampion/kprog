@@ -1,4 +1,4 @@
-package examples.ch14.newsfeedv1t;
+package examples.ch14.addressbookv1g;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -92,7 +92,6 @@ public class AddressBook {
       if (key.startsWith(keyPrefix)) {
         matches.add(book.get(key));
       } else {
-        // As the list is sorted, there won't be any more.
         endOfSearch = true;
       }
     }

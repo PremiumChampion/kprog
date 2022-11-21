@@ -44,6 +44,7 @@ public interface ExtendedSnakeService extends SnakeService {
 
   /**
    * Adds food to the given position.
+   *
    * @param coordinate coordinate to add food to.
    * @throws IllegalArgumentException if there is already food or the position is not allowed.
    */

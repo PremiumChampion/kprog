@@ -1,4 +1,4 @@
-package examples.ch14.newsfeedv1t;
+package examples.ch14.addressbookv1t;
 
 /**
  * Provide a simple demonstration of the AddressBook class.
@@ -9,8 +9,8 @@ package examples.ch14.newsfeedv1t;
  * @version 2016.02.29
  */
 public class AddressBookDemo {
-  private AddressBook book;
-  private AddressBookTextInterface interaction;
+  private final AddressBook book;
+  private final AddressBookTextInterface interaction;
 
   /**
    * Setup an AddressBook with sample data.
@@ -43,6 +43,8 @@ public class AddressBookDemo {
   }
 
   /**
+   * Returns an AddressBook.
+   *
    * @return The sample address book.
    */
   public AddressBook getBook() {

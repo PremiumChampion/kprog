@@ -53,7 +53,8 @@ public class CreateOrderScreen extends VBox implements Initializable {
 
       loader.setController(this);
       this.getChildren().clear();
-      this.getChildren().add(loader.load());
+      loader.load();
+      this.getChildren().add(loader.getRoot());
 
     } catch (IOException | NullPointerException e) {
       new ExceptionAlert(e).showAndWait();

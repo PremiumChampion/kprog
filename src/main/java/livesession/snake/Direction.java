@@ -37,5 +37,4 @@ public enum Direction {
   public Direction getRight() {
     return right;
   }
-
-  }
+}

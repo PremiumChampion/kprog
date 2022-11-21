@@ -17,8 +17,8 @@ public class ExternalBoard extends BaseBoard {
   /**
    * Creates the external board based on the contents of the internal board.
    *
-   * @param internalBoard
-   * @param snake
+   * @param internalBoard internal board the contents is copied from
+   * @param snake actual snake
    */
   public ExternalBoard(InternalBoard internalBoard, final SimpleSnake snake) {
     super(internalBoard.size());

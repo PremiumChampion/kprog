@@ -12,6 +12,7 @@ module kprog.main {
   exports examples.javafx.modal;
   exports examples.javafx.mvvm;
   exports examples.javafx.observable;
+  exports examples.javafx.addressbook;
   exports examples.io;
   exports examples.designpattern.observer;
   exports examples.designpattern.singleton;

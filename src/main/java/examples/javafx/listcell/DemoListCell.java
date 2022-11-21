@@ -16,21 +16,20 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * Demonstrator for a simple cell renderer for a ListView.
  */
 public class DemoListCell extends Application {
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(DemoListCell.class);
+      org.slf4j.LoggerFactory.getLogger(DemoListCell.class);
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
     StackPane rootStackPane = new StackPane();
     ListView<Contact> contactListView = new ListView<>();
     ObservableList<Contact> contactObservableList =
-            FXCollections.observableList(MockDataGenerator.getContactList());
+        FXCollections.observableList(MockDataGenerator.getContactList());
     contactListView.setItems(contactObservableList);
     contactListView.setCellFactory(list -> new ContactListCell(contactObservableList));
     rootStackPane.getChildren().add(contactListView);
@@ -38,7 +37,7 @@ public class DemoListCell extends Application {
     primaryStage.show();
   }
 
-  static class ContactListCell extends ListCell<Contact> {
+  class ContactListCell extends ListCell<Contact> {
     private final ObservableList<Contact> contactList;
 
     public ContactListCell(final ObservableList<Contact> contactList) {
@@ -59,7 +58,7 @@ public class DemoListCell extends Application {
         Button removeButton = new Button("remove");
         removeButton.setOnAction((event -> contactList.remove(item)));
         Pane spacer = new Pane();
-        spacer.setMinSize(10,1);
+        spacer.setMinSize(10, 1);
         HBox horizontalBox = new HBox();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         horizontalBox.getChildren().addAll(verticalBox, spacer, removeButton);

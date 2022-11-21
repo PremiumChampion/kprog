@@ -33,7 +33,8 @@ public class BidirectionalSliderDemo extends Application {
     Button upButton = new Button("up");
     Button downButton = new Button("down");
     Label valueLabel = new Label();
-    Bindings.bindBidirectional(valueLabel.textProperty(), doubleProperty, new NumberStringConverter());
+    Bindings.bindBidirectional(valueLabel.textProperty(), doubleProperty,
+        new NumberStringConverter());
     upButton.setOnAction((e) -> doubleProperty.setValue(doubleProperty.getValue() + 0.1));
     downButton.setOnAction((e) -> doubleProperty.setValue(doubleProperty.getValue() - 0.1));
     HBox hbox = new HBox();

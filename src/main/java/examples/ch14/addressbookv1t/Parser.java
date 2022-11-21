@@ -1,4 +1,4 @@
-package examples.ch14.newsfeedv1t;
+package examples.ch14.addressbookv1t;
 
 import java.util.Scanner;
 
@@ -11,8 +11,8 @@ import java.util.Scanner;
  */
 public class Parser {
   // Hold all valid command words.
-  private CommandWords commands;
-  private Scanner reader;
+  private final CommandWords commands;
+  private final Scanner reader;
 
   public Parser() {
     commands = new CommandWords();
@@ -54,7 +54,9 @@ public class Parser {
   }
 
   /**
-   * @return A line of text from the user.
+   * Returns A line of text from the user.
+   *
+   * @return line of text
    */
   public String readLine() {
     return reader.nextLine();

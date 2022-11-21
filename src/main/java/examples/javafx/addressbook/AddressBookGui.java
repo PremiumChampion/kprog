@@ -1,9 +1,21 @@
-package examples.ch14.newsfeedv1g;
+package examples.javafx.addressbook;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  * Provide a GUI view of an AddressBook.
@@ -19,21 +31,21 @@ import javax.swing.event.*;
  * @author David J. Barnes and Michael Kölling.
  * @version 2016.02.29
  */
-public class AddressBookGUI extends JFrame {
+public class AddressBookGui extends JFrame {
   // Size preferences for this frame.
   private static final int PREFERRED_WIDTH = 500;
   private static final int PREFERRED_HEIGHT = 500;
   private static final Dimension PREFERRED_SIZE =
       new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT);
   // The address book to be viewed and manipulated.
-  private AddressBook book;
+  private final AddressBook book;
 
   /**
    * Create the frame with its panels.
    *
    * @param book The address book to be manipulated.
    */
-  public AddressBookGUI(AddressBook book) {
+  public AddressBookGui(AddressBook book) {
     this.book = book;
     setTitle("Address Book");
     addWindowListener(new WindowAdapter() {
@@ -60,6 +72,8 @@ public class AddressBookGUI extends JFrame {
   }
 
   /**
+   * Returns the preferred size of this window.
+   *
    * @return The preferred size of this window.
    */
   public Dimension getPreferredSize() {
@@ -158,7 +172,7 @@ public class AddressBookGUI extends JFrame {
     // Set up the area where the resuts will be displayed.
     final JTextArea resultList = new JTextArea(10, 50);
     resultList.setEditable(false);
-    JScrollPane scrollArea =
+    final JScrollPane scrollArea =
         new JScrollPane(resultList,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -213,7 +227,7 @@ public class AddressBookGUI extends JFrame {
     // Set up the area where the details will be displayed.
     final JTextArea details = new JTextArea(10, 50);
     details.setEditable(false);
-    JScrollPane scrollArea =
+    final JScrollPane scrollArea =
         new JScrollPane(details,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

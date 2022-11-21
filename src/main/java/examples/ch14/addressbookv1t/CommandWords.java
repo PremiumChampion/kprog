@@ -1,4 +1,4 @@
-package examples.ch14.newsfeedv1t;
+package examples.ch14.addressbookv1t;
 
 /**
  * This class holds an enumeration of all command words known
@@ -9,10 +9,10 @@ package examples.ch14.newsfeedv1t;
  */
 public class CommandWords {
   // a constant array that holds all valid command words
-  private static final String validCommands[] = {"add", "search", "list", "help", "quit",};
+  private static final String[] validCommands = {"add", "search", "list", "help", "quit"};
 
   /**
-   * Constructor for CommandWords
+   * Constructor for CommandWords.
    */
   public CommandWords() {
   }
@@ -20,13 +20,13 @@ public class CommandWords {
   /**
    * Check whether a given String is a valid command word.
    *
-   * @param aString The string to be checked.
+   * @param string The string to be checked.
    * @return true if it is valid, false if it isn't.
    */
-  public boolean isCommand(String aString) {
-    if (aString != null) {
+  public boolean isCommand(String string) {
+    if (string != null) {
       for (int i = 0; i < validCommands.length; i++) {
-        if (validCommands[i].equals(aString)) {
+        if (validCommands[i].equals(string)) {
           return true;
         }
       }

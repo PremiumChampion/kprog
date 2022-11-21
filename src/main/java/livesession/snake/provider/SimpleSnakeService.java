@@ -16,6 +16,9 @@ import livesession.snake.Reason;
 import livesession.snake.Snake;
 import livesession.snake.SnakeListener;
 
+/**
+ * Simple and straight-forward implementation of the ExtendedSnakeService interface.
+ */
 public class SimpleSnakeService implements ExtendedSnakeService {
 
   private static final org.slf4j.Logger logger =
@@ -23,7 +26,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   private GameConfiguration gameConfiguration;
   private InternalBoard board;
   private SimpleSnake snake;
-  private SimpleGameLoop simpleGameLoop;
+  private GameLoop simpleGameLoop;
   private FoodGenerator foodGenerator;
 
   private GameState gameState;
@@ -41,7 +44,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     this.gameConfiguration = GameConfiguration.DEFAULT_GAME_CONFIGURATION;
     this.foodGenerator = new FoodGenerator(this);
     this.init();
-
+// TODO: end.
   }
 
   private void init() {
@@ -68,9 +71,11 @@ public class SimpleSnakeService implements ExtendedSnakeService {
 
   @Override
   public void reset() {
+    logger.debug("reset:");
     // TODO: (DONE) reset for a new game
     this.gameState = GameState.PREPARED;
     this.init();
+    // TODO: end.
   }
 
   @Override
@@ -199,6 +204,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     this.gameConfiguration = configuration;
 
     this.init();
+    // TODO: end.
   }
 
   public void triggeredByGameLoop() {
@@ -221,6 +227,9 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void addFood(final Coordinate coordinate) {
     logger.debug("addFood: " + coordinate);
+    if (board.getStateFromPosition(coordinate).equals(BoardState.FOOD)) {
+      throw new IllegalArgumentException("There is already food at this position: " + coordinate);
+    }
     board.addFood(coordinate);
     notifyListeners((l) -> l.updateBoard(getExternalBoard()));
   }
@@ -236,6 +245,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     this.addFood(nextFoodCoordinate);
     updateScore(BoardState.FOOD);
     this.board.removeFood(coordinate);
+    // TODO: end.
   }
 
   @Override
@@ -248,6 +258,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
       default:
         throw new IllegalArgumentException("Unknown state in updateScore: " + state);
     }
+    notifyListeners((l) -> l.updateScore(score));
   }
 
   @Override
@@ -265,7 +276,6 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   public InternalBoard getInternalBoard() {
     return board;
   }
-
   public Board getBoard() {
     return getExternalBoard();
   }

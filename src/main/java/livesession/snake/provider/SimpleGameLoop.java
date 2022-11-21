@@ -1,15 +1,25 @@
 package livesession.snake.provider;
 
-public class SimpleGameLoop implements GameLoop {
+/**
+ * Simple implementation of the GameLoop interface for the game snake.
+ */
+public class SimpleGameLoop extends Thread implements GameLoop {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleGameLoop.class);
 
-  public SimpleGameLoop(final SimpleSnakeService simpleSnakeService, final int velocityInMilliseconds) {
+  /**
+   * Constructor.
+   *
+   * @param service   ExtendedSnakeService to be notified every loop
+   * @param sleepTime time between two notifications in milliseconds
+   */
+  public SimpleGameLoop(final ExtendedSnakeService service,
+                        final int sleepTime) {
   }
 
   @Override
   public void run() {
-    
+
   }
 
   @Override

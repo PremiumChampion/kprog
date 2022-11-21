@@ -13,7 +13,7 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryServic
 import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizzaDeliveryService;
 
 /**
- * launcher.
+ * Launches the PizzaDeliveryService order application.
  */
 public class PizzaDeliveryLauncher extends Application {
 

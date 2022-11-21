@@ -1,5 +1,7 @@
 package livesession.snake;
 
+import java.util.StringJoiner;
+
 import static livesession.snake.Board.MINIMAL_BOARD_SIZE;
 import static livesession.snake.SnakeService.DEFAULT_NUMBER_OF_FOOD;
 import static livesession.snake.SnakeService.DEFAULT_SIZE;
@@ -14,9 +16,10 @@ public class GameConfiguration {
       org.slf4j.LoggerFactory.getLogger(GameConfiguration.class);
   public static final GameConfiguration DEFAULT_GAME_CONFIGURATION = new GameConfiguration(
       DEFAULT_SIZE, DEFAULT_VELOCITY, DEFAULT_NUMBER_OF_FOOD);
-  private int size;
-  private int velocityInMilliSeconds;
-  private int numberOfFood;
+
+  private final int size;
+  private final int velocityInMilliSeconds;
+  private final int numberOfFood;
 
   /**
    * Creates a new game configuration.
@@ -42,5 +45,14 @@ public class GameConfiguration {
 
   public int getNumberOfFood() {
     return numberOfFood;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", GameConfiguration.class.getSimpleName() + "[", "]")
+        .add("size=" + size)
+        .add("velocityInMilliSeconds=" + velocityInMilliSeconds)
+        .add("numberOfFood=" + numberOfFood)
+        .toString();
   }
 }

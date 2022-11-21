@@ -1,4 +1,4 @@
-package examples.ch14.newsfeedv1t;
+package examples.ch14.addressbookv1t;
 
 /**
  * Provide a textual interface to an AddressBook.
@@ -15,12 +15,12 @@ package examples.ch14.newsfeedv1t;
  */
 public class AddressBookTextInterface {
   // The address book to be viewed and manipulated.
-  private AddressBook book;
+  private final AddressBook book;
   // A parser for handling user commands.
-  private Parser parser;
+  private final Parser parser;
 
   /**
-   * Constructor for objects of class AddressBookTextInterface
+   * Constructor for objects of class AddressBookTextInterface.
    *
    * @param book The address book to be manipulated.
    */

@@ -1,4 +1,4 @@
-package examples.ch14.newsfeedv1t;
+package examples.ch14.addressbookv1t;
 
 /**
  * Name, address and telephone number details.
@@ -7,9 +7,9 @@ package examples.ch14.newsfeedv1t;
  * @version 2016.02.29
  */
 public class ContactDetails implements Comparable<ContactDetails> {
-  private String name;
-  private String phone;
-  private String address;
+  private final String name;
+  private final String phone;
+  private final String address;
 
   /**
    * Set up the contact details. All details are trimmed to remove
@@ -35,23 +35,14 @@ public class ContactDetails implements Comparable<ContactDetails> {
     this.address = address.trim();
   }
 
-  /**
-   * @return The name.
-   */
   public String getName() {
     return name;
   }
 
-  /**
-   * @return The telephone number.
-   */
   public String getPhone() {
     return phone;
   }
 
-  /**
-   * @return The address.
-   */
   public String getAddress() {
     return address;
   }
@@ -61,14 +52,14 @@ public class ContactDetails implements Comparable<ContactDetails> {
    *
    * @param other The object to compare to this one.
    * @return true if the argument object is a set
-   * of contact details with matching attributes.
+   *     of contact details with matching attributes.
    */
   public boolean equals(Object other) {
     if (other instanceof ContactDetails) {
       ContactDetails otherDetails = (ContactDetails) other;
-      return name.equals(otherDetails.getName()) &&
-          phone.equals(otherDetails.getPhone()) &&
-          address.equals(otherDetails.getAddress());
+      return name.equals(otherDetails.getName())
+          && phone.equals(otherDetails.getPhone())
+          && address.equals(otherDetails.getAddress());
     } else {
       return false;
     }
@@ -80,8 +71,8 @@ public class ContactDetails implements Comparable<ContactDetails> {
    *
    * @param otherDetails The details to be compared against.
    * @return a negative integer if this comes before the parameter,
-   * zero if they are equal and a positive integer if this
-   * comes after the second.
+   *     zero if they are equal and a positive integer if this
+   *     comes after the second.
    */
   public int compareTo(ContactDetails otherDetails) {
     int comparison = name.compareTo(otherDetails.getName());
@@ -95,9 +86,6 @@ public class ContactDetails implements Comparable<ContactDetails> {
     return address.compareTo(otherDetails.getAddress());
   }
 
-  /**
-   * @return A multi-line string containing the name, phone, and address.
-   */
   public String toString() {
     return name + "\n" + phone + "\n" + address;
   }

@@ -79,7 +79,7 @@ public class SimpleSnake implements Snake {
     }else{
       this.service.foodEaten(nextPosition);
     }
-
+// TODO: end
     return nextPosition;
   }
 
@@ -101,7 +101,7 @@ public class SimpleSnake implements Snake {
       throw new IllegalPositionException(newHead,
           BoardState.SNAKE);
     }
-
+// TODO: end
     return this.board.getStateFromPosition(newHead);
   }
 
