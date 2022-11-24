@@ -2,6 +2,10 @@ package examples.threads.simplequeue;
 
 import java.util.Queue;
 
+/**
+ *  Simple Thread that munches Food from a queue. Complains when the expected Food is a null
+ *  reference.
+ */
 public class MunchingThread extends Thread {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(MunchingThread.class);
@@ -10,6 +14,11 @@ public class MunchingThread extends Thread {
   private static int idCounter = 1;
   private boolean running = true;
 
+  /**
+   * Constructor.
+   *
+   * @param queue queue the thread gets its Food from
+   */
   public MunchingThread(final Queue<Food> queue) {
     super("munchingThread- " + idCounter++);
     this.queue = queue;

@@ -20,7 +20,8 @@ module kprog.main {
   exports prog.ex09.solution.editpizzascreen.gui;
   exports prog.ex09.solution.editpizzascreen.pizzadelivery;
   exports prog.ex09.exercise.editpizzascreen.pizzadelivery;
-  exports prog.ex10.solution.javafx4pizzadelivery.gui;
+  opens examples.javafx.fxml to javafx.fxml;
+  opens prog.ex10.solution.javafx4pizzadelivery.gui to javafx.fxml;
   exports prog.ex10.exercise.javafx4pizzadelivery.gui;
   exports prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery;
   exports prog.ex10.solution.javafx4pizzadelivery.gui.events;
