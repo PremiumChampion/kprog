@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import livesession.snake.IllegalConfigurationException;
 
+/**
+ * Demonstrates a simple modal dialog based on an exception.
+ */
 public class ModalDialogDemo extends Application {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ModalDialogDemo.class);

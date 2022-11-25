@@ -78,7 +78,7 @@ public class ShowOrderScreen extends VBox implements Initializable {
 
     try {
       FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(
-          getClass().getClassLoader().getResource("ShowOrderScreen.fxml"),
+          getClass().getClassLoader().getResource("ex10/ShowOrderScreen.fxml"),
           "ShowOrderScreen.fxml resource not found."));
       loader.setController(this);
       this.getChildren().clear();

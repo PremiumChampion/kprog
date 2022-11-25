@@ -31,7 +31,7 @@ public class FirstScreen extends VBox implements Initializable {
   public FirstScreen() {
     contactObservableList = FXCollections.observableList(MockDataGenerator.getContactList());
 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FirstScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ex10/FirstScreen.fxml"));
     loader.setRoot(this);
     loader.setController(this);
 

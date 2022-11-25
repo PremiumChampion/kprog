@@ -6,11 +6,19 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
+/**
+ * Demo to show that a simple queue makes problems in concurrency situations.
+ */
 public class NonConcurrentQueueDemo {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(NonConcurrentQueueDemo.class);
   private static final int MAX_THEADS = 100;
 
+  /**
+   * Main.
+   *
+   * @param args no args expected.
+   */
   public static void main(String[] args) {
     Queue<Food> queue = new LinkedList<>();
 
