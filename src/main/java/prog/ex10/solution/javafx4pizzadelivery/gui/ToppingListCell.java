@@ -3,6 +3,7 @@ package prog.ex10.solution.javafx4pizzadelivery.gui;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.HBox;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
 import prog.ex10.solution.javafx4pizzadelivery.gui.events.OnRemoveEventHandler;
@@ -36,7 +37,7 @@ public class ToppingListCell extends ListCell<Topping> {
     this.topping = topping;
 
     if (topping == null || empty) {
-      setGraphic(null);
+      setGraphic(new HBox());
       setText(null);
       return;
     }

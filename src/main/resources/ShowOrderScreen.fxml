@@ -14,7 +14,8 @@
     </VBox>
     <HBox layoutX="17.0" layoutY="54.0" spacing="10.0">
       <ChoiceBox id="pizzaSizeChoiceBox" fx:id="pizzaSizeChoiceBox" layoutX="14.0" layoutY="62.0"
-        prefWidth="150.0"/>
+        prefWidth="150.0"
+      />
       <Button id="addPizzaButton" fx:id="addPizzaButton" layoutX="177.0" layoutY="62.0"
         mnemonicParsing="false" text="Add pizza"/>
     </HBox>

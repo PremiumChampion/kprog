@@ -39,6 +39,7 @@ public class EditPizzaScreen extends VBox {
   public static final String SCREEN_NAME = "EditPizzaScreen";
   private final SingletonAttributeStore store;
 
+
   /**
    * stuff.
    *

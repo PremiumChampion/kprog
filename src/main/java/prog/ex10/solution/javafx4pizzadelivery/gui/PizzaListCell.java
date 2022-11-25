@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.HBox;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
 import prog.ex10.solution.javafx4pizzadelivery.gui.events.OnEditEventHandler;
 import prog.ex10.solution.javafx4pizzadelivery.gui.events.OnRemoveEventHandler;
@@ -70,7 +71,7 @@ public class PizzaListCell extends ListCell<Pizza> implements Initializable {
     changePizzaButton.setOnAction(this::editPizza);
     removePizzaButton.setOnAction(this::removePizza);
     pizzaSizeLabel.textProperty().bind(model.sizeProperty().asString("Größe: %s"));
-    toppingCountLabel.textProperty().bind(model.toppingCountProperty().asString("Toppings %d"));
+    toppingCountLabel.textProperty().bind(model.toppingCountProperty().asString("Toppings: %d"));
   }
 
   private void editPizza(ActionEvent actionEvent) {
@@ -92,7 +93,7 @@ public class PizzaListCell extends ListCell<Pizza> implements Initializable {
     super.updateItem(pizza, empty);
 
     if (pizza == null || empty) {
-      setGraphic(null);
+      setGraphic(new HBox());
       return;
     }
 
