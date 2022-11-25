@@ -45,7 +45,7 @@ public class PizzaListCell extends ListCell<Pizza> implements Initializable {
     model.pizzaProperty().addListener(this::pizzaChanged);
     try {
       FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(
-          getClass().getClassLoader().getResource("PizzaListCell.fxml"),
+          getClass().getClassLoader().getResource("ex10/PizzaListCell.fxml"),
           "PizzaListCell.fxml resource not found."));
       loader.setController(this);
       ui = loader.load();

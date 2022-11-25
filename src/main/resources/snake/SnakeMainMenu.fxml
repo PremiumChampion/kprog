@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="550.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="livesession.snake.ui.MainMenuController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004e89" height="550.0" stroke="BLACK" strokeType="INSIDE" width="728.0" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#1a659e" height="502.0" layoutX="32.0" layoutY="25.0" stroke="#1a659e" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="50.0" width="673.0" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ff6b35" height="135.0" layoutX="54.0" layoutY="46.0" stroke="#1a659e" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="622.0" />
+      <Text fill="#efefd0" layoutX="198.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SNAKE" textAlignment="CENTER">
+         <font>
+            <Font size="114.0" />
+         </font>
+      </Text>
+      <Button fx:id="startButton" defaultButton="true" layoutX="370.0" layoutY="224.0" mnemonicParsing="false" prefHeight="101.0" prefWidth="311.0" style="-fx-background-color: #FF6B35; -fx-background-radius: 50;" text="Start" textFill="#efefd0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button fx:id="optionsButton" defaultButton="true" layoutX="370.0" layoutY="391.0" mnemonicParsing="false" prefHeight="101.0" prefWidth="311.0" style="-fx-background-color: #F1A208; -fx-background-radius: 50;" text="Options" textFill="#efefd0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9c6644" height="269.0" layoutX="61.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="282.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a994e" height="240.0" layoutX="82.0" layoutY="237.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="242.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffd500" height="21.0" layoutX="112.0" layoutY="276.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="96.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffd500" height="21.0" layoutX="203.0" layoutY="347.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="90.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffd500" height="77.0" layoutX="203.0" layoutY="276.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="23.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffd500" height="51.0" layoutX="270.0" layoutY="353.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="23.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffd500" height="21.0" layoutX="134.0" layoutY="391.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="159.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f1a208" height="21.0" layoutX="134.0" layoutY="391.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="23.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc4749" height="21.0" layoutX="134.0" layoutY="337.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="23.0" />
+   </children>
+</AnchorPane>
