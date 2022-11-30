@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<?import livesession.snake.ui.nodes.SnakeBoard?>
+<AnchorPane prefHeight="550.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="livesession.snake.ui.gameover.GameOverController">
+  <Rectangle arcHeight="5.0" fill="#004e89" height="550.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="728.0" />
+  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#1a659e" height="502.0" layoutX="32.0" layoutY="25.0" stroke="#1a659e" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="50.0" width="673.0" />
+  <SnakeBoard fx:id="gameBoard" layoutX="139.0" layoutY="51.0" prefHeight="450.0" prefWidth="450.0" snakeModel="${controller.snakeModel}" />
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0000008d" height="550.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="728.0" />
+   <Text fill="#efefd0" layoutX="178.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Over">
+      <font>
+         <Font size="75.0" />
+      </font>
+   </Text>
+   <Label fx:id="scoreLabel" layoutX="232.0" layoutY="191.0" text="Score: xxxx" textFill="#efefd0">
+      <font>
+         <Font size="57.0" />
+      </font>
+   </Label>
+  <Button fx:id="restartButton" defaultButton="true" layoutX="57.0" layoutY="345.0" mnemonicParsing="false" onAction="#restart" prefHeight="101.0" prefWidth="311.0" style="-fx-background-color: #FF6B35; -fx-background-radius: 50;" text="Retry" textFill="#efefd0">
+    <font>
+      <Font size="36.0" />
+    </font>
+  </Button>
+  <Button fx:id="mainMenuButton" defaultButton="true" layoutX="378.0" layoutY="345.0" mnemonicParsing="false" onAction="#showMainMenu" prefHeight="101.0" prefWidth="311.0" style="-fx-background-color: #F1A208; -fx-background-radius: 50;" text="Menu" textFill="#efefd0">
+    <font>
+      <Font size="36.0" />
+    </font>
+  </Button>
+</AnchorPane>

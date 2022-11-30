@@ -1,8 +1,10 @@
 package livesession.snake.ui;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.stage.Stage;
+import livesession.snake.ui.mainmenu.MainMenu;
 
 public class SimpleSnakeUi extends Application {
 
@@ -12,14 +14,15 @@ public class SimpleSnakeUi extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-
-
-
-
-    Scene scene = new Scene();
-    primaryStage.setScene();
-
+    SnakeScreenLoader snakeScreenLoader = new SnakeScreenLoader();
+    primaryStage.setScene(snakeScreenLoader.getScene());
+    snakeScreenLoader.load(new MainMenu());
     primaryStage.show();
+  }
+
+  @Override
+  public void stop() throws Exception {
+    super.stop();
 
   }
 }

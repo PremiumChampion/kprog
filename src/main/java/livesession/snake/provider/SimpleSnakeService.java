@@ -4,6 +4,7 @@ import static livesession.snake.Board.MINIMAL_BOARD_SIZE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 import livesession.snake.Board;
@@ -51,7 +52,18 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     this.gameState = GameState.PREPARED;
     this.board = new InternalBoard(this.gameConfiguration.getSize());
     this.snake = new SimpleSnake(this);
+    this.score = 0;
     this.initFood();
+    allPropertiesChanged();
+  }
+
+  private void allPropertiesChanged() {
+    notifyListeners((l) -> {
+      l.newGameState(gameState);
+      l.updateScore(score);
+      l.updateBoard(getExternalBoard());
+      l.gameEnded(null);
+    });
   }
 
   private void initFood(){
@@ -167,8 +179,9 @@ public class SimpleSnakeService implements ExtendedSnakeService {
    * @param consumer consumer to be executed.
    */
   private void notifyListeners(Consumer<SnakeListener> consumer) {
-    for (SnakeListener listener : listeners) {
-      consumer.accept(listener);
+    Iterator<SnakeListener> i = listeners.iterator();
+    while (i.hasNext()){
+      consumer.accept(i.next());
     }
   }
 
@@ -245,6 +258,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     this.addFood(nextFoodCoordinate);
     updateScore(BoardState.FOOD);
     this.board.removeFood(coordinate);
+    notifyListeners((l) -> l.updateBoard(getExternalBoard()));
     // TODO: end.
   }
 

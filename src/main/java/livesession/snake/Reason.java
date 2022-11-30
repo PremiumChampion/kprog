@@ -91,7 +91,7 @@ public class Reason {
   /**
    * Modes the reason can be in.
    */
-  enum Mode {
+  public enum Mode {
     MESSAGE, COORDINATE
   }
 }

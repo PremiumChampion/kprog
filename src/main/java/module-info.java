@@ -27,4 +27,11 @@ module kprog.main {
   exports prog.ex10.solution.javafx4pizzadelivery.gui.events;
   opens livesession.snake to javafx.fxml,javafx.graphics;
   exports livesession.snake;
+  exports livesession.snake.ui;
+  exports livesession.snake.ui.configure;
+  exports livesession.snake.ui.gameover;
+  exports livesession.snake.ui.mainmenu;
+  exports livesession.snake.ui.pause;
+  exports livesession.snake.ui.play;
+  exports livesession.snake.ui.nodes;
 }
