@@ -120,3 +120,29 @@ task zipEx10WithResources(type: Zip) {
         into('src/main/resources')
     }
 }
+
+
+task zipAgainSnake(type: Zip) {
+    archiveFileName = "ltsSnakeWithResources.zip"
+    destinationDirectory = file ("${rootDir}/zipfiles")
+    from ('src/main/java/livesession/snake') {
+        into('src/main/java/livesession/snake')
+    }
+    from ('src/main/java') {
+        include ('module-info.java')
+        into('src/main/java')
+    }
+    from ('src/main/resources') {
+        into('src/main/resources')
+    }
+
+//    include "src/main/java/module-info.java"
+}
+
+zipAgainSnake.doFirst {
+    println"Try zipping the snake project with resources ..."
+}
+zipAgainSnake.doLast {
+    println "Resulting zip file should be ${rootDir}/zipfiles/ltsSnakeWithResources.zip"
+    assert file("${rootDir}/zipfiles/ltsSnakeWithResources.zip").exists()
+}
