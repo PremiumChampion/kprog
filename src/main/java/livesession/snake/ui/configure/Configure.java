@@ -5,32 +5,35 @@ import java.net.URL;
 import java.util.Objects;
 import livesession.snake.GameConfiguration;
 import livesession.snake.IllegalConfigurationException;
-import livesession.snake.ui.BaseSnakeComponent;
+import livesession.snake.ui.BaseSnakeScreen;
 import livesession.snake.ui.SnakeServiceViewModel;
 import livesession.snake.ui.mainmenu.MainMenu;
 
 /**
- * class ConfigureView.
+ * Shows a configuration screen.
  */
-public class Configure extends BaseSnakeComponent<ConfigureController, ConfigureModel> {
+public class Configure extends BaseSnakeScreen<ConfigureController, ConfigureModel> {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Configure.class);
+
   @Override
   public void bind(SnakeServiceViewModel thingToBind) {
-//    super.bind(thingToBind);
     model.getSnakeModel().bindBidirectional(thingToBind);
     model.setSaveConfigurationHandler(this::onSave);
     model.setDiscardHandler(this::onDiscard);
     controller.bind();
   }
 
+  /**
+   * Action to perform when the discard button is pressed.
+   */
   private void onDiscard() {
     this.sceneLoader.load(new MainMenu());
   }
 
   private void onSave(int speed, int size, int food) {
-    logger.info("onSave: speed:{} size:{} food:{}",speed,size,food);
+    logger.info("onSave: speed:{} size:{} food:{}", speed, size, food);
     try {
       GameConfiguration configuration = new GameConfiguration(size, speed, food);
       this.model.getSnakeModel().setConfiguration(configuration);
@@ -41,7 +44,7 @@ public class Configure extends BaseSnakeComponent<ConfigureController, Configure
   }
 
   @Override
-  protected URL getFXMLLocation() {
+  protected URL getFxmlLocation() {
     return Objects.requireNonNull(
         getClass().getClassLoader().getResource("snake/SnakeConfigureView.fxml"),
         "could not load SnakeConfigureView.fxml");

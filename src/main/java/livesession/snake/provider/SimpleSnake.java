@@ -43,32 +43,34 @@ public class SimpleSnake implements Snake {
    */
   public Coordinate advance() throws IllegalPositionException {
     // TODO: (DONE) advance the snake
-    Coordinate currentHead = this.position.getFirst();
     Direction currentDirection = this.direction;
 
-    int moveROW = 0;
-    int moveCOL = 0;
+    int moveRow = 0;
+    int moveCol = 0;
 
     if (currentDirection == Direction.NORTH) {
-      moveROW = -1;
-      moveCOL = 0;
+      moveRow = -1;
+      moveCol = 0;
     }
 
     if (currentDirection == Direction.EAST) {
-      moveROW = 0;
-      moveCOL = +1;
-    }
-    if (currentDirection == Direction.SOUTH) {
-      moveROW = +1;
-      moveCOL = 0;
-    }
-    if (currentDirection == Direction.WEST) {
-      moveROW = 0;
-      moveCOL = -1;
+      moveRow = 0;
+      moveCol = +1;
     }
 
-    Coordinate nextPosition = new Coordinate(currentHead.getRow() + moveROW,
-        currentHead.getColumn() + moveCOL);
+    if (currentDirection == Direction.SOUTH) {
+      moveRow = +1;
+      moveCol = 0;
+    }
+
+    if (currentDirection == Direction.WEST) {
+      moveRow = 0;
+      moveCol = -1;
+    }
+    Coordinate currentHead = this.position.getFirst();
+
+    Coordinate nextPosition = new Coordinate(currentHead.getRow() + moveRow,
+        currentHead.getColumn() + moveCol);
 
     BoardState newPosBoardState = assertNewPositionIsPossible(nextPosition);
 
@@ -76,10 +78,10 @@ public class SimpleSnake implements Snake {
 
     if (newPosBoardState != BoardState.FOOD) {
       this.position.removeLast();
-    }else{
+    } else {
       this.service.foodEaten(nextPosition);
     }
-// TODO: end
+    // TODO: end
     return nextPosition;
   }
 
@@ -93,6 +95,7 @@ public class SimpleSnake implements Snake {
         break;
       case WALL:
       case SNAKE:
+      default:
         throw new IllegalPositionException(newHead,
             this.board.getStateFromPosition(newHead));
     }
@@ -101,7 +104,7 @@ public class SimpleSnake implements Snake {
       throw new IllegalPositionException(newHead,
           BoardState.SNAKE);
     }
-// TODO: end
+    // TODO: end
     return this.board.getStateFromPosition(newHead);
   }
 

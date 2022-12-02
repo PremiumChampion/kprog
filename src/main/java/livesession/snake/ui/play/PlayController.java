@@ -1,21 +1,14 @@
 package livesession.snake.ui.play;
 
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javafx.beans.Observable;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import livesession.snake.Board;
-import livesession.snake.provider.ExternalBoard;
 import livesession.snake.ui.BaseSnakeUiController;
 import livesession.snake.ui.SnakeServiceViewModel;
 import livesession.snake.ui.nodes.SnakeBoard;
@@ -23,7 +16,7 @@ import livesession.snake.ui.nodes.SnakeBoard;
 /**
  * class PlayViewController.
  */
-public class PlayController implements Initializable, BaseSnakeUiController<PlayModel> {
+public class PlayController implements BaseSnakeUiController<PlayModel> {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(PlayController.class);
@@ -42,29 +35,32 @@ public class PlayController implements Initializable, BaseSnakeUiController<Play
   public SnakeBoard gameBoard;
   private PlayModel model = new PlayModel();
 
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
-    logger.info("initialising");
-  }
-
-  public PlayModel getModel() {
-    logger.debug("getModel");
-    return model;
-  }
-
+  /**
+   * get the snake model.
+   *
+   * @return the snake model.
+   */
   public SnakeServiceViewModel getSnakeModel() {
     logger.debug("getSnakeModel");
     return model.getSnakeModel();
   }
 
+  /**
+   * handler for pause button.
+   *
+   * @param actionEvent event.
+   */
   public void pause(ActionEvent actionEvent) {
-    logger.debug("pause: {}", getSnakeModel().getService());
-    getSnakeModel().getService().pause();
+    model.getOnPauseGameAction().run();
   }
 
+  /**
+   * handler for the giveUp button.
+   *
+   * @param actionEvent event.
+   */
   public void giveUp(ActionEvent actionEvent) {
-    logger.debug("giveUp: {}", getSnakeModel().getService());
-    getSnakeModel().getService().abort();
+    model.getOnAbortGameAction().run();
   }
 
   @Override
@@ -82,25 +78,45 @@ public class PlayController implements Initializable, BaseSnakeUiController<Play
     scoreLabel.textProperty().bind(getSnakeModel().scoreProperty().asString("Score: %d"));
   }
 
+  /**
+   * handles a keypress event.
+   *
+   * @param keyEvent event.
+   */
   private void keyPressed(KeyEvent keyEvent) {
-    logger.info("keyPressed {}",keyEvent.getCode());
+    logger.info("keyPressed {}", keyEvent.getCode());
     Direction d = keybindings.get(keyEvent.getCode());
 
-    if(d == Direction.LEFT){
+    if (d == Direction.LEFT) {
       getSnakeModel().getService().moveLeft();
     }
-    if(d == Direction.RIGHT){
+    if (d == Direction.RIGHT) {
       getSnakeModel().getService().moveRight();
     }
   }
 
+  /**
+   * focus changed event for the grid.
+   *
+   * @param observable grid focus property.
+   */
   private void focusChanged(Observable observable) {
     if (!gameBoard.isFocused()) {
       gameBoard.requestFocus();
     }
   }
 
+  /**
+   * keybinding action.
+   */
   enum Direction {
-    LEFT, RIGHT;
+    /**
+     * left.
+     */
+    LEFT,
+    /**
+     * right.
+     */
+    RIGHT;
   }
 }

@@ -23,7 +23,8 @@ public class ShowOrderScreenModel {
   private final IntegerProperty pizzaId = new SimpleIntegerProperty();
   private final IntegerProperty preis = new SimpleIntegerProperty();
   private final ObjectProperty<PizzaSize> pizzaSize = new SimpleObjectProperty<>();
-  private final ObjectProperty<PizzaDeliveryService> pizzaDeliveryService = new SimpleObjectProperty<>();
+  private final ObjectProperty<PizzaDeliveryService> pizzaDeliveryService =
+      new SimpleObjectProperty<>();
 
   //region getter/setter
   public ObservableList<Pizza> getPizzasInOrderList() {

@@ -26,10 +26,16 @@ public class FoodGenerator {
     this.random = new Random(42);
   }
 
+  /**
+   * place food.
+   *
+   * @return new food coordinate.
+   */
   public Coordinate placeFood() {
     // TODO: (DONE) place the food randomly.
-    Coordinate coordinate = new Coordinate(1+this.random.nextInt(service.getConfiguration().getSize()-2),
-        1+this.random.nextInt(service.getConfiguration().getSize()-2));
+    Coordinate coordinate = new Coordinate(
+        1 + this.random.nextInt(service.getConfiguration().getSize() - 2),
+        1 + this.random.nextInt(service.getConfiguration().getSize() - 2));
     // TODO: end.
     return coordinate;
   }

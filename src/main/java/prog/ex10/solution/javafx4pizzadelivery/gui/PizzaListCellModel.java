@@ -55,5 +55,5 @@ public class PizzaListCellModel {
   public void setPizza(Pizza pizza) {
     this.pizza.set(pizza);
   }
-//endregion
+  //endregion
 }

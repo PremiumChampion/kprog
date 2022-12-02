@@ -24,6 +24,9 @@ public class InternalBoard extends BaseBoard {
 
   }
 
+  /**
+   * creates a empty board.
+   */
   public void createEmptyBoard() {
     for (int row = 0; row < size; row++) {
       for (int col = 0; col < size; col++) {

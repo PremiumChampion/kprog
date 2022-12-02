@@ -13,33 +13,47 @@ import livesession.snake.ui.nodes.SnakeBoard;
 /**
  * class PauseViewController.
  */
-public class PauseController implements Initializable , BaseSnakeUiController<PauseModel> {
+public class PauseController implements Initializable, BaseSnakeUiController<PauseModel> {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(PauseController.class);
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      PauseController.class);
   public Label scoreLabel;
   public Button giveUpButton;
   public Button resumeButton;
   public SnakeBoard gameBoard;
   private PauseModel model = new PauseModel();
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     logger.info("initialising");
   }
 
-  public PauseModel getModel() {
-    return model;
-  }
+  /**
+   * getter for the snake model.
+   *
+   * @return the snake model.
+   */
 
-  public SnakeServiceViewModel getSnakeModel(){
+  public SnakeServiceViewModel getSnakeModel() {
     return model.getSnakeModel();
   }
+
+  /**
+   * handler for the give up button.
+   *
+   * @param actionEvent event.
+   */
   public void giveUp(ActionEvent actionEvent) {
-    getSnakeModel().getService().abort();
+    model.getOnAbortGameAction().run();
   }
 
+  /**
+   * handler for the resume button.
+   *
+   * @param actionEvent event.
+   */
   public void resume(ActionEvent actionEvent) {
-    getSnakeModel().getService().resume();
+    model.getOnResumeGameAction().run();
   }
 
   @Override

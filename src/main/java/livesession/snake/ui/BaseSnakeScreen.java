@@ -8,25 +8,34 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
 /**
- * class BaseSnakeComponent.
+ * Implements base actions for a snake screen, synchronises controller, property binding and
+ * dependency injection.
+ *
+ * @param <Controller> the controller of the screen.
+ * @param <Model>      the model of the screen.
  */
-public abstract class BaseSnakeComponent<Controller extends BaseSnakeUiController, Model extends BaseSnakeUiModel> implements
-    Loadable<SnakeServiceViewModel> {
+public abstract class BaseSnakeScreen<
+    Controller extends BaseSnakeUiController,
+    Model extends BaseSnakeUiModel>
+    implements Loadable<SnakeServiceViewModel> {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(BaseSnakeComponent.class);
+      org.slf4j.LoggerFactory.getLogger(BaseSnakeScreen.class);
   protected Loader<SnakeServiceViewModel> sceneLoader;
   protected FXMLLoader loader;
   protected Controller controller;
   protected Model model;
 
-  public BaseSnakeComponent() {
-    loader = new FXMLLoader(Objects.requireNonNull(getFXMLLocation(), "FXML-File not found."));
+  /**
+   * constructs a new snake screen.
+   */
+  public BaseSnakeScreen() {
+    loader = new FXMLLoader(Objects.requireNonNull(getFxmlLocation(), "FXML-File not found."));
 
     try {
       model = getModelClass().getDeclaredConstructor().newInstance();
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-             NoSuchMethodException e) {
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException
+             | NoSuchMethodException e) {
       logger.error(e.getMessage(), e);
       throw new RuntimeException(e);
     }
@@ -63,9 +72,25 @@ public abstract class BaseSnakeComponent<Controller extends BaseSnakeUiControlle
     model.getSnakeModel().bind(snakeModel);
     this.controller.bind();
   }
-  protected abstract URL getFXMLLocation();
 
+  /**
+   * Location of the fxml file to load. file needs controller to specified.
+   *
+   * @return the location of the file.
+   */
+  protected abstract URL getFxmlLocation();
+
+  /**
+   * class for the controller used for type checking.
+   *
+   * @return the controller class.
+   */
   protected abstract Class<Controller> getControllerClass();
 
+  /**
+   * class for the model. used to generate a shared model.
+   *
+   * @return the model class.
+   */
   protected abstract Class<Model> getModelClass();
 }

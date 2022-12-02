@@ -9,7 +9,7 @@ import livesession.snake.Coordinate;
 import livesession.snake.ui.SnakeServiceViewModel;
 
 /**
- * class BaseSnakeBoard.
+ * class SnakeBoard.
  */
 public class SnakeBoard extends GridPane {
 
@@ -19,10 +19,19 @@ public class SnakeBoard extends GridPane {
   private SnakeServiceViewModel snakeModel = new SnakeServiceViewModel();
   private Map<Coordinate, SnakeBoardCell> cells = new HashMap<>();
 
-  public SnakeServiceViewModel getSnakeModel() {
-    return snakeModel;
+  /**
+   * create a new snake model.
+   */
+  public SnakeBoard() {
+    logger.debug("constructor");
+    setFocusTraversable(true);
   }
 
+  /**
+   * sets a new snake model.
+   *
+   * @param snakeModel the new snake model.
+   */
   public void setSnakeModel(SnakeServiceViewModel snakeModel) {
     logger.debug("setSnakeModel");
     this.snakeModel.unbind();
@@ -30,17 +39,15 @@ public class SnakeBoard extends GridPane {
     createBoard();
   }
 
-  public SnakeBoard() {
-    logger.debug("constructor");
-    setFocusTraversable(true);
-  }
-
+  /**
+   * creates a new Board and bind events.
+   */
   private void createBoard() {
-    cells.values().forEach(cell -> cell.unbind());
+    cells.values().forEach(SnakeBoardCell::unbind);
     cells.clear();
     getChildren().clear();
     int boardSize = snakeModel.getService().getConfiguration().getSize();
-    logger.info("boardSize:{}", boardSize);
+    logger.info("configuration: size:{}", boardSize);
     double cellSize = floor(getPrefWidth() / boardSize);
     for (int row = 0; row < boardSize; row++) {
       for (int col = 0; col < boardSize; col++) {

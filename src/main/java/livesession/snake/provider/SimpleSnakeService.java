@@ -45,7 +45,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     this.gameConfiguration = GameConfiguration.DEFAULT_GAME_CONFIGURATION;
     this.foodGenerator = new FoodGenerator(this);
     this.init();
-// TODO: end.
+    // TODO: end.
   }
 
   private void init() {
@@ -66,12 +66,13 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     });
   }
 
-  private void initFood(){
+  private void initFood() {
     for (int i = 0; i < this.gameConfiguration.getNumberOfFood(); i++) {
       Coordinate nextFoodCoordinate;
       do {
         nextFoodCoordinate = foodGenerator.placeFood();
-      } while (this.getExternalBoard().getStateFromPosition(nextFoodCoordinate) != BoardState.GRASS);
+      } while (this.getExternalBoard().getStateFromPosition(nextFoodCoordinate)
+          != BoardState.GRASS);
       this.addFood(nextFoodCoordinate);
     }
   }
@@ -180,7 +181,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
    */
   private void notifyListeners(Consumer<SnakeListener> consumer) {
     Iterator<SnakeListener> i = listeners.iterator();
-    while (i.hasNext()){
+    while (i.hasNext()) {
       consumer.accept(i.next());
     }
   }
@@ -220,6 +221,9 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     // TODO: end.
   }
 
+  /**
+   * do a step.
+   */
   public void triggeredByGameLoop() {
     try {
       advanceSnake();
@@ -290,6 +294,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   public InternalBoard getInternalBoard() {
     return board;
   }
+
   public Board getBoard() {
     return getExternalBoard();
   }

@@ -2,11 +2,14 @@ package livesession.snake.ui.mainmenu;
 
 import java.net.URL;
 import java.util.Objects;
-import livesession.snake.ui.BaseSnakeComponent;
+import livesession.snake.ui.BaseSnakeScreen;
 import livesession.snake.ui.SnakeServiceViewModel;
 import livesession.snake.ui.configure.Configure;
 
-public class MainMenu extends BaseSnakeComponent<MainMenuController,MainMenuModel> {
+/**
+ * main menu.
+ */
+public class MainMenu extends BaseSnakeScreen<MainMenuController, MainMenuModel> {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(MainMenu.class);
@@ -19,15 +22,22 @@ public class MainMenu extends BaseSnakeComponent<MainMenuController,MainMenuMode
     controller.getModel().setOnConfigure(this::onConfigure);
   }
 
+  /**
+   * action to perform when game should start.
+   */
   private void onStart() {
     model.getSnakeModel().serviceProperty().get().start();
   }
 
+  /**
+   * action to perform when game should be configured.
+   */
   private void onConfigure() {
     sceneLoader.load(new Configure());
   }
 
-  protected URL getFXMLLocation() {
+  @Override
+  protected URL getFxmlLocation() {
     return Objects.requireNonNull(
         getClass().getClassLoader().getResource("snake/SnakeMainMenu.fxml"),
         "could not load SnakeMainMenu.fxml");
@@ -40,6 +50,6 @@ public class MainMenu extends BaseSnakeComponent<MainMenuController,MainMenuMode
 
   @Override
   protected Class<MainMenuModel> getModelClass() {
-    return  MainMenuModel.class;
+    return MainMenuModel.class;
   }
 }

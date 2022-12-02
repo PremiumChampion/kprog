@@ -44,12 +44,8 @@ public class SimpleGameLoop extends Thread implements GameLoop {
           }
         } catch (InterruptedException e) {
           shouldTerminate = true;
-          continue;
         }
-      }
-
-      if(shouldTerminate){
-        return;
+        continue;
       }
 
       service.triggeredByGameLoop();

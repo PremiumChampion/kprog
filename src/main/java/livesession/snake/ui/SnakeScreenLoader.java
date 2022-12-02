@@ -21,19 +21,30 @@ public class SnakeScreenLoader implements Loader<SnakeServiceViewModel> {
       org.slf4j.LoggerFactory.getLogger(SnakeScreenLoader.class);
   private Group root = new Group();
   private Scene scene = new Scene(root);
-  private final SnakeServiceViewModel MASTER_MODEL = new SnakeServiceViewModel(true);
+  private final SnakeServiceViewModel masterModel = new SnakeServiceViewModel(true);
 
+  /**
+   * creates a new instance of a snake screen.
+   */
   public SnakeScreenLoader() {
-    MASTER_MODEL.gameStateProperty().addListener(this::gameStateChanged);
-    MASTER_MODEL.reasonProperty().addListener(this::reasonChanged);
+    masterModel.gameStateProperty().addListener(this::gameStateChanged);
+    masterModel.reasonProperty().addListener(this::reasonChanged);
   }
 
+  /**
+   * reason changed.
+   *
+   * @param observable reason property.
+   */
   private void reasonChanged(Observable observable) {
     setAbortScreen();
   }
 
+  /**
+   * set the abort screen.
+   */
   private void setAbortScreen() {
-    Reason reason = MASTER_MODEL.getReason();
+    Reason reason = masterModel.getReason();
     if (reason == null) {
       // do nothing
     }
@@ -49,8 +60,13 @@ public class SnakeScreenLoader implements Loader<SnakeServiceViewModel> {
     }
   }
 
+  /**
+   * game state changed. change ui.
+   *
+   * @param observable game-state property.
+   */
   private void gameStateChanged(Observable observable) {
-    GameState gameState = MASTER_MODEL.getGameState();
+    GameState gameState = masterModel.getGameState();
     logger.info("game-state changed: {}", gameState);
     switch (gameState) {
       case ABORTED:
@@ -75,10 +91,20 @@ public class SnakeScreenLoader implements Loader<SnakeServiceViewModel> {
     }
   }
 
+  /**
+   * get the scene.
+   *
+   * @return the scene.
+   */
   public Scene getScene() {
     return scene;
   }
 
+  /**
+   * load a new ui component.
+   *
+   * @param ui the component to load.
+   */
   public void load(Loadable<SnakeServiceViewModel> ui) {
     if (!Platform.isFxApplicationThread()) {
       Platform.runLater(() -> load(ui));
@@ -87,7 +113,7 @@ public class SnakeScreenLoader implements Loader<SnakeServiceViewModel> {
 
     root.getChildren().clear();
     ui.setLoader(this);
-    ui.bind(MASTER_MODEL);
+    ui.bind(masterModel);
 
     root.getChildren().add(ui.load());
   }

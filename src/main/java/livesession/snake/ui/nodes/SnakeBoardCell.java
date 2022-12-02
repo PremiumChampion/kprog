@@ -15,7 +15,8 @@ import livesession.snake.ui.SnakeServiceViewModel;
  */
 public class SnakeBoardCell extends Rectangle {
 
-  public static final Paint GRASS = Color.web("#6A994E");
+  public static final Paint GRASS_LIGHT = Color.web("#6A994E");
+  public static final Paint GRASS_DARK = Color.web("#67944d");
   public static final Paint SNAKE_BODY = Color.web("#FFD500");
   public static final Paint SNAKE_HEAD = Color.web("#F1A208");
   public static final Paint FOOD = Color.web("#BC4749");
@@ -27,6 +28,13 @@ public class SnakeBoardCell extends Rectangle {
   private SnakeServiceViewModel model;
   private InvalidationListener onChange = this::boardChanged;
 
+  /**
+   * creates a new snake cell.
+   *
+   * @param model      the model to show data from.
+   * @param coordinate the coordinate of the cell.
+   * @param size       the size of the cell for showing in the grid.
+   */
   public SnakeBoardCell(SnakeServiceViewModel model, Coordinate coordinate, double size) {
     super(size, size);
     logger.debug("constructor {} {}", coordinate, size);
@@ -38,19 +46,30 @@ public class SnakeBoardCell extends Rectangle {
     setStrokeWidth(0);
   }
 
+  /**
+   * called before snake is removed.
+   */
   public void unbind() {
     this.model.boardProperty().removeListener(onChange);
   }
 
+  /**
+   * handler when the board changed.
+   *
+   * @param observable board property.
+   */
   private void boardChanged(Observable observable) {
     updateCellValue();
   }
 
+  /**
+   * updates the cells value.
+   */
   private void updateCellValue() {
     Coordinate head = model.getService().getSnake().getPosition().get(0);
     Board board = model.getBoard();
     BoardState boardState = board.getStateFromPosition(coordinate);
-    Paint color = GRASS;
+    Paint color = GRASS_LIGHT;
     switch (boardState) {
       case SNAKE:
         if (coordinate.equals(head)) {
@@ -60,7 +79,11 @@ public class SnakeBoardCell extends Rectangle {
         }
         break;
       case GRASS:
-        color = GRASS;
+        boolean rowIsEven = coordinate.getRow() % 2 == 0;
+        boolean colIsEven = coordinate.getColumn() % 2 == 0;
+
+        color = rowIsEven ? (colIsEven ? GRASS_LIGHT : GRASS_DARK)
+            : colIsEven ? GRASS_DARK : GRASS_LIGHT;
         break;
       case WALL:
         color = WALL;
@@ -68,6 +91,8 @@ public class SnakeBoardCell extends Rectangle {
       case FOOD:
         color = FOOD;
         break;
+      default:
+        throw new IllegalArgumentException("Did not expect:" + boardState);
     }
     setFill(color);
   }

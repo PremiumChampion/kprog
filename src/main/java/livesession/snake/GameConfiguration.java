@@ -1,11 +1,10 @@
 package livesession.snake;
 
-import java.util.StringJoiner;
-
-import static livesession.snake.Board.MINIMAL_BOARD_SIZE;
 import static livesession.snake.SnakeService.DEFAULT_NUMBER_OF_FOOD;
 import static livesession.snake.SnakeService.DEFAULT_SIZE;
 import static livesession.snake.SnakeService.DEFAULT_VELOCITY;
+
+import java.util.StringJoiner;
 
 /**
  * Configures a snake game. This class is intended to be immutable.

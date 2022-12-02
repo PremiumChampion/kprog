@@ -20,8 +20,8 @@ import livesession.snake.provider.SimpleSnakeService;
 public class SnakeServiceViewModel implements SnakeListener {
 
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(SnakeServiceViewModel.class);
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      SnakeServiceViewModel.class);
   private boolean isMaster = false;
   private ObjectProperty<SnakeService> service = new SimpleObjectProperty<>();
   private ObjectProperty<Board> board = new SimpleObjectProperty<>();
@@ -30,16 +30,27 @@ public class SnakeServiceViewModel implements SnakeListener {
   private ObjectProperty<Reason> reason = new SimpleObjectProperty<>(null);
   private IntegerProperty score = new SimpleIntegerProperty(0);
 
+  /**
+   * new snake service View Model.
+   *
+   * @param isMaster sets the model as master.
+   */
   public SnakeServiceViewModel(boolean isMaster) {
     this.isMaster = isMaster;
     init();
     getService().addListener(this);
   }
 
+  /**
+   * create a new snake model but skip binding event listener.
+   */
   public SnakeServiceViewModel() {
     init();
   }
 
+  /**
+   * initialise default values.
+   */
   private void init() {
     SimpleSnakeService simpleSnakeService = new SimpleSnakeService();
     service.setValue(simpleSnakeService);
@@ -84,55 +95,121 @@ public class SnakeServiceViewModel implements SnakeListener {
     this.score.setValue(score);
   }
 
+  /**
+   * getter for the board.
+   *
+   * @return board.
+   */
   public Board getBoard() {
     return board.get();
   }
 
+  /**
+   * getter for board property.
+   *
+   * @return board property.
+   */
   public ObjectProperty<Board> boardProperty() {
     return board;
   }
 
+  /**
+   * getter game-state.
+   *
+   * @return gamestate.
+   */
   public GameState getGameState() {
     return gameState.get();
   }
 
+  /**
+   * getter game-state.property.
+   *
+   * @return game-state-property.
+   */
   public ObjectProperty<GameState> gameStateProperty() {
     return gameState;
   }
 
+  /**
+   * getter current score.
+   *
+   * @return current score.
+   */
   public int getScore() {
     return score.get();
   }
 
+  /**
+   * getter current score property.
+   *
+   * @return score property.
+   */
   public IntegerProperty scoreProperty() {
     return score;
   }
 
+  /**
+   * getter current reason.
+   *
+   * @return current reason.
+   */
   public Reason getReason() {
     return reason.get();
   }
 
+  /**
+   * getter reason property.
+   *
+   * @return reason property.
+   */
   public ObjectProperty<Reason> reasonProperty() {
     return reason;
   }
 
+  /**
+   * getter snake service.
+   *
+   * @return snake service.
+   */
   public SnakeService getService() {
     return service.get();
   }
 
+  /**
+   * getter snake service property.
+   *
+   * @return snake service property.
+   */
   public ObjectProperty<SnakeService> serviceProperty() {
     return service;
   }
 
+  /**
+   * getter configuration.
+   *
+   * @return configuration.
+   */
   public GameConfiguration getConfiguration() {
     logger.info("getConfiguration");
     return configuration.get();
   }
 
+  /**
+   * Game configuration property.
+   *
+   * @return configuration property.
+   */
   public ObjectProperty<GameConfiguration> configurationProperty() {
     return configuration;
   }
 
+  /**
+   * set a new configuration.
+   *
+   * @param configuration the new configuration.
+   * @throws IllegalConfigurationException illegal exception.
+   */
   public void setConfiguration(GameConfiguration configuration)
       throws IllegalConfigurationException {
     if (!Platform.isFxApplicationThread()) {
@@ -150,23 +227,27 @@ public class SnakeServiceViewModel implements SnakeListener {
   }
 
   /**
-   * sets value to other and binds property bidirectional
+   * sets value to other and binds property bidirectional.
    *
-   * @param other property with new value
+   * @param other property with new value.
    */
   public void bindBidirectional(SnakeServiceViewModel other) {
-    SnakeService simpleSnakeService = service.get();
     score.bindBidirectional(other.scoreProperty());
     board.bindBidirectional(other.boardProperty());
     gameState.bindBidirectional(other.gameStateProperty());
     reason.bindBidirectional(other.reasonProperty());
     service.bindBidirectional(other.serviceProperty());
     configuration.bindBidirectional(other.configurationProperty());
-    simpleSnakeService = service.get();
+    SnakeService simpleSnakeService = service.get();
     board.set(simpleSnakeService.getBoard());
     configuration.set(simpleSnakeService.getConfiguration());
   }
 
+  /**
+   * unbind properties bidirectional.
+   *
+   * @param other other model.
+   */
   public void unbindBidirectional(SnakeServiceViewModel other) {
     score.unbindBidirectional(other.scoreProperty());
     board.unbindBidirectional(other.boardProperty());
@@ -177,9 +258,9 @@ public class SnakeServiceViewModel implements SnakeListener {
   }
 
   /**
-   * sets value to other and binds property
+   * sets value to other and binds property.
    *
-   * @param other property with new value
+   * @param other property with new value.
    */
   public void bind(SnakeServiceViewModel other) {
     unbind();
@@ -191,6 +272,9 @@ public class SnakeServiceViewModel implements SnakeListener {
     configuration.bind(other.configurationProperty());
   }
 
+  /**
+   * unbind unidirectional.
+   */
   public void unbind() {
     score.unbind();
     board.unbind();

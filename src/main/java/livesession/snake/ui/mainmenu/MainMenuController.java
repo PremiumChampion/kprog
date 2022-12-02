@@ -8,7 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import livesession.snake.ui.BaseSnakeUiController;
 
-public class MainMenuController implements Initializable, BaseSnakeUiController<MainMenuModel> {
+/**
+ * controller for the main menu.
+ */
+public class MainMenuController implements BaseSnakeUiController<MainMenuModel> {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(MainMenuController.class);
@@ -18,20 +21,29 @@ public class MainMenuController implements Initializable, BaseSnakeUiController<
   public Button optionsButton;
   private MainMenuModel model = new MainMenuModel();
 
-
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
-    logger.info("initialising");
-  }
-
+  /**
+   * getter for the snake model.
+   *
+   * @return the snake model.
+   */
   public MainMenuModel getModel() {
     return model;
   }
 
+  /**
+   * handler for the on action start button.
+   *
+   * @param actionEvent event.
+   */
   public void start(ActionEvent actionEvent) {
     this.model.getOnStart().run();
   }
 
+  /**
+   * handler for the configure button click.
+   *
+   * @param actionEvent event.
+   */
   public void configure(ActionEvent actionEvent) {
     this.model.getOnConfigure().run();
   }
@@ -43,6 +55,6 @@ public class MainMenuController implements Initializable, BaseSnakeUiController<
 
   @Override
   public void bind() {
-    logger.info("binding");
+    // no ui elements to actively bind.
   }
 }
