@@ -14,6 +14,7 @@ module kprog.main {
   exports examples.javafx.observable;
   exports examples.javafx.addressbook;
   exports examples.io;
+  exports examples.dateandtime;
   exports examples.designpattern.observer;
   exports examples.designpattern.singleton;
   exports prog.javafx.main;

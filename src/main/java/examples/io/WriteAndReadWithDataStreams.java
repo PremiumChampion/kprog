@@ -24,14 +24,14 @@ public class WriteAndReadWithDataStreams {
    * @throws IOException if anything goes wrong in the IO sections.
    */
   public static void main(String[] args) throws IOException {
-    String dataFile = "invoicedata";
+    String dataFile = "demofiles/output/invoicedata";
 
     double[] prices = {19.99, 9.99, 15.99, 3.99, 4.99};
     int[] units = {12, 8, 13, 29, 50};
     String[] descs = {"Java T-shirt", "Java Mug", "Duke Juggling Dolls",
         "Java Pin", "Java Key Chain"};
     try (DataOutputStream out =
-                 new DataOutputStream(new BufferedOutputStream(new FileOutputStream(dataFile)));) {
+                 new DataOutputStream(new BufferedOutputStream(new FileOutputStream(dataFile)))) {
       for (int i = 0; i < prices.length; i++) {
         out.writeDouble(prices[i]);
         out.writeInt(units[i]);
@@ -43,7 +43,7 @@ public class WriteAndReadWithDataStreams {
 
     double total = 0.0;
     try (DataInputStream in =
-                 new DataInputStream(new BufferedInputStream(new FileInputStream(dataFile)));) {
+                 new DataInputStream(new BufferedInputStream(new FileInputStream(dataFile)))) {
       double price;
       int unit;
       String desc;
