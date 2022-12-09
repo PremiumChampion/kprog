@@ -6,6 +6,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import livesession.snake.Board;
+import livesession.snake.Coordinate;
 import livesession.snake.GameConfiguration;
 import livesession.snake.GameState;
 import livesession.snake.IllegalConfigurationException;
@@ -19,43 +20,26 @@ import livesession.snake.provider.SimpleSnakeService;
  */
 public class SnakeServiceViewModel implements SnakeListener {
 
-
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
       SnakeServiceViewModel.class);
-  private boolean isMaster = false;
-  private ObjectProperty<SnakeService> service = new SimpleObjectProperty<>();
-  private ObjectProperty<Board> board = new SimpleObjectProperty<>();
-  private ObjectProperty<GameConfiguration> configuration = new SimpleObjectProperty<>(null);
-  private ObjectProperty<GameState> gameState = new SimpleObjectProperty<>(GameState.PREPARED);
-  private ObjectProperty<Reason> reason = new SimpleObjectProperty<>(null);
-  private IntegerProperty score = new SimpleIntegerProperty(0);
-
-  /**
-   * new snake service View Model.
-   *
-   * @param isMaster sets the model as master.
-   */
-  public SnakeServiceViewModel(boolean isMaster) {
-    this.isMaster = isMaster;
-    init();
-    getService().addListener(this);
-  }
+  private final ObjectProperty<SnakeService> service = new SimpleObjectProperty<>();
+  private final ObjectProperty<Board> board = new SimpleObjectProperty<>();
+  private final ObjectProperty<GameConfiguration> configuration = new SimpleObjectProperty<>(null);
+  private final ObjectProperty<GameState> gameState = new SimpleObjectProperty<>(
+      GameState.PREPARED);
+  private final ObjectProperty<Reason> reason = new SimpleObjectProperty<>(null);
+  private final ObjectProperty<Coordinate> snakeHead = new SimpleObjectProperty<>();
+  private final IntegerProperty score = new SimpleIntegerProperty(0);
 
   /**
    * create a new snake model but skip binding event listener.
    */
   public SnakeServiceViewModel() {
-    init();
-  }
-
-  /**
-   * initialise default values.
-   */
-  private void init() {
     SimpleSnakeService simpleSnakeService = new SimpleSnakeService();
     service.setValue(simpleSnakeService);
     board.set(simpleSnakeService.getExternalBoard());
     configuration.set(simpleSnakeService.getConfiguration());
+    getService().addListener(this);
   }
 
   @Override
@@ -66,6 +50,8 @@ public class SnakeServiceViewModel implements SnakeListener {
     }
     logger.debug("updateBoard");
     this.board.setValue(board);
+    Coordinate snakeHead = service.get().getSnake().getPosition().get(0);
+    this.snakeHead.setValue(snakeHead);
   }
 
   @Override
@@ -93,6 +79,49 @@ public class SnakeServiceViewModel implements SnakeListener {
       return;
     }
     this.score.setValue(score);
+  }
+
+  public void abort() {
+    getService().abort();
+  }
+
+  public void play() {
+    getService().start();
+  }
+
+  public void pause() {
+    getService().pause();
+  }
+
+  public void resume() {
+    getService().resume();
+  }
+
+  public void left() {
+    getService().moveLeft();
+  }
+
+  public void right() {
+    getService().moveRight();
+  }
+  //region setter + getter
+
+  /**
+   * getter for the snake head.
+   *
+   * @return the coordinate of the snake head.
+   */
+  public Coordinate getSnakeHead() {
+    return snakeHead.get();
+  }
+
+  /**
+   * getter for the snake head property.
+   *
+   * @return snake head property.
+   */
+  public ObjectProperty<Coordinate> snakeHeadProperty() {
+    return snakeHead;
   }
 
   /**
@@ -203,27 +232,29 @@ public class SnakeServiceViewModel implements SnakeListener {
   public ObjectProperty<GameConfiguration> configurationProperty() {
     return configuration;
   }
+  //endregion
 
   /**
-   * set a new configuration.
+   * sets a new configuration.
    *
-   * @param configuration the new configuration.
-   * @throws IllegalConfigurationException illegal exception.
+   * @param speed the new speed
+   * @param size  the new size
+   * @param food  the new food
    */
-  public void setConfiguration(GameConfiguration configuration)
-      throws IllegalConfigurationException {
+  public void setConfiguration(int speed, int size, int food) {
     if (!Platform.isFxApplicationThread()) {
       Platform.runLater(() -> {
-        try {
-          setConfiguration(configuration);
-        } catch (IllegalConfigurationException e) {
-          throw new RuntimeException(e);
-        }
+        setConfiguration(speed, size, food);
       });
       return;
     }
-    getService().configure(configuration);
-    this.configuration.setValue(this.service.get().getConfiguration());
+
+    try {
+      getService().configure(new GameConfiguration(size, speed, food));
+      this.configuration.setValue(this.service.get().getConfiguration());
+    } catch (IllegalConfigurationException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
@@ -232,29 +263,18 @@ public class SnakeServiceViewModel implements SnakeListener {
    * @param other property with new value.
    */
   public void bindBidirectional(SnakeServiceViewModel other) {
+    SnakeService simpleSnakeService = service.get();
+    simpleSnakeService.removeListener(this);
     score.bindBidirectional(other.scoreProperty());
     board.bindBidirectional(other.boardProperty());
     gameState.bindBidirectional(other.gameStateProperty());
     reason.bindBidirectional(other.reasonProperty());
     service.bindBidirectional(other.serviceProperty());
     configuration.bindBidirectional(other.configurationProperty());
-    SnakeService simpleSnakeService = service.get();
+    snakeHead.bindBidirectional(other.snakeHeadProperty());
+    simpleSnakeService = service.get();
     board.set(simpleSnakeService.getBoard());
     configuration.set(simpleSnakeService.getConfiguration());
-  }
-
-  /**
-   * unbind properties bidirectional.
-   *
-   * @param other other model.
-   */
-  public void unbindBidirectional(SnakeServiceViewModel other) {
-    score.unbindBidirectional(other.scoreProperty());
-    board.unbindBidirectional(other.boardProperty());
-    gameState.unbindBidirectional(other.gameStateProperty());
-    reason.unbindBidirectional(other.reasonProperty());
-    service.unbindBidirectional(other.serviceProperty());
-    configuration.unbindBidirectional(other.configurationProperty());
   }
 
   /**
@@ -270,18 +290,20 @@ public class SnakeServiceViewModel implements SnakeListener {
     gameState.bind(other.gameStateProperty());
     reason.bind(other.reasonProperty());
     configuration.bind(other.configurationProperty());
+    snakeHead.bind(other.snakeHeadProperty());
   }
 
   /**
    * unbind unidirectional.
    */
   public void unbind() {
+    service.get().removeListener(this);
     score.unbind();
     board.unbind();
     gameState.unbind();
     reason.unbind();
     service.unbind();
     configuration.unbind();
+    snakeHead.unbind();
   }
-
 }

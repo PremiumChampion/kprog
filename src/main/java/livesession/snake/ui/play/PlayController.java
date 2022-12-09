@@ -1,22 +1,26 @@
 package livesession.snake.ui.play;
 
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import livesession.snake.ui.BaseSnakeUiController;
+import livesession.snake.ui.BaseSnakeController;
+import livesession.snake.ui.SnakeScreenLoader;
 import livesession.snake.ui.SnakeServiceViewModel;
 import livesession.snake.ui.nodes.SnakeBoard;
 
 /**
  * class PlayViewController.
  */
-public class PlayController implements BaseSnakeUiController<PlayModel> {
+public class PlayController implements BaseSnakeController, Initializable {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(PlayController.class);
@@ -33,17 +37,8 @@ public class PlayController implements BaseSnakeUiController<PlayModel> {
   public Button giveUpButton;
   public Label scoreLabel;
   public SnakeBoard gameBoard;
-  private PlayModel model = new PlayModel();
-
-  /**
-   * get the snake model.
-   *
-   * @return the snake model.
-   */
-  public SnakeServiceViewModel getSnakeModel() {
-    logger.debug("getSnakeModel");
-    return model.getSnakeModel();
-  }
+  private final SnakeServiceViewModel model = new SnakeServiceViewModel();
+  private SnakeScreenLoader screenLoader;
 
   /**
    * handler for pause button.
@@ -51,7 +46,7 @@ public class PlayController implements BaseSnakeUiController<PlayModel> {
    * @param actionEvent event.
    */
   public void pause(ActionEvent actionEvent) {
-    model.getOnPauseGameAction().run();
+    model.pause();
   }
 
   /**
@@ -60,23 +55,9 @@ public class PlayController implements BaseSnakeUiController<PlayModel> {
    * @param actionEvent event.
    */
   public void giveUp(ActionEvent actionEvent) {
-    model.getOnAbortGameAction().run();
+    model.abort();
   }
 
-  @Override
-  public void setModel(PlayModel model) {
-    this.model = model;
-  }
-
-  @Override
-  public void bind() {
-    logger.info("binding");
-    gameBoard.setSnakeModel(getSnakeModel());
-    gameBoard.focusedProperty().addListener(this::focusChanged);
-    gameBoard.requestFocus();
-    gameBoard.setOnKeyPressed(this::keyPressed);
-    scoreLabel.textProperty().bind(getSnakeModel().scoreProperty().asString("Score: %d"));
-  }
 
   /**
    * handles a keypress event.
@@ -88,10 +69,10 @@ public class PlayController implements BaseSnakeUiController<PlayModel> {
     Direction d = keybindings.get(keyEvent.getCode());
 
     if (d == Direction.LEFT) {
-      getSnakeModel().getService().moveLeft();
+      model.left();
     }
     if (d == Direction.RIGHT) {
-      getSnakeModel().getService().moveRight();
+      model.right();
     }
   }
 
@@ -104,6 +85,26 @@ public class PlayController implements BaseSnakeUiController<PlayModel> {
     if (!gameBoard.isFocused()) {
       gameBoard.requestFocus();
     }
+  }
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    gameBoard.bindBoard(model.boardProperty());
+    gameBoard.bindHead(model.snakeHeadProperty());
+    gameBoard.focusedProperty().addListener(this::focusChanged);
+    gameBoard.requestFocus();
+    gameBoard.setOnKeyPressed(this::keyPressed);
+    scoreLabel.textProperty().bind(model.scoreProperty().asString("Score: %d"));
+  }
+
+  @Override
+  public void bind(SnakeServiceViewModel model) {
+    this.model.bind(model);
+  }
+
+  @Override
+  public void setScreenLoader(SnakeScreenLoader loader) {
+    this.screenLoader = loader;
   }
 
   /**

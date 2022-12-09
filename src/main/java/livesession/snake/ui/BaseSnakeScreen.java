@@ -1,7 +1,6 @@
 package livesession.snake.ui;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXMLLoader;
@@ -11,66 +10,45 @@ import javafx.scene.Node;
  * Implements base actions for a snake screen, synchronises controller, property binding and
  * dependency injection.
  *
- * @param <Controller> the controller of the screen.
- * @param <Model>      the model of the screen.
+ * @param <C> the controller of the screen.
  */
-public abstract class BaseSnakeScreen<
-    Controller extends BaseSnakeUiController,
-    Model extends BaseSnakeUiModel>
-    implements Loadable<SnakeServiceViewModel> {
+public abstract class BaseSnakeScreen<C extends BaseSnakeController> {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(BaseSnakeScreen.class);
-  protected Loader<SnakeServiceViewModel> sceneLoader;
-  protected FXMLLoader loader;
-  protected Controller controller;
-  protected Model model;
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      BaseSnakeScreen.class);
+  protected SnakeScreenLoader sceneLoader;
+  protected FXMLLoader fxmlLoader;
+  protected C controller;
+  protected SnakeServiceViewModel model;
 
   /**
    * constructs a new snake screen.
    */
   public BaseSnakeScreen() {
-    loader = new FXMLLoader(Objects.requireNonNull(getFxmlLocation(), "FXML-File not found."));
+    fxmlLoader = new FXMLLoader(Objects.requireNonNull(getFxmlLocation(), "FXML-File not found."));
+    model = new SnakeServiceViewModel();
 
     try {
-      model = getModelClass().getDeclaredConstructor().newInstance();
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException
-             | NoSuchMethodException e) {
-      logger.error(e.getMessage(), e);
-      throw new RuntimeException(e);
-    }
-
-    try {
-      this.loader.load();
+      this.fxmlLoader.load();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    Object controller = loader.getController();
-
-    if (!getControllerClass().isInstance(controller)) {
-      throw new IllegalArgumentException(String.format("Controller is of type %s but expected %s",
-          controller.getClass().getSimpleName(), getControllerClass().getSimpleName()));
-    }
-    this.controller = (Controller) controller;
-
-    this.controller.setModel(model);
-
+    this.controller = fxmlLoader.getController();
   }
 
-  @Override
   public Node load() {
-    return this.loader.getRoot();
+    return this.fxmlLoader.getRoot();
   }
 
-  @Override
-  public void setLoader(Loader<SnakeServiceViewModel> loader) {
+  public void setScreenLoader(SnakeScreenLoader loader) {
     this.sceneLoader = loader;
+    controller.setScreenLoader(this.sceneLoader);
   }
 
-  @Override
+
   public void bind(SnakeServiceViewModel snakeModel) {
-    model.getSnakeModel().bind(snakeModel);
-    this.controller.bind();
+    model.bind(snakeModel);
+    controller.bind(snakeModel);
   }
 
   /**
@@ -79,18 +57,4 @@ public abstract class BaseSnakeScreen<
    * @return the location of the file.
    */
   protected abstract URL getFxmlLocation();
-
-  /**
-   * class for the controller used for type checking.
-   *
-   * @return the controller class.
-   */
-  protected abstract Class<Controller> getControllerClass();
-
-  /**
-   * class for the model. used to generate a shared model.
-   *
-   * @return the model class.
-   */
-  protected abstract Class<Model> getModelClass();
 }

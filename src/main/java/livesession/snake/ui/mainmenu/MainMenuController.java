@@ -6,12 +6,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import livesession.snake.ui.BaseSnakeUiController;
+import livesession.snake.ui.BaseSnakeController;
+import livesession.snake.ui.SnakeScreenLoader;
+import livesession.snake.ui.SnakeServiceViewModel;
+import livesession.snake.ui.configure.Configure;
 
 /**
  * controller for the main menu.
  */
-public class MainMenuController implements BaseSnakeUiController<MainMenuModel> {
+public class MainMenuController implements BaseSnakeController, Initializable {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(MainMenuController.class);
@@ -19,16 +22,8 @@ public class MainMenuController implements BaseSnakeUiController<MainMenuModel> 
   public Button startButton;
   @FXML
   public Button optionsButton;
-  private MainMenuModel model = new MainMenuModel();
-
-  /**
-   * getter for the snake model.
-   *
-   * @return the snake model.
-   */
-  public MainMenuModel getModel() {
-    return model;
-  }
+  private SnakeServiceViewModel model = new SnakeServiceViewModel();
+  private SnakeScreenLoader screenLoader;
 
   /**
    * handler for the on action start button.
@@ -36,7 +31,7 @@ public class MainMenuController implements BaseSnakeUiController<MainMenuModel> 
    * @param actionEvent event.
    */
   public void start(ActionEvent actionEvent) {
-    this.model.getOnStart().run();
+    model.play();
   }
 
   /**
@@ -45,16 +40,22 @@ public class MainMenuController implements BaseSnakeUiController<MainMenuModel> 
    * @param actionEvent event.
    */
   public void configure(ActionEvent actionEvent) {
-    this.model.getOnConfigure().run();
+    screenLoader.load(new Configure());
+  }
+
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    // nothing to bind because of fxml
   }
 
   @Override
-  public void setModel(MainMenuModel model) {
-    this.model = model;
+  public void bind(SnakeServiceViewModel model) {
+    this.model.bind(model);
   }
 
   @Override
-  public void bind() {
-    // no ui elements to actively bind.
+  public void setScreenLoader(SnakeScreenLoader loader) {
+    this.screenLoader = loader;
   }
 }

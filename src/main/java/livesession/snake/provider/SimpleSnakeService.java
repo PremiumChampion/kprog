@@ -98,7 +98,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
 
     simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
     gameState = GameState.RUNNING;
-    notifyListeners((l) -> l.newGameState(gameState));
+    notifyListeners(l -> l.newGameState(gameState));
   }
 
   @Override

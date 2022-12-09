@@ -2,8 +2,8 @@ package livesession.snake.ui;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
-import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import livesession.snake.GameState;
 import livesession.snake.Reason;
 import livesession.snake.Reason.Mode;
@@ -15,13 +15,13 @@ import livesession.snake.ui.play.Play;
 /**
  * class SnakeScreenLoader.
  */
-public class SnakeScreenLoader implements Loader<SnakeServiceViewModel> {
+public class SnakeScreenLoader {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SnakeScreenLoader.class);
-  private Group root = new Group();
-  private Scene scene = new Scene(root);
-  private final SnakeServiceViewModel masterModel = new SnakeServiceViewModel(true);
+  private final VBox root = new VBox();
+  private final Scene scene = new Scene(root);
+  private final SnakeServiceViewModel masterModel = new SnakeServiceViewModel();
 
   /**
    * creates a new instance of a snake screen.
@@ -105,17 +105,19 @@ public class SnakeScreenLoader implements Loader<SnakeServiceViewModel> {
    *
    * @param ui the component to load.
    */
-  public void load(Loadable<SnakeServiceViewModel> ui) {
+  public void load(BaseSnakeScreen ui) {
     if (!Platform.isFxApplicationThread()) {
       Platform.runLater(() -> load(ui));
       return;
     }
 
-    root.getChildren().clear();
-    ui.setLoader(this);
+    ui.setScreenLoader(this);
     ui.bind(masterModel);
 
+    root.getChildren().clear();
     root.getChildren().add(ui.load());
   }
+
+
 
 }

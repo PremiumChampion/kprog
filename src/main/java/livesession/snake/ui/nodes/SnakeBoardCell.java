@@ -1,14 +1,10 @@
 package livesession.snake.ui.nodes;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import livesession.snake.Board;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
-import livesession.snake.ui.SnakeServiceViewModel;
 
 /**
  * class SnakeBoardCell.
@@ -25,54 +21,28 @@ public class SnakeBoardCell extends Rectangle {
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
       SnakeBoardCell.class);
   private final Coordinate coordinate;
-  private SnakeServiceViewModel model;
-  private InvalidationListener onChange = this::boardChanged;
 
   /**
    * creates a new snake cell.
    *
-   * @param model      the model to show data from.
    * @param coordinate the coordinate of the cell.
    * @param size       the size of the cell for showing in the grid.
    */
-  public SnakeBoardCell(SnakeServiceViewModel model, Coordinate coordinate, double size) {
+  public SnakeBoardCell(Coordinate coordinate, double size) {
     super(size, size);
-    logger.debug("constructor {} {}", coordinate, size);
-    this.model = model;
     this.coordinate = coordinate;
-    this.model.boardProperty().addListener(onChange);
-    updateCellValue();
     setArcWidth(0);
     setStrokeWidth(0);
   }
 
   /**
-   * called before snake is removed.
-   */
-  public void unbind() {
-    this.model.boardProperty().removeListener(onChange);
-  }
-
-  /**
-   * handler when the board changed.
-   *
-   * @param observable board property.
-   */
-  private void boardChanged(Observable observable) {
-    updateCellValue();
-  }
-
-  /**
    * updates the cells value.
    */
-  private void updateCellValue() {
-    Coordinate head = model.getService().getSnake().getPosition().get(0);
-    Board board = model.getBoard();
-    BoardState boardState = board.getStateFromPosition(coordinate);
-    Paint color = GRASS_LIGHT;
+  public void updateValue(BoardState boardState, boolean isSnakeHead) {
+    Paint color;
     switch (boardState) {
       case SNAKE:
-        if (coordinate.equals(head)) {
+        if (isSnakeHead) {
           color = SNAKE_HEAD;
         } else {
           color = SNAKE_BODY;
