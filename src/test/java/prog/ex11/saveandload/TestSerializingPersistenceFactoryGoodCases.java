@@ -40,7 +40,7 @@ public class TestSerializingPersistenceFactoryGoodCases {
 
   }
 
-  @Test @Ignore
+  @Test
   public void saveAndLoadAnOrder() throws IOException, WrongOrderFormatException {
     factory.save(new File("testorder.bin"), order);
     Order loadedOrder = factory.load(new File("testorder.bin"));

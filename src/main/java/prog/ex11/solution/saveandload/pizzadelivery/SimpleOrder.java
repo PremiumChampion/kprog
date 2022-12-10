@@ -1,6 +1,8 @@
 package prog.ex11.solution.saveandload.pizzadelivery;
 
-
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import prog.ex11.exercise.saveandload.pizzadelivery.Order;
 import prog.ex11.exercise.saveandload.pizzadelivery.Pizza;
@@ -8,22 +10,84 @@ import prog.ex11.exercise.saveandload.pizzadelivery.Pizza;
 /**
  * Simple and straight-forward implementation of the Order interface.
  */
-public class SimpleOrder implements Order {
+public class SimpleOrder implements Order, Serializable {
+
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(SimpleOrder.class);
+      org.slf4j.LoggerFactory.getLogger(
+          prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder.class);
+  private static int nextOrderId = 0;
+  private final int orderId;
+  private final List<Pizza> pizzaList;
+  private OrderState state;
+  private int price;
+  public SimpleOrder() {
+    state = OrderState.PizzaDeliveryService;
+    this.orderId = nextOrderId++;
+    this.pizzaList = new ArrayList<>();
+  }
+
+  public SimpleOrder(int orderId) {
+    state = OrderState.Standalone;
+    this.orderId = orderId;
+    this.pizzaList = new ArrayList<>();
+  }
 
   @Override
   public int getOrderId() {
-    return 0;
+    return this.orderId;
   }
 
   @Override
   public List<Pizza> getPizzaList() {
-    return null;
+    return Collections.unmodifiableList(this.pizzaList);
+  }
+  public void setPrice(int price){
+    if(state != OrderState.Standalone){
+      throw new IllegalStateException("Expected state to be Standalone but was: "+ state);
+    }
+    this.price = price;
+  }
+
+  /**
+   * add pizza.
+   *
+   * @param pizzaToAdd pizza to add.
+   */
+  public void addPizza(Pizza pizzaToAdd) {
+    this.pizzaList.add(pizzaToAdd);
+  }
+
+  /**
+   * remove pizza.
+   *
+   * @param pizzaToRemove pizza.
+   */
+  public void removePizza(Pizza pizzaToRemove) {
+    this.pizzaList.remove(pizzaToRemove);
+  }
+
+  public void removePizza(int pizzaToRemove) {
+    this.pizzaList.remove(pizzaToRemove);
   }
 
   @Override
   public int getValue() {
-    return 0;
+    return this.pizzaList.stream().mapToInt(Pizza::getPrice).sum();
   }
+
+  @Override
+  public String toString() {
+    return "SimpleOrder{" +
+        "orderId=" + getOrderId() +
+        ", pizzaList=" + getOrderId() +
+        ", price=" + getValue() +
+        '}';
+  }
+
+  enum OrderState {
+    PizzaDeliveryService,
+    Standalone
+  }
+
+
 }

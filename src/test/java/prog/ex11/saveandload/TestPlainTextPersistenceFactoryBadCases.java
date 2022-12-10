@@ -25,26 +25,26 @@ public class TestPlainTextPersistenceFactoryBadCases {
     classLoader = getClass().getClassLoader();
   }
 
-  @Test(expected = WrongOrderFormatException.class)  @Ignore
+  @Test(expected = WrongOrderFormatException.class)
   public void testLoadBadOrderFile1() throws IOException, WrongOrderFormatException {
     logger.info("try to load a bad file with a Topping which does not exist");
     Order order = factory.load(new File("testfiles/test-badorder-1.txt"));
   }
 
 
-  @Test(expected = WrongOrderFormatException.class)  @Ignore
+  @Test(expected = WrongOrderFormatException.class)
   public void testLoadBadOrderFile2() throws IOException, WrongOrderFormatException {
     logger.info("try to load a bad file with one Token too much in the first line");
     Order order = factory.load(new File("testfiles/test-badorder-2.txt"));
   }
 
-  @Test(expected = WrongOrderFormatException.class) @Ignore
+  @Test(expected = WrongOrderFormatException.class)
   public void testLoadBadOrderFile3() throws IOException, WrongOrderFormatException {
     logger.info("try to load a bad file with one Token too few in the first line");
     Order order = factory.load(new File("testfiles/test-badorder-3.txt"));
   }
 
-  @Test(expected = WrongOrderFormatException.class) @Ignore
+  @Test(expected = WrongOrderFormatException.class)
   public void testLoadBadOrderFile4() throws IOException, WrongOrderFormatException {
     logger.info("try to load a bad file with Strings instead of ids for order and pizza");
     Order order = factory.load(new File("testfiles/test-badorder-4.txt"));
