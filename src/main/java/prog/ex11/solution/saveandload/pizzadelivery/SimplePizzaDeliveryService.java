@@ -1,5 +1,6 @@
 package prog.ex11.solution.saveandload.pizzadelivery;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import prog.ex11.exercise.saveandload.pizzadelivery.Topping;
 /**
  * Simple and straight-forward implementation of the PizzaDeliveryService interface.
  */
-public class SimplePizzaDeliveryService implements PizzaDeliveryService {
+public class SimplePizzaDeliveryService implements PizzaDeliveryService, Serializable {
 
   public static final Map<PizzaSize, Integer> sizePriceList;
   public static final Map<Topping, Integer> toppingPriceList;

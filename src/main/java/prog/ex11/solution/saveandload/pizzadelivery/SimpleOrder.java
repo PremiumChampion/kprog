@@ -12,20 +12,28 @@ import prog.ex11.exercise.saveandload.pizzadelivery.Pizza;
  */
 public class SimpleOrder implements Order, Serializable {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(
-          prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder.class);
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder.class);
   private static int nextOrderId = 0;
   private final int orderId;
   private final List<Pizza> pizzaList;
   private OrderState state;
   private int price;
+
+  /**
+   * creates a new simple order.
+   */
   public SimpleOrder() {
     state = OrderState.PizzaDeliveryService;
     this.orderId = nextOrderId++;
     this.pizzaList = new ArrayList<>();
   }
 
+  /**
+   * creates a new simple order without a pizza delivery service.
+   *
+   * @param orderId the orderid.
+   */
   public SimpleOrder(int orderId) {
     state = OrderState.Standalone;
     this.orderId = orderId;
@@ -41,9 +49,15 @@ public class SimpleOrder implements Order, Serializable {
   public List<Pizza> getPizzaList() {
     return Collections.unmodifiableList(this.pizzaList);
   }
-  public void setPrice(int price){
-    if(state != OrderState.Standalone){
-      throw new IllegalStateException("Expected state to be Standalone but was: "+ state);
+
+  /**
+   * setter.
+   *
+   * @param price new price.
+   */
+  public void setPrice(int price) {
+    if (state != OrderState.Standalone) {
+      throw new IllegalStateException("Expected state to be Standalone but was: " + state);
     }
     this.price = price;
   }
@@ -77,16 +91,12 @@ public class SimpleOrder implements Order, Serializable {
 
   @Override
   public String toString() {
-    return "SimpleOrder{" +
-        "orderId=" + getOrderId() +
-        ", pizzaList=" + getOrderId() +
-        ", price=" + getValue() +
-        '}';
+    return "SimpleOrder{" + "orderId=" + getOrderId() + ", pizzaList=" + getOrderId() + ", price="
+        + getValue() + '}';
   }
 
   enum OrderState {
-    PizzaDeliveryService,
-    Standalone
+    PizzaDeliveryService, Standalone
   }
 
 

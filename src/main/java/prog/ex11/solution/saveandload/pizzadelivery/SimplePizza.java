@@ -40,6 +40,11 @@ public class SimplePizza implements Pizza, Serializable {
     state = PizzaState.PizzaDeliveryService;
   }
 
+  /**
+   * creates a new simple pizza without a pizza delivery service.
+   *
+   * @param pizzaId the new pizza id.
+   */
   public SimplePizza(int pizzaId) {
     this.pizzaId = pizzaId;
     this.toppings = new ArrayList<>();
@@ -77,6 +82,11 @@ public class SimplePizza implements Pizza, Serializable {
     return this.size;
   }
 
+  /**
+   * setter.
+   *
+   * @param size new size.
+   */
   public void setSize(PizzaSize size) {
     if (state != PizzaState.Standalone) {
       throw new IllegalStateException("Expected state to be Standalone but was: " + state);
@@ -84,6 +94,11 @@ public class SimplePizza implements Pizza, Serializable {
     this.size = size;
   }
 
+  /**
+   * setter.
+   *
+   * @param price new price.
+   */
   public void setPrice(int price) {
     if (state != PizzaState.Standalone) {
       throw new IllegalStateException("Expected state to be Standalone but was: " + state);
@@ -119,12 +134,12 @@ public class SimplePizza implements Pizza, Serializable {
 
   @Override
   public String toString() {
-    return "SimplePizza{" +
-        "size=" + getSize() +
-        ", pizzaId=" + getPizzaId() +
-        ", toppings=" + getToppings() +
-        ", pizzaPrice=" + getPrice() +
-        '}';
+    return "SimplePizza{"
+        + "size=" + getSize()
+        + ", pizzaId=" + getPizzaId()
+        + ", toppings=" + getToppings()
+        + ", pizzaPrice=" + getPrice()
+        + '}';
   }
 
   enum PizzaState {

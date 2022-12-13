@@ -26,16 +26,15 @@ import prog.ex11.solution.saveandload.pizzadelivery.SimplePizza;
  */
 public class PlainTextPersistenceFactory implements PersistenceFactory {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(PlainTextPersistenceFactory.class);
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      PlainTextPersistenceFactory.class);
 
   @Override
   public void save(final File file, final Order order) throws IOException {
-    try(PrintWriter printWriter = new PrintWriter(new FileWriter(file))) {
+    try (PrintWriter printWriter = new PrintWriter(new FileWriter(file))) {
       String orderString = createOrderString(order);
       List<String> pizzaStrings = order.getPizzaList().stream().map(this::createPizzaString)
-          .collect(
-              Collectors.toList());
+          .collect(Collectors.toList());
       String pizzaString = String.join("\n", pizzaStrings);
 
       printWriter.println(orderString);
@@ -45,6 +44,12 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     }
   }
 
+  /**
+   * Creates a serialised Pizza string.
+   *
+   * @param pizza to serialize.
+   * @return serialised pizza.
+   */
   private String createPizzaString(Pizza pizza) {
     String basePizzaString = String.format("%d;%d;%s", pizza.getPizzaId(), pizza.getPrice(),
         pizza.getSize());
@@ -57,6 +62,12 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     return wholeOrder;
   }
 
+  /**
+   * creates a order string.
+   *
+   * @param order to serialise.
+   * @return serialised order.
+   */
   private String createOrderString(Order order) {
     return String.format("%d;%d;%d", order.getOrderId(), order.getValue(),
         order.getPizzaList().size());
@@ -84,8 +95,14 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     }
   }
 
-
-  public SimpleOrder parseOrder(String[] orderTokens) throws WrongOrderFormatException {
+  /**
+   * parses the order.
+   *
+   * @param orderTokens data.
+   * @return the order.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private SimpleOrder parseOrder(String[] orderTokens) throws WrongOrderFormatException {
     assertOrderTokenLength(orderTokens);
     SimpleOrder order = new SimpleOrder(parseOrderId(orderTokens));
 
@@ -94,13 +111,26 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     return order;
   }
 
+  /**
+   * checks for the correct token count.
+   *
+   * @param orderTokens data.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
   private void assertOrderTokenLength(String[] orderTokens) throws WrongOrderFormatException {
     if (orderTokens.length != 3) {
       throw new WrongOrderFormatException("Expected 3 entries but got " + orderTokens.length);
     }
   }
 
-  public int parseOrderId(String[] tokinisedOrder) throws WrongOrderFormatException {
+  /**
+   * parses the order id.
+   *
+   * @param tokinisedOrder data.
+   * @return the order.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private int parseOrderId(String[] tokinisedOrder) throws WrongOrderFormatException {
     assertOrderTokenLength(tokinisedOrder);
     try {
       return Integer.parseInt(tokinisedOrder[0]);
@@ -112,32 +142,51 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     }
   }
 
+  /**
+   * parses the order price.
+   *
+   * @param tokinisedOrder data
+   * @return price of the order.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
   private int parseOrderPrice(String[] tokinisedOrder) throws WrongOrderFormatException {
     assertOrderTokenLength(tokinisedOrder);
     try {
       return Integer.parseInt(tokinisedOrder[1]);
     } catch (NumberFormatException e) {
-      throw new WrongOrderFormatException(String.format("Invalid price: %s", tokinisedOrder[1]),
-          e);
+      throw new WrongOrderFormatException(String.format("Invalid price: %s", tokinisedOrder[1]), e);
     } catch (IndexOutOfBoundsException e) {
       throw new WrongOrderFormatException("no price set", e);
     }
   }
 
+  /**
+   * parses the pizza order count.
+   *
+   * @param tokinisedOrder data.
+   * @return pizza-count.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
   private int parseOrderPizzaCount(String[] tokinisedOrder) throws WrongOrderFormatException {
     assertOrderTokenLength(tokinisedOrder);
     try {
       return Integer.parseInt(tokinisedOrder[2]);
     } catch (NumberFormatException e) {
       throw new WrongOrderFormatException(
-          String.format("Invalid pizzacount: %s", tokinisedOrder[2]),
-          e);
+          String.format("Invalid pizzacount: %s", tokinisedOrder[2]), e);
     } catch (IndexOutOfBoundsException e) {
       throw new WrongOrderFormatException("no pizzacount set", e);
     }
   }
 
-  public Pizza parsePizza(String serialisedPizza) throws WrongOrderFormatException {
+  /**
+   * parses a single pizza.
+   *
+   * @param serialisedPizza data.
+   * @return the deserialised pizza.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private Pizza parsePizza(String serialisedPizza) throws WrongOrderFormatException {
 
     serialisedPizza = serialisedPizza.trim();
     String[] pizzaTokens = serialisedPizza.split(";");
@@ -151,13 +200,26 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     return pizza;
   }
 
+  /**
+   * checks for the correct token length of the pizza.
+   *
+   * @param pizzaTokens data.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
   private void assertPizzaTokenLength(String[] pizzaTokens) throws WrongOrderFormatException {
     if (pizzaTokens.length < 3 || pizzaTokens.length > 9) {
       throw new WrongOrderFormatException("Expected 3 to 9 entries but got " + pizzaTokens.length);
     }
   }
 
-  public int parsePizzaId(String[] tokinisedPizza) throws WrongOrderFormatException {
+  /**
+   * parses pizza id.
+   *
+   * @param tokinisedPizza data
+   * @return pizzaid
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private int parsePizzaId(String[] tokinisedPizza) throws WrongOrderFormatException {
     assertPizzaTokenLength(tokinisedPizza);
     try {
       return Integer.parseInt(tokinisedPizza[0]);
@@ -169,7 +231,14 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     }
   }
 
-  public int parsePizzaPrice(String[] tokinisedPizza) throws WrongOrderFormatException {
+  /**
+   * parses the pizza price.
+   *
+   * @param tokinisedPizza data.
+   * @return pizza-price.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private int parsePizzaPrice(String[] tokinisedPizza) throws WrongOrderFormatException {
     assertPizzaTokenLength(tokinisedPizza);
     try {
       return Integer.parseInt(tokinisedPizza[1]);
@@ -180,7 +249,14 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     }
   }
 
-  public PizzaSize parseSize(String[] tokinisedPizza) throws WrongOrderFormatException {
+  /**
+   * parses pizza size.
+   *
+   * @param tokinisedPizza data.
+   * @return pizza-size.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private PizzaSize parseSize(String[] tokinisedPizza) throws WrongOrderFormatException {
     assertPizzaTokenLength(tokinisedPizza);
     try {
       return PizzaSize.valueOf(tokinisedPizza[2]);
@@ -191,7 +267,14 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     }
   }
 
-  public List<Topping> parseToppings(String[] tokinisedPizza) throws WrongOrderFormatException {
+  /**
+   * parses pizza toppings.
+   *
+   * @param tokinisedPizza data.
+   * @return pizza toppings.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private List<Topping> parseToppings(String[] tokinisedPizza) throws WrongOrderFormatException {
     assertPizzaTokenLength(tokinisedPizza);
     try {
       List<Topping> toppingList = new ArrayList<>();
@@ -206,7 +289,14 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
     }
   }
 
-  public Topping parseTopping(String topping) throws WrongOrderFormatException {
+  /**
+   * parses single pizza topping.
+   *
+   * @param topping the topping to parse
+   * @return topping.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private Topping parseTopping(String topping) throws WrongOrderFormatException {
     try {
       return Topping.valueOf(topping);
     } catch (IllegalArgumentException e) {

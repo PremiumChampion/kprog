@@ -1,14 +1,20 @@
 package prog.ex11.solution.saveandload.factory;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 import prog.ex11.exercise.saveandload.factory.PersistenceFactory;
 import prog.ex11.exercise.saveandload.factory.WrongOrderFormatException;
 import prog.ex11.exercise.saveandload.pizzadelivery.Order;
@@ -26,8 +32,8 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
 
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
       BinaryPersistenceFactory.class);
-  static Map<Integer, Topping> toppingMap = new HashMap<>();
-  static Map<Integer, PizzaSize> sizeMap = new HashMap<>();
+  private static Map<Integer, Topping> toppingMap = new HashMap<>();
+  private static Map<Integer, PizzaSize> sizeMap = new HashMap<>();
 
   static {
     Arrays.stream(Topping.values()).forEach(topping -> toppingMap.put(topping.ordinal(), topping));
@@ -67,7 +73,14 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
     }
   }
 
-  public SimpleOrder parseOrder(DataInputStream dataInputStream) throws WrongOrderFormatException {
+  /**
+   * parses a order.
+   *
+   * @param dataInputStream the datasource.
+   * @return the parsed order.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private SimpleOrder parseOrder(DataInputStream dataInputStream) throws WrongOrderFormatException {
     // orderId orderValue numberOfPizza
 
     try {
@@ -94,7 +107,14 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
     }
   }
 
-  public SimplePizza parsePizza(DataInputStream dataInputStream) throws WrongOrderFormatException {
+  /**
+   * parse a single pizza.
+   *
+   * @param dataInputStream the datasource.
+   * @return the parsed pizza.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private SimplePizza parsePizza(DataInputStream dataInputStream) throws WrongOrderFormatException {
     try {
       // pizzaId pizzaValue pizzaSize toppingCount toppings...
       SimplePizza pizza = new SimplePizza(dataInputStream.readInt());
@@ -111,14 +131,28 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
     }
   }
 
-  public PizzaSize parseSize(int ordinal) throws WrongOrderFormatException {
+  /**
+   * parses the size of a pizza.
+   *
+   * @param ordinal the pizzasize.
+   * @return the pizzasize.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private PizzaSize parseSize(int ordinal) throws WrongOrderFormatException {
     if (!sizeMap.containsKey(ordinal)) {
       throw new WrongOrderFormatException(String.format("PizzaSize %d unknown.", ordinal));
     }
     return sizeMap.get(ordinal);
   }
 
-  public Topping parseTopping(int ordinal) throws WrongOrderFormatException {
+  /**
+   * parses a topping.
+   *
+   * @param ordinal the topping ordinal number
+   * @return the topping.
+   * @throws WrongOrderFormatException if the order has a invalid format.
+   */
+  private Topping parseTopping(int ordinal) throws WrongOrderFormatException {
     if (!toppingMap.containsKey(ordinal)) {
       throw new WrongOrderFormatException(String.format("Topping %d unknown.", ordinal));
     }
