@@ -13,7 +13,7 @@ import prog.ex11.exercise.saveandload.pizzadelivery.Pizza;
 public class SimpleOrder implements Order, Serializable {
 
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
-      prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder.class);
+      SimpleOrder.class);
   private static int nextOrderId = 0;
   private final int orderId;
   private final List<Pizza> pizzaList;

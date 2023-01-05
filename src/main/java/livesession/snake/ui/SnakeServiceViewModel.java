@@ -28,7 +28,7 @@ public class SnakeServiceViewModel implements SnakeListener {
   private final ObjectProperty<GameState> gameState = new SimpleObjectProperty<>(
       GameState.PREPARED);
   private final ObjectProperty<Reason> reason = new SimpleObjectProperty<>(null);
-  private final ObjectProperty<Coordinate> snakeHead = new SimpleObjectProperty<>();
+  private final ObjectProperty<Coordinate> snakeHead = new SimpleObjectProperty<>(new Coordinate(0,0));
   private final IntegerProperty score = new SimpleIntegerProperty(0);
 
   /**

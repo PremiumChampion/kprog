@@ -49,7 +49,7 @@ public class ToppingListCell extends ListCell<Topping> {
 
   /**
    * Comment.
-   *
+   *S
    * @param event event handler.
    */
   private void onRemoveButtonAction(ActionEvent event) {

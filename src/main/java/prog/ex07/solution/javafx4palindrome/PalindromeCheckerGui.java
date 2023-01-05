@@ -80,6 +80,4 @@ public class PalindromeCheckerGui extends FlowPane {
     boolean inputIsPalindrome = this.palindromeChecker.isPalindrome(inputToCheck);
     this.resultLabel.setText(inputIsPalindrome ? Constants.SUCCESS : Constants.FAILURE);
   }
-
-
 }
