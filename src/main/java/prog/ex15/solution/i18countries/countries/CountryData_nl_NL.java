@@ -7,10 +7,10 @@ import prog.ex15.exercise.i18ncountries.TypicalCountry;
 /**
  * class i18ncountries_nl_NL.
  */
-public class I18Ncountries_nl_NL extends ListResourceBundle {
+public class CountryData_nl_NL extends ListResourceBundle {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(I18Ncountries_nl_NL.class);
+      org.slf4j.LoggerFactory.getLogger(CountryData_nl_NL.class);
   private final Object[][] contents = {
       {TypicalCountry.MOST_FAMOUS_MEAL, "Pannekoken"},
       {TypicalCountry.MOST_IMPORTANT_HOLIDAY_DATE, LocalDate.of(2022, 4, 27)},

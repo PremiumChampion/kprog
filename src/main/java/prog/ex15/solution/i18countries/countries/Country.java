@@ -9,12 +9,12 @@ import prog.ex15.exercise.i18ncountries.TypicalCountry;
 /**
  * class SimpleCountry.
  */
-public class I18NCountry implements TypicalCountry {
+public class Country implements TypicalCountry {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(I18NCountry.class);
+      org.slf4j.LoggerFactory.getLogger(Country.class);
 
-  public I18NCountry(ResourceBundle bundle) {
+  public Country(ResourceBundle bundle) {
     assertValidBundle(bundle);
     fillInformation(bundle);
   }

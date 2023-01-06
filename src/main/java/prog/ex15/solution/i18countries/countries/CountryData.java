@@ -7,10 +7,10 @@ import prog.ex15.exercise.i18ncountries.TypicalCountry;
 /**
  * class i18ncountries.
  */
-public class I18Ncountries_en_EN extends ListResourceBundle {
+public class CountryData extends ListResourceBundle {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(I18Ncountries_en_EN.class);
+      org.slf4j.LoggerFactory.getLogger(CountryData.class);
 
   private final Object[][] contents = {
       {TypicalCountry.MOST_FAMOUS_MEAL, "fish and chips"},

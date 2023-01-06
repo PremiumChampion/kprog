@@ -10,10 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import prog.ex15.exercise.i18ncountries.Country;
-import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
-import prog.ex15.solution.i18countries.I18nKnowledgeGenerator;
 import prog.ex15.solution.i18countries.SingletonConfiguration;
-import prog.ex15.solution.i18countries.countries.I18NCountry;
 
 /**
  * class I18CountriesRoot.
@@ -27,6 +24,9 @@ public class I18CountriesRoot extends VBox {
   ChoiceBox<String> countrySelector;
   private EventHandler<ActionEvent> countrySelectorOnAction = this::countryChanged;
 
+  /**
+   * entry point.
+   */
   public I18CountriesRoot() {
     countrySelector = new ChoiceBox<>();
     updateCountrySelector();

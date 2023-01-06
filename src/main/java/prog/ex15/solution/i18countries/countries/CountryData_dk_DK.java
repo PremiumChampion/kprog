@@ -5,17 +5,17 @@ import java.util.ListResourceBundle;
 import prog.ex15.exercise.i18ncountries.TypicalCountry;
 
 /**
- * class i18ncountries_de_DE.
+ * class i18ncountries_dk_DK.
  */
-public class I18Ncountries_de_DE extends ListResourceBundle {
+public class CountryData_dk_DK extends ListResourceBundle {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(I18Ncountries_de_DE.class);
+      org.slf4j.LoggerFactory.getLogger(CountryData_dk_DK.class);
   private final Object[][] contents = {
-      {TypicalCountry.MOST_FAMOUS_MEAL, "Eisbein mit Sauerkraut"},
-      {TypicalCountry.MOST_IMPORTANT_HOLIDAY_DATE, LocalDate.of(2022, 10, 3)},
-      {TypicalCountry.MOST_IMPORTANT_HOLIDAY_NAME, "Tag der Deutschen Einheit"},
-      {TypicalCountry.POPULATION, 83200000},
+      {TypicalCountry.MOST_FAMOUS_MEAL, "knækbrød"},
+      {TypicalCountry.MOST_IMPORTANT_HOLIDAY_DATE, LocalDate.of(2022, 6, 5)},
+      {TypicalCountry.MOST_IMPORTANT_HOLIDAY_NAME, "Grundlovsdag"},
+      {TypicalCountry.POPULATION, 5840000},
       {TypicalCountry.VELOCITY, 130},
       {TypicalCountry.VELOCITY_UNIT, "km/h"}
   };

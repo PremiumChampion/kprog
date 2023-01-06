@@ -13,8 +13,8 @@ import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
  */
 public class ToppingListCell extends ListCell<Topping> {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(ToppingListCell.class);
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
+      ToppingListCell.class);
   private final Button removeButton;
   private final PizzaDeliveryService service;
   private OnRemoveEvent<Topping> onRemoveHandler;
@@ -49,7 +49,7 @@ public class ToppingListCell extends ListCell<Topping> {
 
   /**
    * Comment.
-   *S
+   *
    * @param event event handler.
    */
   private void onRemoveButtonAction(ActionEvent event) {

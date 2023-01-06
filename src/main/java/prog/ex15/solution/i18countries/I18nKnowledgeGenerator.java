@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.ResourceBundle;
 import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
 import prog.ex15.exercise.i18ncountries.KnowledgeGenerator;
-import prog.ex15.solution.i18countries.countries.I18NCountry;
+import prog.ex15.solution.i18countries.countries.Country;
 
 /**
  * Simple, straight-forward implementation of the KnowledgeGenerator interface for multiple
@@ -23,12 +22,18 @@ public class I18nKnowledgeGenerator implements KnowledgeGenerator {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(I18nKnowledgeGenerator.class);
-  private final I18NCountry countryData;
+  private final Country countryData;
   private final ResourceBundle texts;
   private final Locale locale;
 
-  public I18nKnowledgeGenerator(Locale locale, I18NCountry countryData, ResourceBundle texts) {
-    this.locale = locale;
+  /**
+   * constructor.
+   *
+   * @param countryData data.
+   * @param texts       data.
+   */
+  public I18nKnowledgeGenerator(Country countryData, ResourceBundle texts) {
+    this.locale = texts.getLocale();
     assertValidBundle(texts);
     this.countryData = countryData;
     this.texts = texts;

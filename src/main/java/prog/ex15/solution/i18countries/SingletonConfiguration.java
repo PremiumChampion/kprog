@@ -31,17 +31,17 @@ public class SingletonConfiguration implements Configuration {
   private Map<Country, Locale> countryLocaleMap = new HashMap<>();
 
   private SingletonConfiguration() {
-    Locale DENMARK = new Locale("dk", "DK");
-    Locale ENGLAND = new Locale("en", "EN");
-    Locale GERMANY = new Locale("de", "DE");
-    Locale NETHERLANDS = new Locale("nl", "NL");
+    Locale denmark = new Locale("dk", "DK");
+    Locale england = new Locale("en", "EN");
+    Locale germany = new Locale("de", "DE");
+    Locale netherlands = new Locale("nl", "NL");
 
-    this.countryLocaleMap.put(Country.DENMARK, DENMARK);
-    this.countryLocaleMap.put(Country.ENGLAND, ENGLAND);
-    this.countryLocaleMap.put(Country.GERMANY, GERMANY);
-    this.countryLocaleMap.put(Country.NETHERLANDS, NETHERLANDS);
+    this.countryLocaleMap.put(Country.DENMARK, denmark);
+    this.countryLocaleMap.put(Country.ENGLAND, england);
+    this.countryLocaleMap.put(Country.GERMANY, germany);
+    this.countryLocaleMap.put(Country.NETHERLANDS, netherlands);
 
-    setLocale(GERMANY);
+    setLocale(Locale.getDefault());
   }
 
 
@@ -52,12 +52,12 @@ public class SingletonConfiguration implements Configuration {
 
   @Override
   public void setLocale(final Locale newLocale) {
-    Locale oldLocale = this.locale;
+    final Locale oldLocale = this.locale;
     this.locale = newLocale;
 
     this.message = ResourceBundle.getBundle("bundles/i18ncountries", newLocale);
     this.typical = ResourceBundle.getBundle(
-        "prog.ex15.solution.i18countries.countries.I18Ncountries", newLocale);
+        "prog.ex15.solution.i18countries.countries.CountryData", newLocale);
 
     this.pcs.firePropertyChange("locale", oldLocale, newLocale);
   }

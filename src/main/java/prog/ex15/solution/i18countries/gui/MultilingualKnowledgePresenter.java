@@ -10,7 +10,7 @@ import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
 import prog.ex15.solution.i18countries.I18nKnowledgeGenerator;
 import prog.ex15.solution.i18countries.SingletonConfiguration;
-import prog.ex15.solution.i18countries.countries.I18NCountry;
+import prog.ex15.solution.i18countries.countries.Country;
 
 /**
  * class MultilingualKnowledgePresenter.
@@ -31,15 +31,16 @@ public class MultilingualKnowledgePresenter extends Accordion {
   }
 
   private void fillAccordion() {
-    I18NCountry i18NCountry = new I18NCountry(configuration.getTypicalBundle());
-    I18nKnowledgeGenerator generator = new I18nKnowledgeGenerator(configuration.getLocale(),
-        i18NCountry, configuration.getMessageBundle());
+    Country country = new Country(configuration.getTypicalBundle());
+    I18nKnowledgeGenerator generator = new I18nKnowledgeGenerator(country,
+        configuration.getMessageBundle());
     CountryKnowledgeContainer countryKnowledgeContainer = generator.fillContainer();
 
     this.getPanes().clear();
     for (Category category : Category.values()) {
       TitledPane titledPane = new TitledPane();
-      titledPane.setText(configuration.getMessageBundle().getString("categories."+category.toString()));
+      titledPane.setText(
+          configuration.getMessageBundle().getString("categories." + category.toString()));
       List<String> knowledgeList = countryKnowledgeContainer.getKnowledge(category);
       VBox box = new VBox();
       for (String string : knowledgeList) {
