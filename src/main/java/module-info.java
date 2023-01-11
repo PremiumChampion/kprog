@@ -3,6 +3,7 @@ module kprog.main {
   requires org.slf4j;
   requires javafx.controls;
   requires javafx.fxml;
+  requires java.rmi;
   exports environment.testprograms;
   exports examples.javafx.bidirectional;
   exports examples.javafx.firststeps;
@@ -38,6 +39,7 @@ module kprog.main {
   exports livesession.snake.ui.pause;
   exports livesession.snake.ui.play;
   exports livesession.snake.ui.nodes;
+  exports examples.rmi.shapes;
   exports prog.ex15.solution.i18ncountries.gui;
   exports prog.ex15.solution.i18ncountries;
 }
