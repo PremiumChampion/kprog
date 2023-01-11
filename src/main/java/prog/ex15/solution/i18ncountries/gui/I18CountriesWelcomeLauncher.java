@@ -1,4 +1,4 @@
-package prog.ex15.solution.i18countries.gui;
+package prog.ex15.solution.i18ncountries.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

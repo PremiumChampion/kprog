@@ -1,4 +1,4 @@
-package prog.ex15.solution.i18countries;
+package prog.ex15.solution.i18ncountries;
 
 import java.text.MessageFormat;
 import java.text.NumberFormat;
@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
 import prog.ex15.exercise.i18ncountries.KnowledgeGenerator;
-import prog.ex15.solution.i18countries.countries.Country;
 
 /**
  * Simple, straight-forward implementation of the KnowledgeGenerator interface for multiple
@@ -24,21 +23,19 @@ public class I18nKnowledgeGenerator implements KnowledgeGenerator {
       org.slf4j.LoggerFactory.getLogger(I18nKnowledgeGenerator.class);
   private final Country countryData;
   private final ResourceBundle texts;
-  private final Locale locale;
 
-  /**
-   * constructor.
-   *
-   * @param countryData data.
-   * @param texts       data.
-   */
-  public I18nKnowledgeGenerator(Country countryData, ResourceBundle texts) {
-    this.locale = texts.getLocale();
-    assertValidBundle(texts);
-    this.countryData = countryData;
-    this.texts = texts;
-    this.numberFormat = NumberFormat.getNumberInstance(locale);
-    this.dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale);
+  public I18nKnowledgeGenerator() {
+    logger.info("create I18nKnowledgeGenerator");
+    logger.info("get singleton message bundle");
+    assertValidBundle(SingletonConfiguration.getInstance().getMessageBundle());
+    this.texts = SingletonConfiguration.getInstance().getMessageBundle();
+    logger.info("get singleton locale");
+    this.countryData = new Country(SingletonConfiguration.getInstance().getLocale());
+
+    this.numberFormat = NumberFormat.getNumberInstance(
+        SingletonConfiguration.getInstance().getLocale());
+    this.dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
+        .withLocale(SingletonConfiguration.getInstance().getLocale());
   }
 
   private final NumberFormat numberFormat;
@@ -46,6 +43,7 @@ public class I18nKnowledgeGenerator implements KnowledgeGenerator {
 
 
   private String printMessage(final String bundleKey, final int noPeople, final LocalDate date) {
+    logger.info("printMessage");
     return MessageFormat.format(
         texts.getString(bundleKey),
         numberFormat.format(noPeople),
@@ -54,6 +52,7 @@ public class I18nKnowledgeGenerator implements KnowledgeGenerator {
 
   @Override
   public CountryKnowledgeContainer fillContainer() {
+    logger.info("fillContainer");
     CountryKnowledgeContainer container = new CountryKnowledgeContainer();
     container.addKnowledge(Category.FOOD,
         MessageFormat.format(texts.getString("food.most.prominent.food"),

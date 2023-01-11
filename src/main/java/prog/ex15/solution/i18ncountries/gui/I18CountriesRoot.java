@@ -1,4 +1,4 @@
-package prog.ex15.solution.i18countries.gui;
+package prog.ex15.solution.i18ncountries.gui;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import prog.ex15.exercise.i18ncountries.Country;
-import prog.ex15.solution.i18countries.SingletonConfiguration;
+import prog.ex15.solution.i18ncountries.SingletonConfiguration;
 
 /**
  * class I18CountriesRoot.

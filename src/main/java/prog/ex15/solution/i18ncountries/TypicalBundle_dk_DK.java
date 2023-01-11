@@ -1,4 +1,4 @@
-package prog.ex15.solution.i18countries.countries;
+package prog.ex15.solution.i18ncountries;
 
 import java.time.LocalDate;
 import java.util.ListResourceBundle;
@@ -7,10 +7,10 @@ import prog.ex15.exercise.i18ncountries.TypicalCountry;
 /**
  * class i18ncountries_dk_DK.
  */
-public class CountryData_dk_DK extends ListResourceBundle {
+public class TypicalBundle_dk_DK extends ListResourceBundle {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(CountryData_dk_DK.class);
+      org.slf4j.LoggerFactory.getLogger(TypicalBundle_dk_DK.class);
   private final Object[][] contents = {
       {TypicalCountry.MOST_FAMOUS_MEAL, "knækbrød"},
       {TypicalCountry.MOST_IMPORTANT_HOLIDAY_DATE, LocalDate.of(2022, 6, 5)},

@@ -38,6 +38,6 @@ module kprog.main {
   exports livesession.snake.ui.pause;
   exports livesession.snake.ui.play;
   exports livesession.snake.ui.nodes;
-  exports prog.ex15.solution.i18countries.gui;
-  exports prog.ex15.solution.i18countries;
+  exports prog.ex15.solution.i18ncountries.gui;
+  exports prog.ex15.solution.i18ncountries;
 }

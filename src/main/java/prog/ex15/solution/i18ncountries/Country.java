@@ -1,8 +1,9 @@
-package prog.ex15.solution.i18countries.countries;
+package prog.ex15.solution.i18ncountries;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import prog.ex15.exercise.i18ncountries.TypicalCountry;
 
@@ -14,7 +15,22 @@ public class Country implements TypicalCountry {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Country.class);
 
-  public Country(ResourceBundle bundle) {
+  /**
+   * creates a new contry;
+   *
+   * @param locale the locale of the country.
+   */
+  public Country(Locale locale) {
+    ResourceBundle bundle = ResourceBundle.getBundle(
+        "prog.ex15.solution.i18ncountries.TypicalBundle", locale);
+    assertValidBundle(bundle);
+    fillInformation(bundle);
+  }
+
+  public Country() {
+    ResourceBundle bundle = ResourceBundle.getBundle(
+        "prog.ex15.solution.i18countries.TypicalBundle",
+        SingletonConfiguration.getInstance().getLocale());
     assertValidBundle(bundle);
     fillInformation(bundle);
   }
