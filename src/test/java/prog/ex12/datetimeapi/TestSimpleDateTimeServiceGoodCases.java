@@ -38,13 +38,13 @@ public class TestSimpleDateTimeServiceGoodCases {
     service = new SimpleDateTimeService();
   }
 
-  @Test @Ignore
+  @Test 
   public void testGetDayOfWeek() {
     assertEquals("Xmas in 2020 is a Thursday", DayOfWeek.THURSDAY,
             service.getDayOfWeek(LocalDate.of(2020, 12, 24)));
   }
 
-  @Test  @Ignore
+  @Test  
   public void testNearestLeapYear() {
     Year leapYear1972 = Year.of(1972);
     Year leapYear1976 = Year.of(1976);
@@ -53,7 +53,7 @@ public class TestSimpleDateTimeServiceGoodCases {
     assertEquals(leapYear1976, service.nearestLeapYear(Year.of(1975)));
   }
 
-  @Test  @Ignore
+  @Test  
   public void testTimeBetweenNowAndThen() {
     LocalDate today = LocalDate.now();
     LocalDate in10Days = today.plusDays(10);
@@ -61,7 +61,7 @@ public class TestSimpleDateTimeServiceGoodCases {
     assertEquals("Its in 10 days", 10, result.get(ChronoUnit.DAYS));
   }
 
-  @Test @Ignore
+  @Test 
   public void testLoadSimpleFile() throws IOException, NoDateTimeServiceStateException {
     service.load(new File("testfiles/datetimeapi-good-1.csv"));
     List<EventInTime> events = service.getEvents();
@@ -69,7 +69,7 @@ public class TestSimpleDateTimeServiceGoodCases {
     assertEquals("List should contain three entries", 3, events.size());
   }
 
-  @Test @Ignore
+  @Test 
   public void testSaveToSimpleFile() throws IOException {
     Path path = FileSystems.getDefault().getPath("testfiles", "datetimeapi-save.csv");
     try {

@@ -22,91 +22,91 @@ public class TestSimpleDateTimeServiceBadCases {
     service = new SimpleDateTimeService();
   }
 
-  @Test(expected = RuntimeException.class) @Ignore
+  @Test(expected = RuntimeException.class) 
   public void testLoadWithNullReference() throws IOException, NoDateTimeServiceStateException {
     service.load(null);
     fail("Loading from a null reference should result in an IOException.");
   }
 
-  @Test(expected = IOException.class) @Ignore
+  @Test(expected = IOException.class) 
   public void testLoadWithNonexistingFile() throws IOException, NoDateTimeServiceStateException {
     service.load(new File("Nonexistingfilename.csv"));
     fail("Loading a nonexisting file should result in an IOException");
   }
 
-  @Test(expected = RuntimeException.class) @Ignore
+  @Test(expected = RuntimeException.class) 
   public void testSaveWithNullReference() throws IOException {
     service.save(null);
     fail("Saving into a null reference should result in an IOException.");
   }
 
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testNearestLeapYearWithNullReference() {
     service.nearestLeapYear(null);
     fail("Calling nearestLeapYear should result in an IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testGetDayOfWeekWithNullReference() {
     service.getDayOfWeek(null);
     fail("Calling getdayOfWeek should result in an IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testTimeBetweenNowAndThenWithLocalDateIsNullReference() {
     service.timeBetweenNowAndThen(null);
     fail("Calling timeBetweenNowAndThen with a null reference should result in an " +
             "IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testTimeBetweenNowAndThenWithEventIdIsInvalid() {
     service.timeBetweenNowAndThen(-345678);
     fail("Calling timeBetweenNowAndThen with an invalid id should result in an " +
             "IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testAddEventWithEventNameWithNullReference() {
     service.addEvent(null, LocalDate.of(2020, 12, 21));
     fail("Calling addEvent with a null reference as event name should result in an " +
             "IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testAddEventWithLocalDateWithNullReference() {
     service.addEvent("hugo", null);
     fail("Calling addEvent with a null reference as localDate should result in an " +
             "IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testRemoveEventWithInvalidEventId() {
     service.removeEvent(-654321);
     fail("Calling removeEvent with an invalid id should result in an IllegalArgumentException.");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testAddEventWithBlanckEventName() {
     service.addEvent("   ", LocalDate.of(2020, 12, 21));
     fail("addEvent with a blank event name should result in an IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testAddEventWithEmptyEventName() {
     service.addEvent("", LocalDate.of(2020, 12, 21));
     fail("addEvent with an empty event name should result in an IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testAddEventWithOnlyOneReadableCharInEventName() {
     service.addEvent("  k ", LocalDate.of(2020, 12, 21));
     fail("addEvent with only one readable char in event name should result in an " +
             "IllegalArgumentException");
   }
 
-  @Test(expected = IllegalArgumentException.class) @Ignore
+  @Test(expected = IllegalArgumentException.class) 
   public void testAddEventWithIllegalCharInEventName() {
     service.addEvent("  k§d ", LocalDate.of(2020, 12, 21));
     fail("addEvent with only one readable char in event name should result in an " +

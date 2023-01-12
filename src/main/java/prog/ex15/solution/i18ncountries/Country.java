@@ -12,11 +12,10 @@ import prog.ex15.exercise.i18ncountries.TypicalCountry;
  */
 public class Country implements TypicalCountry {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(Country.class);
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(Country.class);
 
   /**
-   * creates a new contry;
+   * creates a new Country.
    *
    * @param locale the locale of the country.
    */
@@ -27,6 +26,9 @@ public class Country implements TypicalCountry {
     fillInformation(bundle);
   }
 
+  /**
+   * create a new country.
+   */
   public Country() {
     ResourceBundle bundle = ResourceBundle.getBundle(
         "prog.ex15.solution.i18countries.TypicalBundle",
@@ -64,18 +66,18 @@ public class Country implements TypicalCountry {
     this.holidayName = holidayName;
   }
 
+  /**
+   * checks a bundle.
+   *
+   * @param bundle bundle th check.
+   * @throws IllegalArgumentException if bundle is invalid.
+   */
   private void assertValidBundle(ResourceBundle bundle) throws IllegalArgumentException {
     if (bundle == null) {
       throw new IllegalArgumentException("Bundle is null");
     }
-    String[] typicalCountryKeys = {
-        VELOCITY,
-        VELOCITY_UNIT,
-        POPULATION,
-        MOST_IMPORTANT_HOLIDAY_DATE,
-        MOST_IMPORTANT_HOLIDAY_NAME,
-        MOST_FAMOUS_MEAL
-    };
+    String[] typicalCountryKeys = {VELOCITY, VELOCITY_UNIT, POPULATION, MOST_IMPORTANT_HOLIDAY_DATE,
+        MOST_IMPORTANT_HOLIDAY_NAME, MOST_FAMOUS_MEAL};
     List<String> missingKeys = new ArrayList<>();
     for (String key : typicalCountryKeys) {
       if (!bundle.containsKey(key)) {
@@ -89,6 +91,11 @@ public class Country implements TypicalCountry {
     }
   }
 
+  /**
+   * fills information from bundle.
+   *
+   * @param bundle the bundle from which to load information.
+   */
   private void fillInformation(ResourceBundle bundle) {
     try {
       this.setMostFamousMeal((String) bundle.getObject(MOST_FAMOUS_MEAL));
@@ -101,26 +108,56 @@ public class Country implements TypicalCountry {
     }
   }
 
+  /**
+   * getter.
+   *
+   * @return velocity.
+   */
   public int getVelocityValue() {
     return velocityValue;
   }
 
+  /**
+   * getter.
+   *
+   * @return velocityUnit.
+   */
   public String getVelocityUnit() {
     return velocityUnit;
   }
 
+  /**
+   * getter.
+   *
+   * @return population.
+   */
   public int getPopulation() {
     return population;
   }
 
+  /**
+   * getter.
+   *
+   * @return mostFamousMeal.
+   */
   public String getMostFamousMeal() {
     return mostFamousMeal;
   }
 
+  /**
+   * getter.
+   *
+   * @return holidayName.
+   */
   public String getHolidayName() {
     return holidayName;
   }
 
+  /**
+   * getter.
+   *
+   * @return holidayDate.
+   */
   public LocalDate getHolidayDate() {
     return holidayDate;
   }

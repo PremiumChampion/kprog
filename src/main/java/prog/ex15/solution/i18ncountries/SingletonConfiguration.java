@@ -2,16 +2,11 @@ package prog.ex15.solution.i18ncountries;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
-import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.Configuration;
 import prog.ex15.exercise.i18ncountries.Country;
 
@@ -23,16 +18,8 @@ public class SingletonConfiguration implements Configuration {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SingletonConfiguration.class);
 
-  private static SingletonConfiguration instance;
+  private static SingletonConfiguration instance = new SingletonConfiguration();
 
-  static {
-    try {
-      instance = new SingletonConfiguration();
-    } catch (Exception e) {
-      logger.info("Error constructing singleton", e);
-      throw e;
-    }
-  }
 
   public static SingletonConfiguration getInstance() {
     return instance;
@@ -49,7 +36,6 @@ public class SingletonConfiguration implements Configuration {
    * creates a new singleton configuration.
    */
   public SingletonConfiguration() {
-    logger.info("create SingletonConfiguration");
     Locale denmark = new Locale("dk", "DK");
     Locale england = new Locale("en", "EN");
     Locale germany = new Locale("de", "DE");
@@ -75,7 +61,7 @@ public class SingletonConfiguration implements Configuration {
     this.locale = newLocale;
 
     try {
-      this.message = ResourceBundle.getBundle("bundles/i18ncountries", newLocale);
+      this.message = ResourceBundle.getBundle("i18ncountries", newLocale);
       this.typical = ResourceBundle.getBundle(
           "prog.ex15.solution.i18ncountries.TypicalBundle", newLocale);
     } catch (NullPointerException | MissingResourceException e) {
