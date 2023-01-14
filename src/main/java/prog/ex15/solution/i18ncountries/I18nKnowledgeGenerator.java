@@ -7,10 +7,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
 import prog.ex15.exercise.i18ncountries.KnowledgeGenerator;
+import prog.ex15.exercise.i18ncountries.TypicalCountry;
 
 /**
  * Simple, straight-forward implementation of the KnowledgeGenerator interface for multiple
@@ -20,57 +22,102 @@ public class I18nKnowledgeGenerator implements KnowledgeGenerator {
 
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(
       I18nKnowledgeGenerator.class);
-  private final Country countryData;
-  private final ResourceBundle texts;
-
-  /**
-   * create a new knowledge generator.
-   */
-  public I18nKnowledgeGenerator() {
-    assertValidBundle(SingletonConfiguration.getInstance().getMessageBundle());
-    this.texts = SingletonConfiguration.getInstance().getMessageBundle();
-    this.countryData = new Country(SingletonConfiguration.getInstance().getLocale());
-
-    this.numberFormat = NumberFormat.getNumberInstance(
-        SingletonConfiguration.getInstance().getLocale());
-    this.dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
-        .withLocale(SingletonConfiguration.getInstance().getLocale());
-  }
-
-  private final NumberFormat numberFormat;
-  private final DateTimeFormatter dateTimeFormatter;
-
-
-  private String printMessage(final String bundleKey, final int noPeople, final LocalDate date) {
-    return MessageFormat.format(texts.getString(bundleKey), numberFormat.format(noPeople),
-        dateTimeFormatter.format(date));
-  }
 
   @Override
   public CountryKnowledgeContainer fillContainer() {
-    logger.info("locale {}", texts.getLocale().toString());
+    final ResourceBundle messageBundle = SingletonConfiguration.getInstance().getMessageBundle();
+    assertValidBundle(messageBundle);
+    final Locale locale = SingletonConfiguration.getInstance().getLocale();
+    final Country countryData = new Country(locale);
+    final NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+    final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
+        .withLocale(locale);
+
+    logger.info("locale {}", locale);
+
     CountryKnowledgeContainer container = new CountryKnowledgeContainer();
-    String foodText = MessageFormat.format(texts.getString("food.most.prominent.food"),
-        this.countryData.getMostFamousMeal());
-    logger.info("foodText: {}", foodText);
+    String foodText = getFoodText(messageBundle, countryData);
     container.addKnowledge(Category.FOOD, foodText);
-    String holidayText = MessageFormat.format(texts.getString("holiday.most.important.holiday"),
-        this.countryData.getHolidayName(),
-        dateTimeFormatter.format(this.countryData.getHolidayDate()));
-    logger.info("holidayText: {}", holidayText);
+    String holidayText = getHolidayText(messageBundle, countryData, dateTimeFormatter);
     container.addKnowledge(Category.HOLIDAYS, holidayText);
-    String trafficText = MessageFormat.format(texts.getString("traffic.maximum.speed.highways"),
-        numberFormat.format(this.countryData.getVelocityValue()),
-        this.countryData.getVelocityUnit());
-    logger.info("trafficText: {}", trafficText);
+    String trafficText = getTrafficText(messageBundle, countryData, numberFormat);
     container.addKnowledge(Category.TRAFFIC, trafficText);
-    String statisticsText = MessageFormat.format(texts.getString("statistics.population"),
-        numberFormat.format(this.countryData.getPopulation()));
-    logger.info("statisticsText: {}", statisticsText);
+    String statisticsText = getStatisticsText(messageBundle, countryData, numberFormat);
     container.addKnowledge(Category.STATISTICS, statisticsText);
+
     return container;
   }
 
+  /**
+   * comment.
+   *
+   * @param messageBundle comment.
+   * @param countryData   comment.
+   * @param numberFormat  comment.
+   * @return comment.
+   */
+  private String getStatisticsText(ResourceBundle messageBundle, Country countryData,
+      NumberFormat numberFormat) {
+    String statisticsText = MessageFormat.format(messageBundle.getString("statistics.population"),
+        numberFormat.format(countryData.getPopulation()));
+    logger.info("statisticsText: {}", statisticsText);
+    return statisticsText;
+  }
+
+  /**
+   * comment.
+   *
+   * @param messageBundle comment.
+   * @param countryData   comment.
+   * @param numberFormat  comment.
+   * @return comment.
+   */
+  private String getTrafficText(ResourceBundle messageBundle, Country countryData,
+      NumberFormat numberFormat) {
+    String trafficText = MessageFormat.format(
+        messageBundle.getString("traffic.maximum.speed.highways"),
+        numberFormat.format(countryData.getVelocityValue()), countryData.getVelocityUnit());
+    logger.info("trafficText: {}", trafficText);
+    return trafficText;
+  }
+
+  /**
+   * comment.
+   *
+   * @param messageBundle     comment.
+   * @param countryData       comment.
+   * @param dateTimeFormatter comment.
+   * @return comment.
+   */
+  private String getHolidayText(ResourceBundle messageBundle, Country countryData,
+      DateTimeFormatter dateTimeFormatter) {
+    String holidayText = MessageFormat.format(
+        messageBundle.getString("holiday.most.important.holiday"), countryData.getHolidayName(),
+        dateTimeFormatter.format(countryData.getHolidayDate()));
+    logger.info("holidayText: {}", holidayText);
+    return holidayText;
+  }
+
+  /**
+   * comment.
+   *
+   * @param messageBundle comment.
+   * @param countryData   comment.
+   * @return comment.
+   */
+  private String getFoodText(ResourceBundle messageBundle, Country countryData) {
+    String foodText = MessageFormat.format(messageBundle.getString("food.most.prominent.food"),
+        countryData.getMostFamousMeal());
+    logger.info("foodText: {}", foodText);
+    return foodText;
+  }
+
+  /**
+   * comment.
+   *
+   * @param bundle comment.
+   * @throws IllegalArgumentException comment.
+   */
   private void assertValidBundle(ResourceBundle bundle) throws IllegalArgumentException {
     if (bundle == null) {
       throw new IllegalArgumentException("Bundle is null");

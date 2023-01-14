@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ResourceBundleManager">
+    <file url="file://$PROJECT_DIR$/src/main/resources/bundles/DemoI18N.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/bundles/DemoI18N_de_DE.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/expenses.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/expenses_en_GB.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/i18ncountries.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/i18ncountries_de_DE.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/i18ncountries_en_EN.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/i18ncountries_nl_NL.properties" />
-    <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/src/main/resources/bundles/i18ncountries.properties" />
-      <file value="file://$PROJECT_DIR$/src/main/resources/bundles/i18ncountries_dk_DK.properties" />
-      <file value="file://$PROJECT_DIR$/src/main/resources/bundles/i18ncountries_nl_NL.properties" />
-      <base-name>i18ncountries</base-name>
-    </custom-resource-bundle>
     <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/src/main/resources/i18ncountries.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/i18ncountries_de_DE.properties" />
@@ -18,6 +16,17 @@
       <file value="file://$PROJECT_DIR$/src/main/resources/i18ncountries_en_EN.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/i18ncountries_nl_NL.properties" />
       <base-name>i18ncountries</base-name>
+    </custom-resource-bundle>
+    <custom-resource-bundle>
+      <file value="file://$PROJECT_DIR$/src/main/resources/bundles/DemoI18N.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/bundles/DemoI18N_de_DE.properties" />
+      <base-name>DemoI18N</base-name>
+    </custom-resource-bundle>
+    <custom-resource-bundle>
+      <file value="file://$PROJECT_DIR$/src/main/resources/expenses.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/expenses_DE.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/expenses_en_GB.properties" />
+      <base-name>expenses</base-name>
     </custom-resource-bundle>
   </component>
 </project>

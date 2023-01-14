@@ -30,9 +30,7 @@ public class Country implements TypicalCountry {
    * create a new country.
    */
   public Country() {
-    ResourceBundle bundle = ResourceBundle.getBundle(
-        "prog.ex15.solution.i18countries.TypicalBundle",
-        SingletonConfiguration.getInstance().getLocale());
+    ResourceBundle bundle = SingletonConfiguration.getInstance().getTypicalBundle();
     assertValidBundle(bundle);
     fillInformation(bundle);
   }

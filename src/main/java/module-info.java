@@ -42,4 +42,5 @@ module kprog.main {
   exports examples.rmi.shapes;
   exports prog.ex15.solution.i18ncountries.gui;
   exports prog.ex15.solution.i18ncountries;
+  exports prog.ws21.solution.bookings.gui;
 }
